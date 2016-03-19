@@ -33,6 +33,7 @@ namespace Cronofy_WebAPI.App_Start
 
             // For instance:
              container.Register<IConfiguration, Configuration>();
+            container.Register<GetFreeBusyRequestBuilderFactory>();
         }
     }
 }

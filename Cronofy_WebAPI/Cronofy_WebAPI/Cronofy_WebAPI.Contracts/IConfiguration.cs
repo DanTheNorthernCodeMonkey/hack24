@@ -3,5 +3,6 @@
     public interface IConfiguration
     {
         string AuthToken { get; set; }
+        string TimeZoneId { get; set; }
     }
 }

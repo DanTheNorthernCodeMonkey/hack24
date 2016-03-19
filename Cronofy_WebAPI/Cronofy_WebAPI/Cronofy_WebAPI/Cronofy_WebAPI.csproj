@@ -104,12 +104,16 @@
   <ItemGroup>
     <Compile Include="App_Start\SimpleInjectorWebApiInitializer.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AddEventController.cs" />
     <Compile Include="Controllers\AvailabilityController.cs" />
     <Compile Include="Helpers\DateTimeParser.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\FreeTimeExtension.cs" />
     <Compile Include="Logic\Configuration.cs" />
+    <Compile Include="Logic\GetFreeBusyRequestBuilderFactory.cs" />
+    <Compile Include="Models\Slot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -124,7 +128,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Cronofy_WebAPI.Contracts\Cronofy_WebAPI.Contracts.csproj">
