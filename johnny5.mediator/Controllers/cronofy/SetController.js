@@ -20,7 +20,7 @@ module.exports.post = function (req, res) {
         }
         else {
             console.log(body);
-            res.send(body);
+            res.json(body);
         }});
 
     res.send(200);
