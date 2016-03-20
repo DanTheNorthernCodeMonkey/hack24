@@ -19,8 +19,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(bodyParser.json());
 
-routes.initRoutes(app);
-
 app.use(function (req, res, next) {
     var oneof = false;
     if (req.headers.origin) {
@@ -49,16 +47,7 @@ app.use(function (req, res, next) {
         next();
     }
 });
-/*
-app.get('/api/mediator/essendex', function (req, res, next) {
-    console.log('essendex service called');
-    next();
-}, essendexController.get);
 
-app.post('/api/mediator/cronofy', function (req, res, next) {
-    console.log('cronofy service called');
-    next();
-}, cronofyController.post);*/
-
+routes.initRoutes(app);
 
 module.exports = app;

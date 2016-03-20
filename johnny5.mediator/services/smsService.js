@@ -7,16 +7,16 @@ var request = require('request');
 module.exports.send = function (message) {
 
     var sms = {
-        accountreference: "EX0207704",
+        accountreference: "EX0207602",
         message: {
-            to: "447413628822",
+            to: "447982022506",
             body: message
         }
     };
 
     var xmlMessage = js2xmlparser("messages", sms);
 
-    var basicAuthString = new Buffer("dan.ian.shea@gmail.com:ANeadwxdGWC1").toString('base64');
+    var basicAuthString = new Buffer("mark_towndrow@hotmail.co.uk:6E5mW3ZPAdX1").toString('base64');
 
     request({
         url: 'https://api.esendex.com/v1.0/messagedispatcher',
