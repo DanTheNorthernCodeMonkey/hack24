@@ -3,8 +3,6 @@
  */
 var say = require('say');
 
-var queue = [];
-
 module.exports.greet = function (req, res) {
 
     say.speak('why aye man, what canny do for ye pet?');
@@ -18,13 +16,9 @@ module.exports.calendarSet = function (req, res) {
 
 module.exports.listen = function (req, res) {
 
-    var message = req.message.body;
-    if (queue.length > 0) {
-        if (queue.length < 10) {
-            var next = queue.pop();
-            say.speak(next);
-        }
-    } else {
-        say.speak(message);
+    if (req.body.message == undefined) {
+        return res.send(400);
     }
+    say.speak(req.body.message);
+    res.send(200);
 };
