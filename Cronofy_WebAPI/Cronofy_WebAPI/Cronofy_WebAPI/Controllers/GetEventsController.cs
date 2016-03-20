@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -21,11 +22,11 @@ namespace Cronofy_WebAPI.Controllers
         [HttpGet]
         public HttpResponseMessage Get()
         {
-            IEnumerable<Event> events;
+            List<Event> events;
             try
             {
                 var cronofy = new CronofyAccountClient(_configuration.AuthToken);
-                events = cronofy.GetEvents();
+                events = cronofy.GetEvents().ToList();
             }
             catch (Exception ex)
             {
