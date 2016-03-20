@@ -23,6 +23,5 @@ var pusherSingleton = function () {
 };
 
 module.exports.get = function () {
-
     return pusherSingleton();
 };

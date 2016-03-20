@@ -17,4 +17,9 @@ module.exports.initRoutes = function (app) {
         console.log('greeting called');
         next();
     }, speechController.greet);
+
+    app.post('/api/mediator/listen', function (req, res, next) {
+        console.log('listen called');
+        next();
+    }, speechController.listen);
 };
