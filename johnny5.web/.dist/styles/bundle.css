@@ -7363,6 +7363,13 @@ body{
 	padding-bottom:260px;
 }
 
+@media only screen and (max-device-width: 480px){
+	.content-section  {
+		padding-top:660px;
+		padding-bottom:660px;
+	}
+}
+
 .summary{
 	text-align: left;
 }
