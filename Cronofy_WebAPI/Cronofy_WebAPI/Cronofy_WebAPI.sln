@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cronofy_WebAPI", "Cronofy_WebAPI\Cronofy_WebAPI.csproj", "{7E41A81B-EA07-4E51-9135-F0C44E14CA15}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cronofy_WebAPI.Contracts", "Cronofy_WebAPI.Contracts\Cronofy_WebAPI.Contracts.csproj", "{FC296FF1-CCAA-4D57-AB6D-1F69D4B8B569}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7E41A81B-EA07-4E51-9135-F0C44E14CA15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E41A81B-EA07-4E51-9135-F0C44E14CA15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E41A81B-EA07-4E51-9135-F0C44E14CA15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E41A81B-EA07-4E51-9135-F0C44E14CA15}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC296FF1-CCAA-4D57-AB6D-1F69D4B8B569}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC296FF1-CCAA-4D57-AB6D-1F69D4B8B569}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC296FF1-CCAA-4D57-AB6D-1F69D4B8B569}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC296FF1-CCAA-4D57-AB6D-1F69D4B8B569}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
