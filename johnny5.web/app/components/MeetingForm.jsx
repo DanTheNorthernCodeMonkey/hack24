@@ -15,7 +15,7 @@ var meetingForm = React.createClass({
     },
     MakeShitHappen: function(start, end){
         debugger;
-        $.post("", {start: start, end: end, description: this.state.description, summary: this.state.summary})
+        $.post("http://localhost:3002/api/mediator/cronofy", {start: start, end: end, description: this.state.description, summary: this.state.summary})
 
     },
     getSlots: function(e){
