@@ -3,15 +3,14 @@
  */
 var js2xmlparser = require("js2xmlparser");
 var request = require('request');
-var bodyParser = require ('body-parser');
 
-module.exports.get = function (req, res) {
+module.exports.post = function (req, res) {
 
     var testSms = {
         accountreference: "EX0207704",
         message: {
             to: "447413628822",
-            body: "bits please test"
+            body: req.body.message
         }
     };
 
