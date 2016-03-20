@@ -6,8 +6,6 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var router = express.Router();
 var routes = require('./routes');
-var cronofyController = require('./controllers/cronofy/setController');
-var essendexController = require('./controllers/essendex/sendSms');
 
 var app = express();
 
@@ -20,8 +18,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(bodyParser.json());
-
-routes.initRoutes(app);
 
 app.use(function (req, res, next) {
     var oneof = false;
@@ -51,16 +47,7 @@ app.use(function (req, res, next) {
         next();
     }
 });
-/*
-app.get('/api/mediator/essendex', function (req, res, next) {
-    console.log('essendex service called');
-    next();
-}, essendexController.get);
 
-app.post('/api/mediator/cronofy', function (req, res, next) {
-    console.log('cronofy service called');
-    next();
-}, cronofyController.post);*/
-
+routes.initRoutes(app);
 
 module.exports = app;

@@ -114,6 +114,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AddEventController.cs" />
     <Compile Include="Controllers\AvailabilityController.cs" />
+    <Compile Include="Controllers\GetEventsController.cs" />
     <Compile Include="Helpers\DateTimeParser.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

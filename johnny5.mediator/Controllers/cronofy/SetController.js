@@ -31,8 +31,8 @@ module.exports.post = function (req, res) {
             });
 
             smsService.send("You're friend just created a new event, don't miss out");
-
-            res.send(body);
+            res.header('Access-Control-Allow-Origin', '*');
+            res.send(200);
         }
     });
 };
