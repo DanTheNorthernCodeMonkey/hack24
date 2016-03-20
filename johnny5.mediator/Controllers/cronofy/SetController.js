@@ -4,15 +4,16 @@ var request = require('request');
 
 module.exports.post = function (req, res) {
 
-    var url = 'http://hack24cronofy.azurewebsites.net/api/availability/daterange/';
+    var url = 'http://hack24cronofy.azurewebsites.net/api/AddEvent/';
 
     url += req.body.startDate +"/";
     url += req.body.endDate +"/";
-    url += req.body.duration +"/";
+    url += req.body.description +"/";
+    url += req.body.summary +"/";
 
     request({
         url: url,
-        method: "GET"
+        method: "POST"
     }, function (error, response, body){
         if (error){
             console.log(error);
@@ -20,8 +21,6 @@ module.exports.post = function (req, res) {
         }
         else {
             console.log(body);
-            res.json(body);
+            res.send(body );
         }});
-
-    res.send(200);
 };

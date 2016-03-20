@@ -1,14 +1,20 @@
 var cronofyController = require('./controllers/cronofy/setController');
 var essendexController = require('./controllers/essendex/sendSms');
-module.exports.initRoutes = function (app){
+var speechController = require('./controllers/speechController');
+module.exports.initRoutes = function (app) {
 
-        app.post('/api/mediator/cronofy', function (req, res, next) {
-            console.log('cronofy service called');
-            next();
-        }, cronofyController.post);
+    app.post('/api/mediator/cronofy', function (req, res, next) {
+        console.log('cronofy service called');
+        next();
+    }, cronofyController.post);
 
-        app.get('/api/mediator/essendex', function (req, res, next) {
+    app.post('/api/mediator/essendex', function (req, res, next) {
         console.log('essendex service called');
         next();
-    }, essendexController.get);
+    }, essendexController.post);
+
+    app.get('/api/mediator/greeting', function (req, res, next) {
+        console.log('greeting called');
+        next();
+    }, speechController.greet);
 };
