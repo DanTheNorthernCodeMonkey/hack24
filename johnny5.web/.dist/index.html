@@ -18,11 +18,26 @@
             </a>
         </div>
 
+    <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+        <ul class="nav navbar-nav">
+            <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+            <li class="hidden">
+                <a href="#intro-body"></a>
+            </li>
+            <li class="">
+                <a class="page-scroll" href="#add">Add New Event</a>
+            </li>
+            <li class="">
+                <a class="page-scroll" href="#view">Upcoming Events</a>
+            </li>
+        </ul>
     </div>
+    </div>
+
 </nav>
 
 <header class="intro">
-    <div class="intro-body">
+    <div id="intro-body" class="intro-body">
         <div class="container">
             <div class="row">
                 <div class="col-md-8 col-md-offset-2">
@@ -36,28 +51,29 @@
         </div>
     </div>
 </header>
-<div id="notify">
 
-</div>
 <section class="container content-section text-center" id="login">
 
 </section>
 <section class="container content-section text-center" id="add">
 
 </section>
+<section class="container content-section text-center" id="view">
 
+</section>
 
 
 <script src="scripts/thirdParty.js" type="text/javascript" charset="utf-8"></script>
 <script src="scripts/toastr.js" type="text/javascript" charset="utf-8"></script>
 <script src="scripts/bundle.js" type="text/javascript" charset="utf-8"></script>
+<script src="//js.pusher.com/3.0/pusher.min.js"></script>
 <script type="text/javascript">
     $(function() {
         $('a.page-scroll').bind('click', function(event) {
             var $anchor = $(this);
             $('html, body').animate({
                 scrollTop: $($anchor.attr('href')).offset().top
-            }, 2000);
+            }, 1800);
         });
     });
     $(function collapseNavbar() {
@@ -72,10 +88,21 @@
     $(function notifyStuff() {
         $('#submitEvent').bind('click', function(event){
             event.preventDefault();
-            debugger;
-            toastr.success('Event Scheduled!');
         })
     });
+
+    $(function pusher(){
+        var pusher = new Pusher('62639e20112bbe71197e', {
+            cluster: 'eu'
+        });
+        var channel = pusher.subscribe('calendar');
+        channel.bind('eventAdded', function(data) {
+            debugger;
+            toastr.success('A New Event Has Been Created: '+ data.summaryInfo);
+        });
+    })
+
+
 </script>
 
 </body>
