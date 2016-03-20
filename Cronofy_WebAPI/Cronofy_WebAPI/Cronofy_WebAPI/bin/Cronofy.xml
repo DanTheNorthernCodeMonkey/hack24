@@ -1,0 +1,4348 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Cronofy</name>
+    </assembly>
+    <members>
+        <member name="T:Cronofy.UrlBuilder">
+            <summary>
+            Helper for building URLs.
+            </summary></member>
+        <member name="F:Cronofy.UrlBuilder.parameters">
+            <summary>
+            The list of querystring parameters.
+            </summary></member>
+        <member name="F:Cronofy.UrlBuilder.url">
+            <summary>
+            The base URL.
+            </summary></member>
+        <member name="M:Cronofy.UrlBuilder.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Cronofy.UrlBuilder" />
+            class.
+            </summary></member>
+        <member name="M:Cronofy.UrlBuilder.Url(System.String)">
+            <summary>
+            Sets the base URL for the builder.
+            <para>
+            Generally the scheme, TLD, and path of the eventual URL.
+            </para>
+            </summary>
+            <param name="url">
+            The base URL, must not be null or empty.
+            </param>
+            <returns>
+            A reference to the builder.
+            </returns>
+            <exception cref="T:System.ArgumentException">
+            Thrown if <paramref name="url" /> is null or empty.
+            </exception></member>
+        <member name="M:Cronofy.UrlBuilder.AddParameter(System.String,System.String)">
+            <summary>
+            Adds a querystring parameter to the URL.
+            </summary>
+            <param name="key">
+            The key of the querystring parameter, must not be null or empty.
+            </param>
+            <param name="value">
+            The value of the querystring parameter, must not be null.
+            </param>
+            <returns>
+            A reference to the builder.
+            </returns>
+            <exception cref="T:System.ArgumentException">
+            Thrown if <paramref name="key" /> is null or empty, or if
+            <paramref name="value" /> is null.
+            </exception></member>
+        <member name="M:Cronofy.UrlBuilder.AddParameter(System.String,System.Boolean)">
+            <summary>
+            Adds a querystring parameter to the URL.
+            </summary>
+            <param name="key">
+            The key of the querystring parameter, must not be null or empty.
+            </param>
+            <param name="value">
+            The value of the querystring parameter.
+            </param>
+            <returns>
+            A reference to the builder.
+            </returns>
+            <exception cref="T:System.ArgumentException">
+            Thrown if <paramref name="key" /> is null or empty.
+            </exception></member>
+        <member name="M:Cronofy.UrlBuilder.Build">
+            <summary>
+            Generates a URL based on the current state of the builder.
+            </summary>
+            <returns>
+            A URL based on the current state of the builder.
+            </returns></member>
+        <member name="M:Cronofy.UrlBuilder.EncodeParameter(System.String)">
+            <summary>
+            Encodes the parameter.
+            </summary>
+            <param name="parameter">
+            The parameter to encode.
+            </param>
+            <returns>
+            The parameter in an encoded form.
+            </returns></member>
+        <member name="T:Cronofy.Preconditions">
+            <summary>
+            Collection of precondition methods for code contract enforcement.
+            </summary></member>
+        <member name="M:Cronofy.Preconditions.True(System.Boolean,System.String)">
+            <summary>
+            Ensures that <paramref name="value" /> is <c>true</c>.
+            </summary>
+            <param name="value">
+            The value to check, must be true.
+            </param>
+            <param name="message">
+            The message to use for the exception raised if
+            <paramref name="value" /> is <c>false</c>.
+            </param>
+            <exception cref="T:System.ArgumentException">
+            Thrown if <paramref name="value" /> is <c>false</c>.
+            </exception></member>
+        <member name="M:Cronofy.Preconditions.NotBlank(System.String,System.String)">
+            <summary>
+            Ensures that <paramref name="value" /> is not blank.
+            </summary>
+            <param name="name">
+            The name of the parameter being checked, used to provide a more
+            meaningful exception message.
+            </param>
+            <param name="value">
+            The value to check, must not be blank.
+            </param>
+            <exception cref="T:System.ArgumentException">
+            Thrown if <paramref name="value" /> is blank.
+            </exception>
+            <remarks>
+            A <see cref="T:System.String" /> is considered blank if it is <c>null</c> or
+            contains no non-whitespace characters.
+            </remarks></member>
+        <member name="M:Cronofy.Preconditions.NotEmpty(System.String,System.String[])">
+            <summary>
+            Ensures that <paramref name="value" /> is not empty.
+            </summary>
+            <param name="name">
+            The name of the parameter being checked, used to provide a more
+            meaningful exception message.
+            </param>
+            <param name="value">
+            The value to check, must not be empty.
+            </param>
+            <exception cref="T:System.ArgumentException">
+            Thrown if <paramref name="value" /> is empty.
+            </exception>
+            <remarks>
+            An array is considered empty if it is <c>null</c> or contains no
+            values.
+            </remarks></member>
+        <member name="M:Cronofy.Preconditions.NotEmpty(System.String,System.String)">
+            <summary>
+            Ensures that <paramref name="value" /> is not empty.
+            </summary>
+            <param name="name">
+            The name of the parameter being checked, used to provide a more
+            meaningful exception message.
+            </param>
+            <param name="value">
+            The value to check, must not be empty.
+            </param>
+            <exception cref="T:System.ArgumentException">
+            Thrown if <paramref name="value" /> is empty.
+            </exception>
+            <remarks>
+            A <see cref="T:System.String" /> is considered empty if it is <c>null</c> or
+            contains characters.
+            </remarks></member>
+        <member name="M:Cronofy.Preconditions.NotNull(System.String,System.String)">
+            <summary>
+            Ensures that <paramref name="value" /> is not <c>null</c>.
+            </summary>
+            <param name="name">
+            The name of the parameter being checked, used to provide a more
+            meaningful exception message.
+            </param>
+            <param name="value">
+            The value to check, must not be <c>null</c>.
+            </param>
+            <exception cref="T:System.ArgumentException">
+            Thrown if <paramref name="value" /> is <c>null</c>.
+            </exception></member>
+        <member name="M:Cronofy.Preconditions.NotNull(System.String,System.Object)">
+            <summary>
+            Ensures that <paramref name="value" /> is not <c>null</c>.
+            </summary>
+            <param name="name">
+            The name of the parameter being checked, used to provide a more
+            meaningful exception message.
+            </param>
+            <param name="value">
+            The value to check, must not be <c>null</c>.
+            </param>
+            <exception cref="T:System.ArgumentException">
+            Thrown if <paramref name="value" /> is <c>null</c>.
+            </exception></member>
+        <member name="M:Cronofy.Preconditions.NotNegative(System.String,System.Int32)">
+            <summary>
+            Ensures that <paramref name="value" /> is not negative.
+            </summary>
+            <param name="name">
+            The name of the parameter being checked, used to provide a more
+            meaningful exception message.
+            </param>
+            <param name="value">
+            The value to check, must not be negative.
+            </param>
+            <exception cref="T:System.ArgumentException">
+            Thrown if <paramref name="value" /> is negative.
+            </exception></member>
+        <member name="T:Cronofy.OAuthToken">
+            <summary>
+            Class representing the details of an OAuth token.
+            </summary></member>
+        <member name="M:Cronofy.OAuthToken.#ctor(System.String,System.String,System.Int32,System.String[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:Cronofy.OAuthToken" />
+            class.
+            </summary>
+            <param name="accessToken">
+            The access token for the OAuth authorization, must not be empty.
+            </param>
+            <param name="refreshToken">
+            The refresh token for the OAuth authorization, must not be empty.
+            </param>
+            <param name="expiresIn">
+            The number of seconds until the <paramref name="accessToken" />
+            expires, must not be negative.
+            </param>
+            <param name="scope">
+            The scope of the OAuth authorization, must not be null.
+            </param></member>
+        <member name="P:Cronofy.OAuthToken.AccessToken">
+            <summary>
+            Gets the access token for the OAuth authorization.
+            </summary>
+            <value>
+            The access token for the OAuth authorization.
+            </value></member>
+        <member name="P:Cronofy.OAuthToken.RefreshToken">
+            <summary>
+            Gets the refresh token for the OAuth authorization.
+            </summary>
+            <value>
+            The refresh token for the OAuth authorization.
+            </value></member>
+        <member name="P:Cronofy.OAuthToken.ExpiresIn">
+            <summary>
+            Gets the number of seconds until the <see cref="P:Cronofy.OAuthToken.AccessToken" />
+            expires.
+            </summary>
+            <value>
+            The number of seconds until the <see cref="P:Cronofy.OAuthToken.AccessToken" /> expires.
+            </value></member>
+        <member name="P:Cronofy.OAuthToken.Scope">
+            <summary>
+            Gets the scope of the OAuth authorization.
+            </summary>
+            <value>
+            The scope of the OAuth authorization.
+            </value></member>
+        <member name="M:Cronofy.OAuthToken.GetHashCode">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.OAuthToken.Equals(System.Object)">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.OAuthToken.Equals(Cronofy.OAuthToken)">
+            <summary>
+            Determines whether the specified <see cref="T:Cronofy.OAuthToken" /> is
+            equal to the current <see cref="T:Cronofy.OAuthToken" />.
+            </summary>
+            <param name="other">
+            The <see cref="T:Cronofy.OAuthToken" /> to compare with the current
+            <see cref="T:Cronofy.OAuthToken" />.
+            </param>
+            <returns>
+            <c>true</c> if the specified <see cref="T:Cronofy.OAuthToken" /> is
+            equal to the current <see cref="T:Cronofy.OAuthToken" />; otherwise,
+            <c>false</c>.
+            </returns></member>
+        <member name="T:Cronofy.IHttpClient">
+            <summary>
+            Interface for a HTTP client.
+            </summary></member>
+        <member name="M:Cronofy.IHttpClient.GetResponse(Cronofy.HttpRequest)">
+            <summary>
+            Gets the response to the given request.
+            </summary>
+            <param name="request">
+            The request to make, must not be <c>null</c>.
+            </param>
+            <returns>
+            The response to the request.
+            </returns>
+            <exception cref="T:System.ArgumentException">
+            Thrown if <paramref name="request" /> is <c>null</c>.
+            </exception>
+            <remarks>
+            TODO Document request-based exceptions.
+            </remarks></member>
+        <member name="T:Cronofy.ConcreteHttpClient">
+            <summary>
+            Concrete implementation of the <see cref="T:Cronofy.IHttpClient" /> interface that
+            utilizes <see cref="T:System.Net.HttpWebRequest" />.
+            </summary></member>
+        <member name="F:Cronofy.ConcreteHttpClient.UserAgentString">
+            <summary>
+            The user agent string to use for all requests.
+            </summary></member>
+        <member name="F:Cronofy.ConcreteHttpClient.RestrictedHeaders">
+            <summary>
+            A collection of headers that cannot be assigned in a dictionary-like
+            manner, and the corresponding actions to use to set them instead.
+            </summary></member>
+        <member name="M:Cronofy.ConcreteHttpClient.#ctor">
+            <summary>
+            Initializes static members of the
+            <see cref="T:Cronofy.ConcreteHttpClient" /> class.
+            </summary></member>
+        <member name="M:Cronofy.ConcreteHttpClient.GetResponse(Cronofy.HttpRequest)">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.ConcreteHttpClient.MapHeaders(Cronofy.HttpRequest,System.Net.HttpWebRequest)">
+            <summary>
+            Maps the headers onto the given <see cref="T:System.Net.HttpWebRequest" />.
+            </summary>
+            <param name="request">
+            The request being mapped from.
+            </param>
+            <param name="httpRequest">
+            The request being mapped to.
+            </param></member>
+        <member name="M:Cronofy.ConcreteHttpClient.WriteRequestBody(Cronofy.HttpRequest,System.Net.HttpWebRequest)">
+            <summary>
+            Writes the request body to the given <see cref="T:System.Net.HttpWebRequest" />.
+            </summary>
+            <param name="request">
+            The request containing the details of the body to be written.
+            </param>
+            <param name="httpRequest">
+            The request to write the request to.
+            </param></member>
+        <member name="M:Cronofy.ConcreteHttpClient.GetResponse(System.Net.HttpWebRequest)">
+            <summary>
+            Gets the response to the fully populated request.
+            </summary>
+            <param name="httpRequest">
+            The request to invoke.
+            </param>
+            <returns>
+            The response to the request.
+            </returns></member>
+        <member name="M:Cronofy.ConcreteHttpClient.GetAnyResponse(System.Net.HttpWebRequest)">
+            <summary>
+            Gets any valid response instead of throwing an exception depending
+            on the status code.
+            </summary>
+            <param name="httpRequest">
+            The request to make.
+            </param>
+            <returns>
+            The response to the request.
+            </returns></member>
+        <member name="M:Cronofy.ConcreteHttpClient.GetResponseBody(System.Net.WebResponse)">
+            <summary>
+            Gets the body of the response.
+            </summary>
+            <param name="response">
+            The response to extract the body from.
+            </param>
+            <returns>
+            The response body.
+            </returns></member>
+        <member name="T:Cronofy.ConcreteHttpClient.Header">
+            <summary>
+            Class to help manage the assignment of restricted headers.
+            </summary></member>
+        <member name="T:Cronofy.ConcreteHttpClient.Header.Assignment">
+            <summary>
+            Delegate for the assignment of restricted headers.
+            </summary>
+            <param name="request">
+            The target of the header assignment.
+            </param>
+            <param name="value">
+            The value to assign the header to.
+            </param></member>
+        <member name="M:Cronofy.ConcreteHttpClient.Header.SetContentType(System.Net.HttpWebRequest,System.String)">
+            <summary>
+            Sets the content type of the request.
+            </summary>
+            <param name="request">
+            The request to set the content type of.
+            </param>
+            <param name="value">
+            The value to set as the content type of the request.
+            </param></member>
+        <member name="T:Cronofy.HttpRequest">
+            <summary>
+            Class representing a HTTP request.
+            </summary></member>
+        <member name="F:Cronofy.HttpRequest.DefaultSerializerSettings">
+            <summary>
+            The default JSON serializer settings.
+            </summary></member>
+        <member name="M:Cronofy.HttpRequest.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Cronofy.HttpRequest" />
+            class.
+            </summary></member>
+        <member name="P:Cronofy.HttpRequest.Method">
+            <summary>
+            Gets or sets the HTTP method of the request.
+            </summary>
+            <value>
+            The HTTP method of the request.
+            </value></member>
+        <member name="P:Cronofy.HttpRequest.Url">
+            <summary>
+            Gets or sets the URL of the request.
+            </summary>
+            <value>
+            The URL of the request.
+            </value></member>
+        <member name="P:Cronofy.HttpRequest.Headers">
+            <summary>
+            Gets or sets the headers of the request.
+            </summary>
+            <value>
+            The headers of the request.
+            </value></member>
+        <member name="P:Cronofy.HttpRequest.QueryString">
+            <summary>
+            Gets or sets the query string parameters of the request.
+            </summary>
+            <value>
+            The query string parameters of the request.
+            </value></member>
+        <member name="P:Cronofy.HttpRequest.Body">
+            <summary>
+            Gets or sets the body of the request.
+            </summary>
+            <value>
+            The body of the request.
+            </value></member>
+        <member name="M:Cronofy.HttpRequest.AddOAuthAuthorization(System.String)">
+            <summary>
+            Adds an OAuth authorization header to the request.
+            </summary>
+            <param name="accessToken">
+            The OAuth access token to use for authorization, must not be empty.
+            </param>
+            <exception cref="T:System.ArgumentException">
+            Thrown if <paramref name="accessToken" /> is empty.
+            </exception></member>
+        <member name="M:Cronofy.HttpRequest.SetJsonBody(System.Object)">
+            <summary>
+            Sets the body of the request using a JSON-serialized version of the
+            passed object.
+            </summary>
+            <param name="bodyObject">
+            The object to serialize to JSON and assign as the request body, must
+            not be <c>null</c>.
+            </param>
+            <remarks>
+            Also sets the <c>Content-Type</c> header to indicate the request has
+            a JSON-encoded body.
+            </remarks></member>
+        <member name="T:Cronofy.HttpRequest.QueryStringCollection">
+            <summary>
+            Type conversion aware dictionary for building query strings.
+            </summary></member>
+        <member name="F:Cronofy.HttpRequest.QueryStringCollection.pairs">
+            <summary>
+            Data structure to hold the pairs within.
+            </summary></member>
+        <member name="M:Cronofy.HttpRequest.QueryStringCollection.Add(System.String,System.Nullable{System.Boolean})">
+            <summary>
+            Add the specified key and value if one is present.
+            </summary>
+            <param name="key">
+            The key to add the value under, must not be null.
+            </param>
+            <param name="nullable">
+            The value to add, if one is present.
+            </param>
+            <exception cref="T:System.ArgumentException">
+            Thrown if <paramref name="key" /> is null.
+            </exception></member>
+        <member name="M:Cronofy.HttpRequest.QueryStringCollection.Add(System.String,System.Boolean)">
+            <summary>
+            Add the specified key and value.
+            </summary>
+            <param name="key">
+            The key to add the value under, must not be null.
+            </param>
+            <param name="value">
+            The value to add.
+            </param>
+            <exception cref="T:System.ArgumentException">
+            Thrown if <paramref name="key" /> is null.
+            </exception></member>
+        <member name="M:Cronofy.HttpRequest.QueryStringCollection.Add(System.String,System.Nullable{System.DateTime})">
+            <summary>
+            Add the specified key and value if one is present.
+            </summary>
+            <param name="key">
+            The key to add the value under, must not be null.
+            </param>
+            <param name="nullable">
+            The value to add, if one is present.
+            </param>
+            <exception cref="T:System.ArgumentException">
+            Thrown if <paramref name="key" /> is null.
+            </exception></member>
+        <member name="M:Cronofy.HttpRequest.QueryStringCollection.Add(System.String,System.DateTime)">
+            <summary>
+            Add the specified key and value.
+            </summary>
+            <param name="key">
+            The key to add the value under, must not be null.
+            </param>
+            <param name="value">
+            The value to add.
+            </param>
+            <exception cref="T:System.ArgumentException">
+            Thrown if <paramref name="key" /> is null.
+            </exception></member>
+        <member name="M:Cronofy.HttpRequest.QueryStringCollection.Add(System.String,System.Nullable{Cronofy.Date})">
+            <summary>
+            Add the specified key and value if one is present.
+            </summary>
+            <param name="key">
+            The key to add the value under, must not be null.
+            </param>
+            <param name="nullable">
+            The value to add, if one is present.
+            </param>
+            <exception cref="T:System.ArgumentException">
+            Thrown if <paramref name="key" /> is null.
+            </exception></member>
+        <member name="M:Cronofy.HttpRequest.QueryStringCollection.Add(System.String,Cronofy.Date)">
+            <summary>
+            Add the specified key and value.
+            </summary>
+            <param name="key">
+            The key to add the value under, must not be null.
+            </param>
+            <param name="value">
+            The value to add.
+            </param>
+            <exception cref="T:System.ArgumentException">
+            Thrown if <paramref name="key" /> is null.
+            </exception></member>
+        <member name="M:Cronofy.HttpRequest.QueryStringCollection.Add(System.String,System.String)">
+            <summary>
+            Add the specified key and value.
+            </summary>
+            <param name="key">
+            The key of the value, must not be null.
+            </param>
+            <param name="value">
+            The value, must not be null.
+            </param>
+            <exception cref="T:System.ArgumentException">
+            Thrown if <paramref name="key" /> or <paramref name="value" /> are
+            null.
+            </exception></member>
+        <member name="M:Cronofy.HttpRequest.QueryStringCollection.Add(System.String,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Add the specified key and value.
+            </summary>
+            <param name="key">
+            The key of the value, must not be null.
+            </param>
+            <param name="values">
+            The values, if not null must not contain null values.
+            </param>
+            <exception cref="T:System.ArgumentException">
+            Thrown if <paramref name="key" /> is null or
+            <paramref name="values" /> is not null but contains null values.
+            </exception></member>
+        <member name="M:Cronofy.HttpRequest.QueryStringCollection.GetEnumerator">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.HttpRequest.QueryStringCollection.System#Collections#IEnumerable#GetEnumerator">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.HttpRequest.QueryStringCollection.GetPairs">
+            <summary>
+            Gets the pairs.
+            </summary>
+            <returns>
+            The pairs.
+            </returns></member>
+        <member name="T:Cronofy.HttpResponse">
+            <summary>
+            Class representing a HTTP response.
+            </summary></member>
+        <member name="P:Cronofy.HttpResponse.Code">
+            <summary>
+            Gets or sets the response code.
+            </summary>
+            <value>
+            The response code.
+            </value></member>
+        <member name="P:Cronofy.HttpResponse.Headers">
+            <summary>
+            Gets or sets the headers of the response.
+            </summary>
+            <value>
+            The headers of the response.
+            </value></member>
+        <member name="P:Cronofy.HttpResponse.Body">
+            <summary>
+            Gets or sets the body of the response.
+            </summary>
+            <value>
+            The body of the response.
+            </value></member>
+        <member name="T:Cronofy.Responses.OAuthTokenResponse">
+            <summary>
+            Class for the deserialization of an OAuth token response.
+            </summary></member>
+        <member name="P:Cronofy.Responses.OAuthTokenResponse.AccessToken">
+            <summary>
+            Gets or sets the OAuth access token.
+            </summary>
+            <value>
+            The OAuth access token.
+            </value></member>
+        <member name="P:Cronofy.Responses.OAuthTokenResponse.RefreshToken">
+            <summary>
+            Gets or sets the OAuth refresh token.
+            </summary>
+            <value>
+            The OAuth refresh token.
+            </value></member>
+        <member name="P:Cronofy.Responses.OAuthTokenResponse.ExpiresIn">
+            <summary>
+            Gets or sets the number of seconds until the
+            <see cref="P:Cronofy.Responses.OAuthTokenResponse.AccessToken" /> expires.
+            </summary>
+            <value>
+            The number of seconds until the <see cref="P:Cronofy.Responses.OAuthTokenResponse.AccessToken" /> expires.
+            </value></member>
+        <member name="P:Cronofy.Responses.OAuthTokenResponse.Scope">
+            <summary>
+            Gets or sets the granted scope of the <see cref="P:Cronofy.Responses.OAuthTokenResponse.AccessToken" />.
+            </summary>
+            <value>
+            The granted scope of the <see cref="P:Cronofy.Responses.OAuthTokenResponse.AccessToken" />.
+            </value></member>
+        <member name="M:Cronofy.Responses.OAuthTokenResponse.GetScopeArray">
+            <summary>
+            Gets the granted scope of the <see cref="P:Cronofy.Responses.OAuthTokenResponse.AccessToken" /> as an array
+            of <see cref="T:System.String" />s.
+            </summary>
+            <returns>
+            The granted scope of the <see cref="P:Cronofy.Responses.OAuthTokenResponse.AccessToken" /> as an array of
+            <see cref="T:System.String" />s.
+            </returns></member>
+        <member name="M:Cronofy.Responses.OAuthTokenResponse.ToToken">
+            <summary>
+            Converts the response into a <see cref="T:Cronofy.OAuthToken" />.
+            </summary>
+            <returns>
+            A <see cref="T:Cronofy.OAuthToken" /> based upon the response.
+            </returns></member>
+        <member name="T:Cronofy.Requests.OAuthTokenRequest">
+            <summary>
+            Class for the serialization of an OAuth token request.
+            </summary></member>
+        <member name="P:Cronofy.Requests.OAuthTokenRequest.ClientId">
+            <summary>
+            Gets or sets the OAuth application's client identifier.
+            </summary>
+            <value>
+            The OAuth application's client identifier.
+            </value></member>
+        <member name="P:Cronofy.Requests.OAuthTokenRequest.ClientSecret">
+            <summary>
+            Gets or sets the OAuth application's client secret.
+            </summary>
+            <value>
+            The OAuth application's client secret.
+            </value></member>
+        <member name="P:Cronofy.Requests.OAuthTokenRequest.GrantType">
+            <summary>
+            Gets or sets the grant type of the OAuth token request.
+            </summary>
+            <value>
+            The grant type of the OAuth token request.
+            </value></member>
+        <member name="P:Cronofy.Requests.OAuthTokenRequest.Code">
+            <summary>
+            Gets or sets the code retrieved from a successful OAuth
+            authorization request.
+            </summary>
+            <value>
+            The code retrieved from a successful OAuth authorization request.
+            </value></member>
+        <member name="P:Cronofy.Requests.OAuthTokenRequest.RedirectUri">
+            <summary>
+            Gets or sets the redirect URI passed to the successful OAuth
+            authorization request.
+            </summary>
+            <value>
+            The redirect URI passed to the successful OAuth authorization request.
+            </value></member>
+        <member name="T:Cronofy.CronofyAccountClient">
+            <summary>
+            Class for a Cronofy client that interacts with an account's calendars
+            and events.
+            </summary></member>
+        <member name="F:Cronofy.CronofyAccountClient.AccountUrl">
+            <summary>
+            The URL of the account endpoint.
+            </summary></member>
+        <member name="F:Cronofy.CronofyAccountClient.ProfilesUrl">
+            <summary>
+            The URL of the profiles endpoint.
+            </summary></member>
+        <member name="F:Cronofy.CronofyAccountClient.CalendarsUrl">
+            <summary>
+            The URL of the list calendars endpoint.
+            </summary></member>
+        <member name="F:Cronofy.CronofyAccountClient.FreeBusyUrl">
+            <summary>
+            The URL of the free-busy endpoint.
+            </summary></member>
+        <member name="F:Cronofy.CronofyAccountClient.ReadEventsUrl">
+            <summary>
+            The URL of the read events endpoint.
+            </summary></member>
+        <member name="F:Cronofy.CronofyAccountClient.ManagedEventUrlFormat">
+            <summary>
+            The URL format for the managed event endpoint.
+            </summary></member>
+        <member name="F:Cronofy.CronofyAccountClient.ChannelsUrl">
+            <summary>
+            The URL of the channels endpoint.
+            </summary></member>
+        <member name="F:Cronofy.CronofyAccountClient.ChannelUrlFormat">
+            <summary>
+            The URL format for the channel endpoint.
+            </summary></member>
+        <member name="F:Cronofy.CronofyAccountClient.accessToken">
+            <summary>
+            The access token for the OAuth authorization for the account.
+            </summary></member>
+        <member name="M:Cronofy.CronofyAccountClient.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the
+            <see cref="T:Cronofy.CronofyAccountClient" /> class.
+            </summary>
+            <param name="accessToken">
+            The access token for the OAuth authorization for the account, must
+            not be empty.
+            </param>
+            <exception cref="T:System.ArgumentException">
+            Thrown if <paramref name="accessToken" /> is null or empty.
+            </exception></member>
+        <member name="P:Cronofy.CronofyAccountClient.HttpClient">
+            <summary>
+            Gets or sets the HTTP client.
+            </summary>
+            <value>
+            The HTTP client.
+            </value>
+            <remarks>
+            Intend for test purposes only.
+            </remarks></member>
+        <member name="M:Cronofy.CronofyAccountClient.GetAccount">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.CronofyAccountClient.GetProfiles">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.CronofyAccountClient.GetCalendars">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.CronofyAccountClient.CreateCalendar(System.String,System.String)">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.CronofyAccountClient.GetEvents">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.CronofyAccountClient.GetEvents(Cronofy.IBuilder{Cronofy.Requests.GetEventsRequest})">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.CronofyAccountClient.GetEvents(Cronofy.Requests.GetEventsRequest)">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.CronofyAccountClient.GetFreeBusy">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.CronofyAccountClient.GetFreeBusy(Cronofy.IBuilder{Cronofy.Requests.GetFreeBusyRequest})">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.CronofyAccountClient.GetFreeBusy(Cronofy.Requests.GetFreeBusyRequest)">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.CronofyAccountClient.UpsertEvent(System.String,Cronofy.IBuilder{Cronofy.Requests.UpsertEventRequest})">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.CronofyAccountClient.UpsertEvent(System.String,Cronofy.Requests.UpsertEventRequest)">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.CronofyAccountClient.DeleteEvent(System.String,System.String)">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.CronofyAccountClient.CreateChannel(System.String)">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.CronofyAccountClient.CreateChannel(Cronofy.IBuilder{Cronofy.Requests.CreateChannelRequest})">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.CronofyAccountClient.CreateChannel(Cronofy.Requests.CreateChannelRequest)">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.CronofyAccountClient.GetChannels">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.CronofyAccountClient.CloseChannel(System.String)">
+            <inheritdoc /></member>
+        <member name="T:Cronofy.CronofyAccountClient.PagedResultsIterator`2">
+            <summary>
+            Iterator for a paged events response.
+            </summary>
+            <typeparam name="TResponse">
+            The type of response returned by the paged result set.
+            </typeparam>
+            <typeparam name="TResult">
+            The type of the items within the paged result set.
+            </typeparam></member>
+        <member name="F:Cronofy.CronofyAccountClient.PagedResultsIterator`2.httpClient">
+            <summary>
+            The HTTP client to perform requests with.
+            </summary></member>
+        <member name="F:Cronofy.CronofyAccountClient.PagedResultsIterator`2.accessToken">
+            <summary>
+            The access token for the OAuth authorization for the account.
+            </summary></member>
+        <member name="F:Cronofy.CronofyAccountClient.PagedResultsIterator`2.firstPage">
+            <summary>
+            The first page of the events response.
+            </summary></member>
+        <member name="M:Cronofy.CronofyAccountClient.PagedResultsIterator`2.#ctor(Cronofy.IHttpClient,System.String,Cronofy.HttpRequest)">
+            <summary>
+            Initializes a new instance of the
+            <see cref="T:Cronofy.CronofyAccountClient.PagedResultsIterator`2" />
+            class.
+            </summary>
+            <param name="httpClient">
+            The HTTP client to use for requests, must not be null.
+            </param>
+            <param name="accessToken">
+            The access token for the OAuth authorization for the account,
+            must not be empty.
+            </param>
+            <param name="firstRequest">
+            The request for the first page of results, must not be null.
+            </param>
+            <exception cref="T:System.ArgumentException">
+            Thrown if <paramref name="httpClient" /> or
+            <paramref name="firstRequest" /> are null, of if
+            <paramref name="accessToken" /> is empty.
+            </exception></member>
+        <member name="M:Cronofy.CronofyAccountClient.PagedResultsIterator`2.GetEnumerator">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.CronofyAccountClient.PagedResultsIterator`2.System#Collections#IEnumerable#GetEnumerator">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.CronofyAccountClient.PagedResultsIterator`2.GetResults">
+            <summary>
+            Gets all the events from the result set.
+            </summary>
+            <returns>
+            All the events from the result set.
+            </returns></member>
+        <member name="M:Cronofy.CronofyAccountClient.PagedResultsIterator`2.GetPages">
+            <summary>
+            Gets all the pages from the result set.
+            </summary>
+            <returns>
+            All the pages from the result set.
+            </returns></member>
+        <member name="M:Cronofy.CronofyAccountClient.PagedResultsIterator`2.GetNextPageResponse(Cronofy.Responses.IPagedResultsResponse{`1})">
+            <summary>
+            Gets the next page response.
+            </summary>
+            <param name="currentPage">
+            The response for the current page.
+            </param>
+            <returns>
+            The next page response.
+            </returns></member>
+        <member name="T:Cronofy.Event">
+            <summary>
+            Class representing an event.
+            </summary></member>
+        <member name="P:Cronofy.Event.CalendarId">
+            <summary>
+            Gets or sets the ID of the calendar the event is within.
+            </summary>
+            <value>
+            The ID of the calendar the event is within.
+            </value></member>
+        <member name="P:Cronofy.Event.EventId">
+            <summary>
+            Gets or sets the OAuth application's ID for the event, if it is
+            an event the OAuth application is managing.
+            </summary>
+            <value>
+            The OAuth application's ID for the event, <c>null</c> if the
+            OAuth application is not managing this event.
+            </value></member>
+        <member name="P:Cronofy.Event.EventUid">
+            <summary>
+            Gets or sets the UID of the event.
+            </summary>
+            <value>
+            The UID of the event.
+            </value></member>
+        <member name="P:Cronofy.Event.Summary">
+            <summary>
+            Gets or sets the event's summary.
+            </summary>
+            <value>
+            The event's summary.
+            </value></member>
+        <member name="P:Cronofy.Event.Description">
+            <summary>
+            Gets or sets the event's description.
+            </summary>
+            <value>
+            The event's description.
+            </value></member>
+        <member name="P:Cronofy.Event.Start">
+            <summary>
+            Gets or sets the start time of the event.
+            </summary>
+            <value>
+            The start time of the event.
+            </value></member>
+        <member name="P:Cronofy.Event.End">
+            <summary>
+            Gets or sets the end time of the event.
+            </summary>
+            <value>
+            The end time of the event.
+            </value></member>
+        <member name="P:Cronofy.Event.Location">
+            <summary>
+            Gets or sets the location of the event.
+            </summary>
+            <value>
+            The location of the event.
+            </value></member>
+        <member name="P:Cronofy.Event.Deleted">
+            <summary>
+            Gets or sets a value indicating whether this event has been
+            deleted.
+            </summary>
+            <value>
+            <c>true</c> if the event has been deleted; otherwise,
+            <c>false</c>.
+            </value></member>
+        <member name="P:Cronofy.Event.ParticipationStatus">
+            <summary>
+            Gets or sets the account's participation status.
+            </summary>
+            <value>
+            The account's participation status.
+            </value>
+            <remarks>
+            See <see cref="T:Cronofy.AttendeeStatus" /> for potential values.
+            </remarks></member>
+        <member name="P:Cronofy.Event.Transparency">
+            <summary>
+            Gets or sets the transparency of the event.
+            </summary>
+            <value>
+            The transparency of the event.
+            </value>
+            <remarks>
+            See <see cref="T:Cronofy.Transparency" /> for potential values.
+            </remarks></member>
+        <member name="P:Cronofy.Event.EventStatus">
+            <summary>
+            Gets or sets the status of the event.
+            </summary>
+            <value>
+            The status of the event.
+            </value>
+            <remarks>
+            See <see cref="T:Cronofy.EventStatus" /> for potential values.
+            </remarks></member>
+        <member name="P:Cronofy.Event.Categories">
+            <summary>
+            Gets or sets the categories assigned to the event.
+            </summary>
+            <value>
+            The categories assigned to the event.
+            </value></member>
+        <member name="P:Cronofy.Event.Created">
+            <summary>
+            Gets or sets the time the event was created.
+            </summary>
+            <value>
+            The time the event was created.
+            </value></member>
+        <member name="P:Cronofy.Event.Updated">
+            <summary>
+            Gets or sets the time the event was last updated.
+            </summary>
+            <value>
+            The time the event was last updated.
+            </value></member>
+        <member name="P:Cronofy.Event.Attendees">
+            <summary>
+            Gets or sets the event's attendees.
+            </summary>
+            <value>
+            The event's attendees.
+            </value></member>
+        <member name="M:Cronofy.Event.GetHashCode">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.Event.Equals(System.Object)">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.Event.Equals(Cronofy.Event)">
+            <summary>
+            Determines whether the specified <see cref="T:Cronofy.Event" /> is
+            equal to the current <see cref="T:Cronofy.Event" />.
+            </summary>
+            <param name="other">
+            The <see cref="T:Cronofy.Event" /> to compare with the current
+            <see cref="T:Cronofy.Event" />.
+            </param>
+            <returns>
+            <c>true</c> if the specified <see cref="T:Cronofy.Event" /> is equal to
+            the current <see cref="T:Cronofy.Event" />; otherwise, <c>false</c>.
+            </returns></member>
+        <member name="M:Cronofy.Event.ToString">
+            <inheritdoc /></member>
+        <member name="T:Cronofy.Responses.ReadEventsResponse">
+            <summary>
+            Class for the deserialization of a read events response.
+            </summary></member>
+        <member name="P:Cronofy.Responses.ReadEventsResponse.Events">
+            <summary>
+            Gets or sets the array of events.
+            </summary>
+            <value>
+            The array of events.
+            </value></member>
+        <member name="P:Cronofy.Responses.ReadEventsResponse.Pages">
+            <summary>
+            Gets or sets the paging information.
+            </summary>
+            <value>
+            The paging information.
+            </value></member>
+        <member name="M:Cronofy.Responses.ReadEventsResponse.GetResults">
+            <inheritdoc /></member>
+        <member name="T:Cronofy.Responses.ReadEventsResponse.EventResponse">
+            <summary>
+            Class for the deserialization of an event.
+            </summary></member>
+        <member name="P:Cronofy.Responses.ReadEventsResponse.EventResponse.CalendarId">
+            <summary>
+            Gets or sets the ID of the calendar the event is within.
+            </summary>
+            <value>
+            The ID of the calendar the event is within.
+            </value></member>
+        <member name="P:Cronofy.Responses.ReadEventsResponse.EventResponse.EventId">
+            <summary>
+            Gets or sets the OAuth application's ID for the event, if it is
+            an event the OAuth application is managing.
+            </summary>
+            <value>
+            The OAuth application's ID for the event, <c>null</c> if the
+            OAuth application is not managing this event.
+            </value></member>
+        <member name="P:Cronofy.Responses.ReadEventsResponse.EventResponse.EventUid">
+            <summary>
+            Gets or sets the UID of the event.
+            </summary>
+            <value>
+            The UID of the event.
+            </value></member>
+        <member name="P:Cronofy.Responses.ReadEventsResponse.EventResponse.Summary">
+            <summary>
+            Gets or sets the event's summary.
+            </summary>
+            <value>
+            The event's summary.
+            </value></member>
+        <member name="P:Cronofy.Responses.ReadEventsResponse.EventResponse.Description">
+            <summary>
+            Gets or sets the event's description.
+            </summary>
+            <value>
+            The event's description.
+            </value></member>
+        <member name="P:Cronofy.Responses.ReadEventsResponse.EventResponse.Start">
+            <summary>
+            Gets or sets the start time of the event.
+            </summary>
+            <value>
+            The start time of the event.
+            </value></member>
+        <member name="P:Cronofy.Responses.ReadEventsResponse.EventResponse.End">
+            <summary>
+            Gets or sets the end time of the event.
+            </summary>
+            <value>
+            The end time of the event.
+            </value></member>
+        <member name="P:Cronofy.Responses.ReadEventsResponse.EventResponse.Location">
+            <summary>
+            Gets or sets the location of the event.
+            </summary>
+            <value>
+            The location of the event.
+            </value></member>
+        <member name="P:Cronofy.Responses.ReadEventsResponse.EventResponse.Deleted">
+            <summary>
+            Gets or sets a value indicating whether this event has been
+            deleted.
+            </summary>
+            <value>
+            <c>true</c> if the event has been deleted; otherwise,
+            <c>false</c>.
+            </value></member>
+        <member name="P:Cronofy.Responses.ReadEventsResponse.EventResponse.ParticipationStatus">
+            <summary>
+            Gets or sets the account's participation status.
+            </summary>
+            <value>
+            The account's participation status.
+            </value></member>
+        <member name="P:Cronofy.Responses.ReadEventsResponse.EventResponse.Transparency">
+            <summary>
+            Gets or sets the transparency of the event.
+            </summary>
+            <value>
+            The transparency of the event.
+            </value></member>
+        <member name="P:Cronofy.Responses.ReadEventsResponse.EventResponse.EventStatus">
+            <summary>
+            Gets or sets the status of the event.
+            </summary>
+            <value>
+            The status of the event.
+            </value></member>
+        <member name="P:Cronofy.Responses.ReadEventsResponse.EventResponse.Categories">
+            <summary>
+            Gets or sets the categories assigned to the event.
+            </summary>
+            <value>
+            The categories assigned to the event.
+            </value></member>
+        <member name="P:Cronofy.Responses.ReadEventsResponse.EventResponse.Created">
+            <summary>
+            Gets or sets the time the event was created.
+            </summary>
+            <value>
+            The time the event was created.
+            </value></member>
+        <member name="P:Cronofy.Responses.ReadEventsResponse.EventResponse.Updated">
+            <summary>
+            Gets or sets the time the event was last updated.
+            </summary>
+            <value>
+            The time the event was last updated.
+            </value></member>
+        <member name="P:Cronofy.Responses.ReadEventsResponse.EventResponse.Attendees">
+            <summary>
+            Gets or sets the event's attendees.
+            </summary>
+            <value>
+            The event's attendees.
+            </value></member>
+        <member name="M:Cronofy.Responses.ReadEventsResponse.EventResponse.ToEvent">
+            <summary>
+            Converts the response into a <see cref="T:Cronofy.Event" />.
+            </summary>
+            <returns>
+            A <see cref="T:Cronofy.Event" /> based upon the response.
+            </returns></member>
+        <member name="T:Cronofy.Responses.ReadEventsResponse.EventResponse.ResponseLocation">
+            <summary>
+            Class for the deserialization of the location for a read event
+            response.
+            </summary></member>
+        <member name="P:Cronofy.Responses.ReadEventsResponse.EventResponse.ResponseLocation.Description">
+            <summary>
+            Gets or sets the description of the location.
+            </summary>
+            <value>
+            The description of the location.
+            </value></member>
+        <member name="M:Cronofy.Responses.ReadEventsResponse.EventResponse.ResponseLocation.ToLocation">
+            <summary>
+            Converts the response into a <see cref="T:Cronofy.Location" />.
+            </summary>
+            <returns>
+            A <see cref="T:Cronofy.Location" /> based upon the response.
+            </returns></member>
+        <member name="T:Cronofy.Responses.ReadEventsResponse.EventResponse.AttendeeResponse">
+            <summary>
+            Class for the deserialization of an attendee for a read event
+            response.
+            </summary></member>
+        <member name="P:Cronofy.Responses.ReadEventsResponse.EventResponse.AttendeeResponse.Email">
+            <summary>
+            Gets or sets the email of the attendee.
+            </summary>
+            <value>
+            The email of the attendee.
+            </value></member>
+        <member name="P:Cronofy.Responses.ReadEventsResponse.EventResponse.AttendeeResponse.DisplayName">
+            <summary>
+            Gets or sets the display name of the attendee.
+            </summary>
+            <value>
+            The display name of the attendee.
+            </value></member>
+        <member name="P:Cronofy.Responses.ReadEventsResponse.EventResponse.AttendeeResponse.Status">
+            <summary>
+            Gets or sets the status of the attendee.
+            </summary>
+            <value>
+            The status of the attendee.
+            </value></member>
+        <member name="M:Cronofy.Responses.ReadEventsResponse.EventResponse.AttendeeResponse.ToAttendee">
+            <summary>
+            Converts the response into a <see cref="T:Cronofy.Attendee" />.
+            </summary>
+            <returns>
+            A <see cref="T:Cronofy.Attendee" /> based upon the response.
+            </returns></member>
+        <member name="T:Cronofy.Location">
+            <summary>
+            Class representing a location.
+            </summary></member>
+        <member name="P:Cronofy.Location.Description">
+            <summary>
+            Gets or sets the description of the location.
+            </summary>
+            <value>
+            The description of the location.
+            </value></member>
+        <member name="M:Cronofy.Location.GetHashCode">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.Location.Equals(System.Object)">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.Location.Equals(Cronofy.Location)">
+            <summary>
+            Determines whether the specified <see cref="T:Cronofy.Location" /> is
+            equal to the current <see cref="T:Cronofy.Location" />.
+            </summary>
+            <param name="other">
+            The <see cref="T:Cronofy.Location" /> to compare with the current
+            <see cref="T:Cronofy.Location" />.
+            </param>
+            <returns>
+            <c>true</c> if the specified <see cref="T:Cronofy.Location" /> is equal
+            to the current <see cref="T:Cronofy.Location" />; otherwise,
+            <c>false</c>.
+            </returns></member>
+        <member name="T:Cronofy.Transparency">
+            <summary>
+            Potential transparency values.
+            </summary></member>
+        <member name="F:Cronofy.Transparency.Opaque">
+            <summary>
+            The account should appear as busy for the duration of the event.
+            </summary></member>
+        <member name="F:Cronofy.Transparency.Transparent">
+            <summary>
+            The account should not appear as busy for the duration of the event.
+            </summary></member>
+        <member name="F:Cronofy.Transparency.Unknown">
+            <summary>
+            The appearance of the account for the duration of the event is not
+            known.
+            </summary></member>
+        <member name="T:Cronofy.EventStatus">
+            <summary>
+            Potential event status values.
+            </summary></member>
+        <member name="F:Cronofy.EventStatus.Cancelled">
+            <summary>
+            Status indicating the event has been cancelled.
+            </summary></member>
+        <member name="F:Cronofy.EventStatus.Confirmed">
+            <summary>
+            Status indicating the details of the event are confirmed.
+            </summary></member>
+        <member name="F:Cronofy.EventStatus.Tentative">
+            <summary>
+            Status indicating the details of the event are tentative.
+            </summary></member>
+        <member name="F:Cronofy.EventStatus.Unknown">
+            <summary>
+            Status indicating the status of the event is unknown.
+            </summary></member>
+        <member name="T:Cronofy.Date">
+            <summary>
+            Struct representing a date in time.
+            </summary></member>
+        <member name="F:Cronofy.Date.DateFormat">
+            <summary>
+            The format to parse and output dates with.
+            </summary></member>
+        <member name="F:Cronofy.Date.Epoch">
+            <summary>
+            The date which all other dates are relative to.
+            </summary></member>
+        <member name="F:Cronofy.Date.ticks">
+            <summary>
+            The number of ticks this date is from <see cref="F:Cronofy.Date.Epoch" />.
+            </summary></member>
+        <member name="M:Cronofy.Date.#ctor(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Cronofy.Date" /> struct.
+            </summary>
+            <param name="year">
+            The year of the date.
+            </param>
+            <param name="month">
+            The month of the date.
+            </param>
+            <param name="day">
+            The day of the date.
+            </param>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+            Thrown if the combination of <paramref name="year" />,
+            <paramref name="month" />, and <paramref name="day" /> do not combine
+            to represent a valid date.
+            </exception></member>
+        <member name="P:Cronofy.Date.Year">
+            <summary>
+            Gets the year of the date.
+            </summary>
+            <value>
+            The year of the date.
+            </value></member>
+        <member name="P:Cronofy.Date.Month">
+            <summary>
+            Gets the month of the date.
+            </summary>
+            <value>
+            The month of the date.
+            </value></member>
+        <member name="P:Cronofy.Date.Day">
+            <summary>
+            Gets the day of the date.
+            </summary>
+            <value>
+            The day of the date.
+            </value></member>
+        <member name="P:Cronofy.Date.DateTime">
+            <summary>
+            Gets the date represented as an instance of <see cref="T:System.DateTime" />.
+            </summary>
+            <value>
+            The date represented as an instance of <see cref="T:System.DateTime" />.
+            </value></member>
+        <member name="M:Cronofy.Date.op_Equality(Cronofy.Date,Cronofy.Date)">
+            <summary>
+            Compares two <see cref="T:Cronofy.Date" />s for equality.
+            </summary>
+            <param name="left">
+            The first value to compare.
+            </param>
+            <param name="right">
+            The second value to compare.
+            </param>
+            <returns>
+            <c>true</c> if both <see cref="T:Cronofy.Date" />s are equal; otherwise,
+            <c>false</c>.
+            </returns></member>
+        <member name="M:Cronofy.Date.op_Inequality(Cronofy.Date,Cronofy.Date)">
+            <summary>
+            Compares two <see cref="T:Cronofy.Date" />s for inequality.
+            </summary>
+            <param name="left">
+            The first value to compare.
+            </param>
+            <param name="right">
+            The second value to compare.
+            </param>
+            <returns>
+            <c>false</c> if both <see cref="T:Cronofy.Date" />s are equal; otherwise,
+            <c>true</c>.
+            </returns></member>
+        <member name="M:Cronofy.Date.GetHashCode">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.Date.Equals(System.Object)">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.Date.Equals(Cronofy.Date)">
+            <summary>
+            Determines whether the specified <see cref="T:Cronofy.Date" /> is equal
+            to the current <see cref="T:Cronofy.Date" />.
+            </summary>
+            <param name="other">
+            The <see cref="T:Cronofy.Date" /> to compare with the current
+            <see cref="T:Cronofy.Date" />.
+            </param>
+            <returns>
+            <c>true</c> if the specified <see cref="T:Cronofy.Date" /> is equal to
+            the current <see cref="T:Cronofy.Date" />; otherwise, <c>false</c>.
+            </returns></member>
+        <member name="M:Cronofy.Date.ToString">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.Date.From(System.DateTime)">
+            <summary>
+            Creates an equivalent <see cref="T:Cronofy.Date" /> for the given
+            <see cref="T:System.DateTime" />.
+            </summary>
+            <param name="value">
+            The <see cref="T:System.DateTime" /> to create an equivalent
+            <see cref="T:Cronofy.Date" /> for.
+            </param>
+            <returns>
+            A <see cref="T:Cronofy.Date" /> that is equivalent to the provided
+            <see cref="T:System.DateTime" />.
+            </returns></member>
+        <member name="M:Cronofy.Date.From(System.DateTimeOffset)">
+            <summary>
+            Creates an equivalent <see cref="T:Cronofy.Date" /> for the given
+            <see cref="T:System.DateTimeOffset" />.
+            </summary>
+            <param name="value">
+            The <see cref="T:System.DateTimeOffset" /> to create an equivalent
+            <see cref="T:Cronofy.Date" /> for.
+            </param>
+            <returns>
+            A <see cref="T:Cronofy.Date" /> that is equivalent to the provided
+            <see cref="T:System.DateTimeOffset" />.
+            </returns></member>
+        <member name="M:Cronofy.Date.Parse(System.String)">
+            <summary>
+            Creates an equivalent <see cref="T:Cronofy.Date" /> for the given
+            <see cref="T:System.String" />.
+            </summary>
+            <param name="input">
+            The value to convert into a <see cref="T:Cronofy.Date" />.
+            </param>
+            <returns>
+            A <see cref="T:Cronofy.Date" /> that is equivalent to the provided
+            <see cref="T:System.DateTimeOffset" />.
+            </returns>
+            <remarks>
+            <see cref="F:Cronofy.Date.DateFormat" /> is the expected format of the input.
+            </remarks>
+            <exception cref="T:System.FormatException">
+            Thrown if <paramref name="input" /> cannot be converted into a
+            <see cref="T:Cronofy.Date" />.
+            </exception></member>
+        <member name="M:Cronofy.Date.TryParse(System.String,Cronofy.Date@)">
+            <summary>
+            Tries to parse the given <see cref="T:System.String" /> into a
+            <see cref="T:Cronofy.Date" />.
+            </summary>
+            <param name="input">
+            The value to attempt to parse.
+            </param>
+            <param name="value">
+            The value of date when it has been parsed successfully.
+            </param>
+            <returns>
+            <c>true</c>, if <paramref name="input" /> was parsed successfully;
+            otherwise <c>false</c>.
+            </returns></member>
+        <member name="T:Cronofy.EventTime">
+            <summary>
+            Class representing a point in time.
+            </summary>
+            <remarks>
+            In relation to events, times are polymorphic. They can refer to a date
+            or a specific time. They also have some time zone information attached
+            to them.
+            </remarks></member>
+        <member name="F:Cronofy.EventTime.date">
+            <summary>
+            The date the current instance relates to.
+            </summary></member>
+        <member name="F:Cronofy.EventTime.dateTimeOffset">
+            <summary>
+            The date time offset the current instance relates to, if applicable.
+            </summary></member>
+        <member name="F:Cronofy.EventTime.timeZoneId">
+            <summary>
+            The time zone of the current instance.
+            </summary></member>
+        <member name="F:Cronofy.EventTime.hasTime">
+            <summary>
+            Whether the current instance has a time component.
+            </summary></member>
+        <member name="M:Cronofy.EventTime.#ctor(Cronofy.Date,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Cronofy.EventTime" />
+            class.
+            </summary>
+            <param name="date">
+            The <see cref="T:Cronofy.Date" /> the instance relates to.
+            </param>
+            <param name="timeZoneId">
+            The time zone identifier of the instance, must not be empty.
+            </param>
+            <exception cref="T:System.ArgumentException">
+            Thrown if <paramref name="timeZoneId" /> is empty.
+            </exception></member>
+        <member name="M:Cronofy.EventTime.#ctor(System.DateTimeOffset,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Cronofy.EventTime" /> class.
+            </summary>
+            <param name="dateTimeOffset">
+            The time the instance relates to.
+            </param>
+            <param name="timeZoneId">
+            The time zone identifier of the instance, must not be empty.
+            </param>
+            <exception cref="T:System.ArgumentException">
+            Thrown if <paramref name="timeZoneId" /> is empty.
+            </exception></member>
+        <member name="P:Cronofy.EventTime.HasTime">
+            <summary>
+            Gets a value indicating whether this instance has a time component.
+            </summary>
+            <value>
+            <c>true</c> if this instance has a time component; otherwise,
+            <c>false</c>.
+            </value></member>
+        <member name="P:Cronofy.EventTime.Date">
+            <summary>
+            Gets the date this instance relates to.
+            </summary>
+            <value>
+            The date this instance relates to.
+            </value></member>
+        <member name="P:Cronofy.EventTime.DateTimeOffset">
+            <summary>
+            Gets the date time offset of this instance.
+            </summary>
+            <value>
+            The date time offset of this instance.
+            </value>
+            <exception cref="T:System.ArgumentException">
+            Thrown if this instance has no time component. Can be checked via
+            <see cref="P:Cronofy.EventTime.HasTime" />.
+            </exception></member>
+        <member name="P:Cronofy.EventTime.TimeZoneId">
+            <summary>
+            Gets the time zone identifier of this instance.
+            </summary>
+            <value>
+            The time zone identifier of this instance.
+            </value></member>
+        <member name="M:Cronofy.EventTime.GetHashCode">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.EventTime.Equals(System.Object)">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.EventTime.Equals(Cronofy.EventTime)">
+            <summary>
+            Determines whether the specified <see cref="T:Cronofy.EventTime" /> is
+            equal to the current <see cref="T:Cronofy.EventTime" />.
+            </summary>
+            <param name="other">
+            The <see cref="T:Cronofy.EventTime" /> to compare with the current
+            <see cref="T:Cronofy.EventTime" />.
+            </param>
+            <returns>
+            <c>true</c> if the specified <see cref="T:Cronofy.EventTime" /> is
+            equal to the current <see cref="T:Cronofy.EventTime" />; otherwise,
+            <c>false</c>.
+            </returns></member>
+        <member name="M:Cronofy.EventTime.ToString">
+            <inheritdoc /></member>
+        <member name="T:Cronofy.Requests.UpsertEventRequest">
+            <summary>
+            Class for the serialization of an upsert event request.
+            </summary></member>
+        <member name="P:Cronofy.Requests.UpsertEventRequest.EventId">
+            <summary>
+            Gets or sets the OAuth application's ID for the event.
+            </summary>
+            <value>
+            The OAuth application's ID for the event.
+            </value></member>
+        <member name="P:Cronofy.Requests.UpsertEventRequest.Summary">
+            <summary>
+            Gets or sets the event's summary.
+            </summary>
+            <value>
+            The event's summary.
+            </value></member>
+        <member name="P:Cronofy.Requests.UpsertEventRequest.Description">
+            <summary>
+            Gets or sets the event's description.
+            </summary>
+            <value>
+            The event's description.
+            </value></member>
+        <member name="P:Cronofy.Requests.UpsertEventRequest.Start">
+            <summary>
+            Gets or sets the start time of the event.
+            </summary>
+            <value>
+            The start time of the event.
+            </value></member>
+        <member name="P:Cronofy.Requests.UpsertEventRequest.End">
+            <summary>
+            Gets or sets the end time of the event.
+            </summary>
+            <value>
+            The end time of the event.
+            </value></member>
+        <member name="P:Cronofy.Requests.UpsertEventRequest.Location">
+            <summary>
+            Gets or sets the location of the event.
+            </summary>
+            <value>
+            The location of the event.
+            </value></member>
+        <member name="T:Cronofy.Requests.UpsertEventRequest.RequestLocation">
+            <summary>
+            Class for the serialization of the location for an upsert event
+            request.
+            </summary></member>
+        <member name="P:Cronofy.Requests.UpsertEventRequest.RequestLocation.Description">
+            <summary>
+            Gets or sets the description of the location.
+            </summary>
+            <value>
+            The description of the location.
+            </value></member>
+        <member name="T:Cronofy.UpsertEventRequestBuilder">
+            <summary>
+            Builder class for
+            <see cref="M:Cronofy.ICronofyAccountClient.UpsertEvent(System.String,Cronofy.IBuilder{Cronofy.Requests.UpsertEventRequest})" />
+            method calls.
+            </summary></member>
+        <member name="F:Cronofy.UpsertEventRequestBuilder.eventId">
+            <summary>
+            The OAuth application's ID for the event.
+            </summary></member>
+        <member name="F:Cronofy.UpsertEventRequestBuilder.summary">
+            <summary>
+            The event's summary.
+            </summary></member>
+        <member name="F:Cronofy.UpsertEventRequestBuilder.description">
+            <summary>
+            The event's description.
+            </summary></member>
+        <member name="F:Cronofy.UpsertEventRequestBuilder.startTime">
+            <summary>
+            The start time of the event.
+            </summary></member>
+        <member name="F:Cronofy.UpsertEventRequestBuilder.startDate">
+            <summary>
+            The start date of the event.
+            </summary></member>
+        <member name="F:Cronofy.UpsertEventRequestBuilder.endTime">
+            <summary>
+            The end time of the event.
+            </summary></member>
+        <member name="F:Cronofy.UpsertEventRequestBuilder.endDate">
+            <summary>
+            The end date of the event.
+            </summary></member>
+        <member name="F:Cronofy.UpsertEventRequestBuilder.locationDescription">
+            <summary>
+            The description of the event's location.
+            </summary></member>
+        <member name="F:Cronofy.UpsertEventRequestBuilder.startTimeZoneId">
+            <summary>
+            The time zone ID of the event's start time.
+            </summary></member>
+        <member name="F:Cronofy.UpsertEventRequestBuilder.endTimeZoneId">
+            <summary>
+            The time zone ID of the event's end time.
+            </summary></member>
+        <member name="M:Cronofy.UpsertEventRequestBuilder.#ctor">
+            <summary>
+            Initializes a new instance of the
+            <see cref="T:Cronofy.UpsertEventRequestBuilder" /> class.
+            </summary></member>
+        <member name="M:Cronofy.UpsertEventRequestBuilder.EventId(System.String)">
+            <summary>
+            Sets the OAuth application's ID for the event.
+            </summary>
+            <param name="eventId">
+            The OAuth application's ID for the event, must not be empty.
+            </param>
+            <returns>
+            A reference to the modified builder.
+            </returns>
+            <exception cref="T:System.ArgumentException">
+            Thrown if <paramref name="eventId" /> is empty.
+            </exception></member>
+        <member name="M:Cronofy.UpsertEventRequestBuilder.Summary(System.String)">
+            <summary>
+            Sets the summary for the event.
+            </summary>
+            <param name="summary">
+            The summary for the event, must not be empty.
+            </param>
+            <returns>
+            A reference to the modified builder.
+            </returns>
+            <exception cref="T:System.ArgumentException">
+            Thrown if <paramref name="summary" /> is empty.
+            </exception></member>
+        <member name="M:Cronofy.UpsertEventRequestBuilder.Description(System.String)">
+            <summary>
+            Sets the description for the event.
+            </summary>
+            <param name="description">
+            The description for the event.
+            </param>
+            <returns>
+            A reference to the modified builder.
+            </returns></member>
+        <member name="M:Cronofy.UpsertEventRequestBuilder.Start(System.DateTimeOffset)">
+            <summary>
+            Sets the start time of the event.
+            </summary>
+            <param name="start">
+            The start time of the event.
+            </param>
+            <returns>
+            A reference to the modified builder.
+            </returns></member>
+        <member name="M:Cronofy.UpsertEventRequestBuilder.Start(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Sets the start time of the event.
+            </summary>
+            <param name="year">
+            The year of the start time.
+            </param>
+            <param name="month">
+            The month of the start time.
+            </param>
+            <param name="day">
+            The day of the start time.
+            </param>
+            <param name="hour">
+            The hour of the start time.
+            </param>
+            <param name="minute">
+            The minute of the start time.
+            </param>
+            <returns>
+            A reference to the modified builder.
+            </returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+            Thrown if the provided parameters do no generate a valid time.
+            </exception></member>
+        <member name="M:Cronofy.UpsertEventRequestBuilder.Start(Cronofy.Date)">
+            <summary>
+            Sets the start time of the event.
+            </summary>
+            <param name="start">
+            The start time of the event.
+            </param>
+            <returns>
+            A reference to the modified builder.
+            </returns></member>
+        <member name="M:Cronofy.UpsertEventRequestBuilder.Start(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Sets the start time of the event.
+            </summary>
+            <param name="year">
+            The year of the start time.
+            </param>
+            <param name="month">
+            The month of the start time.
+            </param>
+            <param name="day">
+            The day of the start time.
+            </param>
+            <returns>
+            A reference to the modified builder.
+            </returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+            Thrown if the provided parameters do no generate a valid date.
+            </exception></member>
+        <member name="M:Cronofy.UpsertEventRequestBuilder.End(System.DateTimeOffset)">
+            <summary>
+            Sets the end time of the event.
+            </summary>
+            <param name="end">
+            The end time of the event.
+            </param>
+            <returns>
+            A reference to the modified builder.
+            </returns></member>
+        <member name="M:Cronofy.UpsertEventRequestBuilder.End(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Sets the end time of the event.
+            </summary>
+            <param name="year">
+            The year of the end time.
+            </param>
+            <param name="month">
+            The month of the end time.
+            </param>
+            <param name="day">
+            The day of the end time.
+            </param>
+            <param name="hour">
+            The hour of the end time.
+            </param>
+            <param name="minute">
+            The minute of the end time.
+            </param>
+            <returns>
+            A reference to the modified builder.
+            </returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+            Thrown if the provided parameters do no generate a valid time.
+            </exception></member>
+        <member name="M:Cronofy.UpsertEventRequestBuilder.End(Cronofy.Date)">
+            <summary>
+            Sets the end time of the event.
+            </summary>
+            <param name="end">
+            The end time of the event.
+            </param>
+            <returns>
+            A reference to the modified builder.
+            </returns></member>
+        <member name="M:Cronofy.UpsertEventRequestBuilder.End(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Sets the end time of the event.
+            </summary>
+            <param name="year">
+            The year of the end time.
+            </param>
+            <param name="month">
+            The month of the end time.
+            </param>
+            <param name="day">
+            The day of the end time.
+            </param>
+            <returns>
+            A reference to the modified builder.
+            </returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+            Thrown if the provided parameters do no generate a valid date.
+            </exception></member>
+        <member name="M:Cronofy.UpsertEventRequestBuilder.Location(System.String)">
+            <summary>
+            Sets the description of the event's location.
+            </summary>
+            <param name="location">
+            The description of the event's location.
+            </param>
+            <returns>
+            A reference to the modified builder.
+            </returns></member>
+        <member name="M:Cronofy.UpsertEventRequestBuilder.TimeZoneId(System.String)">
+            <summary>
+            Sets the time zone identifier for the start and end times of the
+            event.
+            </summary>
+            <param name="timeZoneId">
+            Time zone identifier, must not be empty.
+            </param>
+            <returns>
+            A reference to the modified builder.
+            </returns>
+            <exception cref="T:System.ArgumentException">
+            Thrown if <paramref name="timeZoneId" /> is empty.
+            </exception></member>
+        <member name="M:Cronofy.UpsertEventRequestBuilder.StartTimeZoneId(System.String)">
+            <summary>
+            Sets the time zone identifier for the start time of the event.
+            </summary>
+            <param name="timeZoneId">
+            Time zone identifier, must not be empty.
+            </param>
+            <returns>
+            A reference to the modified builder.
+            </returns>
+            <exception cref="T:System.ArgumentException">
+            Thrown if <paramref name="timeZoneId" /> is empty.
+            </exception></member>
+        <member name="M:Cronofy.UpsertEventRequestBuilder.EndTimeZoneId(System.String)">
+            <summary>
+            Sets the time zone identifier for the end time of the event.
+            </summary>
+            <param name="timeZoneId">
+            Time zone identifier, must not be empty.
+            </param>
+            <returns>
+            A reference to the modified builder.
+            </returns>
+            <exception cref="T:System.ArgumentException">
+            Thrown if <paramref name="timeZoneId" /> is empty.
+            </exception></member>
+        <member name="M:Cronofy.UpsertEventRequestBuilder.Build">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.UpsertEventRequestBuilder.GetEventTime(System.String,System.Nullable{System.DateTimeOffset},System.Nullable{Cronofy.Date},System.String)">
+            <summary>
+            Gets an <see cref="T:Cronofy.EventTime" /> from the two nullable values.
+            </summary>
+            <returns>
+            An <see cref="T:Cronofy.EventTime" />.
+            </returns>
+            <param name="propertyName">
+            The name of the property the <see cref="T:Cronofy.EventTime" /> will be
+            assigned to. Used to generate more meaningful exception messages.
+            </param>
+            <param name="time">
+            The time to create the <see cref="T:Cronofy.EventTime" /> from when not
+            <code>null</code>.
+            </param>
+            <param name="date">
+            The date to create the <see cref="T:Cronofy.EventTime" /> from when not
+            <code>null</code>.
+            </param>
+            <param name="timeZoneId">
+            Time zone identifier for the <see cref="T:Cronofy.EventTime" />.
+            </param>
+            <exception cref="T:System.ArgumentException">
+            Raised when both <paramref name="time" /> and <paramref name="date" />
+            are <code>null</code>.s
+            </exception></member>
+        <member name="T:Cronofy.Calendar">
+            <summary>
+            Class for representing a calendar.
+            </summary></member>
+        <member name="P:Cronofy.Calendar.Profile">
+            <summary>
+            Gets or sets the profile the calendar belongs to.
+            </summary>
+            <value>
+            The profile the calendar belongs to.
+            </value></member>
+        <member name="P:Cronofy.Calendar.CalendarId">
+            <summary>
+            Gets or sets the ID of the calendar.
+            </summary>
+            <value>
+            The ID of the calendar.
+            </value></member>
+        <member name="P:Cronofy.Calendar.Name">
+            <summary>
+            Gets or sets the name of the calendar.
+            </summary>
+            <value>
+            The name of the calendar.
+            </value></member>
+        <member name="P:Cronofy.Calendar.ReadOnly">
+            <summary>
+            Gets or sets a value indicating whether this
+            <see cref="T:Cronofy.Calendar" /> is read only.
+            </summary>
+            <value>
+            <c>true</c> if read only; otherwise, <c>false</c>.
+            </value></member>
+        <member name="P:Cronofy.Calendar.Deleted">
+            <summary>
+            Gets or sets a value indicating whether this
+            <see cref="T:Cronofy.Calendar" /> has been deleted.
+            </summary>
+            <value>
+            <c>true</c> if deleted; otherwise, <c>false</c>.
+            </value></member>
+        <member name="P:Cronofy.Calendar.Primary">
+            <summary>
+            Gets or sets a value indicating whether this
+            <see cref="T:Cronofy.Calendar" /> is the primary calendar for the
+            profile.
+            </summary>
+            <value>
+            <c>true</c> if the primary calendar for the profile; otherwise,
+            <c>false</c>.
+            </value></member>
+        <member name="M:Cronofy.Calendar.GetHashCode">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.Calendar.Equals(System.Object)">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.Calendar.Equals(Cronofy.Calendar)">
+            <summary>
+            Determines whether the specified <see cref="T:Cronofy.Calendar" /> is
+            equal to the current <see cref="T:Cronofy.Calendar" />.
+            </summary>
+            <param name="other">
+            The <see cref="T:Cronofy.Calendar" /> to compare with the current
+            <see cref="T:Cronofy.Calendar" />.
+            </param>
+            <returns>
+            <c>true</c> if the specified <see cref="T:Cronofy.Calendar" /> is equal
+            to the current <see cref="T:Cronofy.Calendar" />; otherwise,
+            <c>false</c>.
+            </returns></member>
+        <member name="M:Cronofy.Calendar.ToString">
+            <inheritdoc /></member>
+        <member name="T:Cronofy.Calendar.ProfileSummary">
+            <summary>
+            Class representing a profile for an account.
+            </summary></member>
+        <member name="P:Cronofy.Calendar.ProfileSummary.ProviderName">
+            <summary>
+            Gets or sets the name of the provider of the profile.
+            </summary>
+            <value>
+            The name of the provider for the profile.
+            </value></member>
+        <member name="P:Cronofy.Calendar.ProfileSummary.ProfileId">
+            <summary>
+            Gets or sets the ID of the profile.
+            </summary>
+            <value>
+            The ID of the profile.
+            </value></member>
+        <member name="P:Cronofy.Calendar.ProfileSummary.Name">
+            <summary>
+            Gets or sets the name of the profile.
+            </summary>
+            <value>
+            The name of the profile.
+            </value></member>
+        <member name="M:Cronofy.Calendar.ProfileSummary.GetHashCode">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.Calendar.ProfileSummary.Equals(System.Object)">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.Calendar.ProfileSummary.Equals(Cronofy.Calendar.ProfileSummary)">
+            <summary>
+            Determines whether the specified <see cref="T:Cronofy.Profile" /> is
+            equal to the current <see cref="T:Cronofy.Profile" />.
+            </summary>
+            <param name="other">
+            The <see cref="T:Cronofy.Profile" /> to compare with the current
+            <see cref="T:Cronofy.Profile" />.
+            </param>
+            <returns>
+            <c>true</c> if the specified <see cref="T:Cronofy.Profile" /> is equal
+            to the current <see cref="T:Cronofy.Profile" />; otherwise,
+            <c>false</c>.
+            </returns></member>
+        <member name="M:Cronofy.Calendar.ProfileSummary.ToString">
+            <inheritdoc /></member>
+        <member name="T:Cronofy.Profile">
+            <summary>
+            Class representing a profile for an account.
+            </summary></member>
+        <member name="P:Cronofy.Profile.ProviderName">
+            <summary>
+            Gets or sets the name of the provider of the profile.
+            </summary>
+            <value>
+            The name of the provider for the profile.
+            </value></member>
+        <member name="P:Cronofy.Profile.Id">
+            <summary>
+            Gets or sets the ID of the profile.
+            </summary>
+            <value>
+            The ID of the profile.
+            </value></member>
+        <member name="P:Cronofy.Profile.Name">
+            <summary>
+            Gets or sets the name of the profile.
+            </summary>
+            <value>
+            The name of the profile.
+            </value></member>
+        <member name="P:Cronofy.Profile.Connected">
+            <summary>
+            Gets or sets a value indicating whether this profile is connected.
+            </summary>
+            <value>
+            <c>true</c> if this profile is connected; otherwise, <c>false</c>.
+            </value></member>
+        <member name="P:Cronofy.Profile.RelinkUrl">
+            <summary>
+            Gets or sets the relink URL for the profile.
+            </summary>
+            <value>
+            The relink URL for the profile.
+            </value>
+            <remarks>
+            <c>null</c> unless <see cref="P:Cronofy.Profile.Connected" /> is false.
+            </remarks></member>
+        <member name="M:Cronofy.Profile.GetHashCode">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.Profile.Equals(System.Object)">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.Profile.Equals(Cronofy.Profile)">
+            <summary>
+            Determines whether the specified <see cref="T:Cronofy.Profile" /> is
+            equal to the current <see cref="T:Cronofy.Profile" />.
+            </summary>
+            <param name="other">
+            The <see cref="T:Cronofy.Profile" /> to compare with the current
+            <see cref="T:Cronofy.Profile" />.
+            </param>
+            <returns>
+            <c>true</c> if the specified <see cref="T:Cronofy.Profile" /> is equal
+            to the current <see cref="T:Cronofy.Profile" />; otherwise,
+            <c>false</c>.
+            </returns></member>
+        <member name="M:Cronofy.Profile.ToString">
+            <inheritdoc /></member>
+        <member name="T:Cronofy.Responses.CalendarsResponse">
+            <summary>
+            Class for the deserialization of a calendar list response.
+            </summary></member>
+        <member name="P:Cronofy.Responses.CalendarsResponse.Calendars">
+            <summary>
+            Gets or sets the array of calendars.
+            </summary>
+            <value>
+            The array of calendars.
+            </value></member>
+        <member name="T:Cronofy.Responses.CalendarsResponse.CalendarResponse">
+            <summary>
+            Class for the deserialization of a calendar response.
+            </summary></member>
+        <member name="P:Cronofy.Responses.CalendarsResponse.CalendarResponse.ProviderName">
+            <summary>
+            Gets or sets the name of the calendar provider.
+            </summary>
+            <value>
+            The name of the calendar provider.
+            </value></member>
+        <member name="P:Cronofy.Responses.CalendarsResponse.CalendarResponse.ProfileId">
+            <summary>
+            Gets or sets the ID of the calendar's profile.
+            </summary>
+            <value>
+            The ID of the calendar's profile.
+            </value></member>
+        <member name="P:Cronofy.Responses.CalendarsResponse.CalendarResponse.ProfileName">
+            <summary>
+            Gets or sets the name of the calendar's profile.
+            </summary>
+            <value>
+            The name of the calendar's profile.
+            </value></member>
+        <member name="P:Cronofy.Responses.CalendarsResponse.CalendarResponse.CalendarId">
+            <summary>
+            Gets or sets the ID of the calendar.
+            </summary>
+            <value>
+            The ID of the calendar.
+            </value></member>
+        <member name="P:Cronofy.Responses.CalendarsResponse.CalendarResponse.CalendarName">
+            <summary>
+            Gets or sets the name of the calendar.
+            </summary>
+            <value>
+            The name of the calendar.
+            </value></member>
+        <member name="P:Cronofy.Responses.CalendarsResponse.CalendarResponse.CalendarReadonly">
+            <summary>
+            Gets or sets a value indicating whether this calendar is
+            readonly.
+            </summary>
+            <value>
+            <c>true</c> if the calendar readonly; otherwise, <c>false</c>.
+            </value></member>
+        <member name="P:Cronofy.Responses.CalendarsResponse.CalendarResponse.CalendarDeleted">
+            <summary>
+            Gets or sets a value indicating whether this calendar has been
+            deleted.
+            </summary>
+            <value>
+            <c>true</c> if the calendar has been deleted; otherwise,
+            <c>false</c>.
+            </value></member>
+        <member name="P:Cronofy.Responses.CalendarsResponse.CalendarResponse.CalendarPrimary">
+            <summary>
+            Gets or sets a value indicating whether this calendar is the
+            primary one for the profile.
+            </summary>
+            <value>
+            <c>true</c> if the primary calendar for the profile; otherwise,
+            <c>false</c>.
+            </value></member>
+        <member name="M:Cronofy.Responses.CalendarsResponse.CalendarResponse.ToCalendar">
+            <summary>
+            Converts the response into a <see cref="T:Cronofy.Calendar" />.
+            </summary>
+            <returns>
+            A <see cref="T:Cronofy.Calendar" /> based upon the response.
+            </returns></member>
+        <member name="T:Cronofy.ICronofyAccountClient">
+            <summary>
+            Interface for a Cronofy client that interacts with an account's
+            calendars and events.
+            </summary></member>
+        <member name="M:Cronofy.ICronofyAccountClient.GetAccount">
+            <summary>
+            Gets the details of the account.
+            </summary>
+            <returns>
+            The <see cref="T:Cronofy.Account" />.
+            </returns>
+            <exception cref="T:Cronofy.CronofyException">
+            Thrown if an error is encountered whilst making the request.
+            </exception></member>
+        <member name="M:Cronofy.ICronofyAccountClient.GetProfiles">
+            <summary>
+            Gets the profiles belonging to the account.
+            </summary>
+            <returns>
+            The account's <see cref="T:Cronofy.Profile" />s.
+            </returns>
+            <exception cref="T:Cronofy.CronofyException">
+            Thrown if an error is encountered whilst making the request.
+            </exception></member>
+        <member name="M:Cronofy.ICronofyAccountClient.GetCalendars">
+            <summary>
+            Gets the calendars belonging to the account.
+            </summary>
+            <returns>
+            The account's <see cref="T:Cronofy.Calendar" />s.
+            </returns>
+            <exception cref="T:Cronofy.CronofyException">
+            Thrown if an error is encountered whilst making the request.
+            </exception></member>
+        <member name="M:Cronofy.ICronofyAccountClient.CreateCalendar(System.String,System.String)">
+            <summary>
+            Creates a new calendar for the account.
+            </summary>
+            <param name="profileId">
+            The ID of the profile to create the calendar within, must not be
+            empty.
+            </param>
+            <param name="name">
+            The name to give the new calendar, must not be empty.
+            </param>
+            <returns>
+            The new <see cref="T:Cronofy.Calendar" />.
+            </returns>
+            <exception cref="T:System.ArgumentException">
+            Thrown if <paramref name="profileId" /> or <paramref name="name" />
+            are empty.
+            </exception>
+            <exception cref="T:Cronofy.CronofyException">
+            Thrown if an error is encountered whilst making the request.
+            </exception></member>
+        <member name="M:Cronofy.ICronofyAccountClient.GetEvents">
+            <summary>
+            Gets the events belonging to the account.
+            </summary>
+            <returns>
+            The account's <see cref="T:Cronofy.Event" />s.
+            </returns>
+            <exception cref="T:Cronofy.CronofyException">
+            Thrown if an error is encountered whilst making the request.
+            </exception></member>
+        <member name="M:Cronofy.ICronofyAccountClient.GetEvents(Cronofy.IBuilder{Cronofy.Requests.GetEventsRequest})">
+            <summary>
+            Gets the events belonging to the account.
+            </summary>
+            <param name="builder">
+            The builder from which to get the parameters for the request, must
+            not be null.
+            </param>
+            <returns>
+            The account's <see cref="T:Cronofy.Event" />s.
+            </returns>
+            <exception cref="T:System.ArgumentException">
+            Thrown if <paramref name="builder" /> is null.
+            </exception>
+            <exception cref="T:Cronofy.CronofyException">
+            Thrown if an error is encountered whilst making the request.
+            </exception></member>
+        <member name="M:Cronofy.ICronofyAccountClient.GetEvents(Cronofy.Requests.GetEventsRequest)">
+            <summary>
+            Gets the events belonging to the account.
+            </summary>
+            <param name="request">
+            The parameters for the request, must not be null.
+            </param>
+            <returns>
+            The account's <see cref="T:Cronofy.Event" />s.
+            </returns>
+            <exception cref="T:System.ArgumentException">
+            Thrown if <paramref name="request" /> is null.
+            </exception>
+            <exception cref="T:Cronofy.CronofyException">
+            Thrown if an error is encountered whilst making the request.
+            </exception></member>
+        <member name="M:Cronofy.ICronofyAccountClient.GetFreeBusy">
+            <summary>
+            Gets the free busy information belonging to the account.
+            </summary>
+            <returns>
+            The account's <see cref="T:Cronofy.FreeBusy" />s.
+            </returns>
+            <exception cref="T:Cronofy.CronofyException">
+            Thrown if an error is encountered whilst making the request.
+            </exception></member>
+        <member name="M:Cronofy.ICronofyAccountClient.GetFreeBusy(Cronofy.IBuilder{Cronofy.Requests.GetFreeBusyRequest})">
+            <summary>
+            Gets the free busy information belonging to the account.
+            </summary>
+            <param name="builder">
+            The builder from which to get the parameters for the request, must
+            not be null.
+            </param>
+            <returns>
+            The account's <see cref="T:Cronofy.FreeBusy" />s.
+            </returns>
+            <exception cref="T:System.ArgumentException">
+            Thrown if <paramref name="builder" /> is null.
+            </exception>
+            <exception cref="T:Cronofy.CronofyException">
+            Thrown if an error is encountered whilst making the request.
+            </exception></member>
+        <member name="M:Cronofy.ICronofyAccountClient.GetFreeBusy(Cronofy.Requests.GetFreeBusyRequest)">
+            <summary>
+            Gets the free busy information belonging to the account.
+            </summary>
+            <param name="request">
+            The parameters for the request, must not be null.
+            </param>
+            <returns>
+            The account's <see cref="T:Cronofy.FreeBusy" />s.
+            </returns>
+            <exception cref="T:System.ArgumentException">
+            Thrown if <paramref name="request" /> is null.
+            </exception>
+            <exception cref="T:Cronofy.CronofyException">
+            Thrown if an error is encountered whilst making the request.
+            </exception></member>
+        <member name="M:Cronofy.ICronofyAccountClient.UpsertEvent(System.String,Cronofy.IBuilder{Cronofy.Requests.UpsertEventRequest})">
+            <summary>
+            Upserts an event to the account's calendar.
+            </summary>
+            <param name="calendarId">
+            The ID of the calendar the event should be upserted to, must not be
+            empty.
+            </param>
+            <param name="eventBuilder">
+            The builder from which to create a <see cref="T:Cronofy.Requests.UpsertEventRequest" />,
+            must not be null.
+            </param>
+            <exception cref="T:System.ArgumentException">
+            Thrown if <paramref name="calendarId" /> is empty,
+            <paramref name="eventBuilder" /> is null, or if
+            <paramref name="eventBuilder" /> is not in a state which creates a
+            valid <see cref="T:Cronofy.Requests.UpsertEventRequest" />.
+            </exception>
+            <exception cref="T:Cronofy.CronofyException">
+            Thrown if an error is encountered whilst making the request.
+            </exception>
+            <remarks>
+            TODO Validation exceptions.
+            </remarks></member>
+        <member name="M:Cronofy.ICronofyAccountClient.UpsertEvent(System.String,Cronofy.Requests.UpsertEventRequest)">
+            <summary>
+            Upserts an event to the account's calendar.
+            </summary>
+            <param name="calendarId">
+            The ID of the calendar the event should be upserted to, must not be
+            empty.
+            </param>
+            <param name="eventRequest">
+            The details of the event to create, must not be null.
+            </param>
+            <exception cref="T:System.ArgumentException">
+            Thrown if <paramref name="calendarId" /> is empty, or
+            <paramref name="eventRequest" /> is null.
+            </exception>
+            <exception cref="T:Cronofy.CronofyException">
+            Thrown if an error is encountered whilst making the request.
+            </exception>
+            <remarks>
+            TODO Validation exceptions.
+            </remarks></member>
+        <member name="M:Cronofy.ICronofyAccountClient.DeleteEvent(System.String,System.String)">
+            <summary>
+            Deletes an event from the account's calendars.
+            </summary>
+            <param name="calendarId">
+            The ID of the calendar the event should be upserted to, must not be
+            empty.
+            </param>
+            <param name="eventId">
+            The ID of the event to delete, must not be empty.
+            </param>
+            <exception cref="T:System.ArgumentException">
+            Thrown if <paramref name="calendarId" /> or
+            <paramref name="eventId" /> are empty.
+            </exception>
+            <exception cref="T:Cronofy.CronofyException">
+            Thrown if an error is encountered whilst making the request.
+            </exception>
+            <remarks>
+            TODO Validation exceptions.
+            </remarks></member>
+        <member name="M:Cronofy.ICronofyAccountClient.CreateChannel(System.String)">
+            <summary>
+            Creates a notification channel.
+            </summary>
+            <param name="callbackUrl">
+            The callback URL for the channel, must not be empty.
+            </param>
+            <returns>
+            The created channel.
+            </returns>
+            <exception cref="T:System.ArgumentException">
+            Thrown if <paramref name="callbackUrl" /> is empty.
+            </exception>
+            <exception cref="T:Cronofy.CronofyException">
+            Thrown if an error is encountered whilst making the request.
+            </exception>
+            <remarks>
+            TODO Validation exceptions.
+            </remarks></member>
+        <member name="M:Cronofy.ICronofyAccountClient.CreateChannel(Cronofy.IBuilder{Cronofy.Requests.CreateChannelRequest})">
+            <summary>
+            Creates a notification channel.
+            </summary>
+            <param name="channelBuilder">
+            The builder from which to create a
+            <see cref="T:Cronofy.Requests.CreateChannelRequest" />, must not be null.
+            </param>
+            <returns>
+            The created channel.
+            </returns>
+            <exception cref="T:System.ArgumentException">
+            Thrown if <paramref name="channelBuilder" /> is null.
+            </exception>
+            <exception cref="T:Cronofy.CronofyException">
+            Thrown if an error is encountered whilst making the request.
+            </exception>
+            <remarks>
+            TODO Validation exceptions.
+            </remarks></member>
+        <member name="M:Cronofy.ICronofyAccountClient.CreateChannel(Cronofy.Requests.CreateChannelRequest)">
+            <summary>
+            Creates a notification channel.
+            </summary>
+            <param name="channelRequest">
+            The details of the channel to create, must not be null.
+            </param>
+            <returns>
+            The created channel.
+            </returns>
+            <exception cref="T:System.ArgumentException">
+            Thrown if <paramref name="channelRequest" /> is null.
+            </exception>
+            <exception cref="T:Cronofy.CronofyException">
+            Thrown if an error is encountered whilst making the request.
+            </exception>
+            <remarks>
+            TODO Validation exceptions.
+            </remarks></member>
+        <member name="M:Cronofy.ICronofyAccountClient.GetChannels">
+            <summary>
+            Gets the active notification channels for the account.
+            </summary>
+            <returns>
+            The account's <see cref="T:Cronofy.Channel" />s.
+            </returns>
+            <exception cref="T:Cronofy.CronofyException">
+            Thrown if an error is encountered whilst making the request.
+            </exception></member>
+        <member name="M:Cronofy.ICronofyAccountClient.CloseChannel(System.String)">
+            <summary>
+            Close the notification channel.
+            </summary>
+            <param name="channelId">
+            The ID of the notification channel to close, must not be empty.
+            </param>
+            <exception cref="T:System.ArgumentException">
+            Thrown if <paramref name="channelId" /> is empty.
+            </exception>
+            <exception cref="T:Cronofy.CronofyException">
+            Thrown if an error is encountered whilst making the request.
+            </exception></member>
+        <member name="T:Cronofy.CronofyOAuthClient">
+            <summary>
+            Client for the Cronofy API.
+            </summary></member>
+        <member name="F:Cronofy.CronofyOAuthClient.AuthorizationUrl">
+            <summary>
+            The URL for the OAuth authorization endpoint.
+            </summary></member>
+        <member name="F:Cronofy.CronofyOAuthClient.TokenUrl">
+            <summary>
+            The URL for the OAuth token endpoint.
+            </summary></member>
+        <member name="F:Cronofy.CronofyOAuthClient.TokenRevocationUrl">
+            <summary>
+            The URL for the OAuth token revocation endpoint.
+            </summary></member>
+        <member name="F:Cronofy.CronofyOAuthClient.CodeGrantType">
+            <summary>
+            The grant type for exchanging an OAuth authorization code.
+            </summary></member>
+        <member name="F:Cronofy.CronofyOAuthClient.RefreshTokenGrantType">
+            <summary>
+            The grant type for refreshing an OAuth authorization's access token.
+            </summary></member>
+        <member name="F:Cronofy.CronofyOAuthClient.clientId">
+            <summary>
+            The client ID of the OAuth application.
+            </summary></member>
+        <member name="F:Cronofy.CronofyOAuthClient.clientSecret">
+            <summary>
+            The client secret of the OAuth application.
+            </summary></member>
+        <member name="M:Cronofy.CronofyOAuthClient.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the
+            <see cref="T:Cronofy.CronofyOAuthClient" /> class.
+            </summary>
+            <param name="clientId">
+            Your OAuth client_id, must not be blank.
+            </param>
+            <param name="clientSecret">
+            Your OAuth client_secret, must not be blank.
+            </param>
+            <exception cref="T:System.ArgumentException">
+            Thrown if <paramref name="clientId" /> or
+            <paramref name="clientSecret" /> are blank.
+            </exception></member>
+        <member name="P:Cronofy.CronofyOAuthClient.HttpClient">
+            <summary>
+            Gets or sets the HTTP client.
+            </summary>
+            <value>
+            The HTTP client.
+            </value>
+            <remarks>
+            Intend for test purposes only.
+            </remarks></member>
+        <member name="M:Cronofy.CronofyOAuthClient.GetAuthorizationUrlBuilder(System.String)">
+            <summary>
+            Creates a new <see cref="T:Cronofy.CronofyOAuthClient.AuthorizationUrlBuilder" /> seeded with your
+            client configuration.
+            </summary>
+            <param name="redirectUri">
+            The URI to redirect the user's response for the authorization
+            request to, must not be empty.
+            </param>
+            <returns>
+            Returns a new <see cref="T:Cronofy.CronofyOAuthClient.AuthorizationUrlBuilder" />.
+            </returns>
+            <remarks>
+            The read_account, read_events, create_event, and delete_event scopes
+            are requested by default.
+            </remarks>
+            <exception cref="T:System.ArgumentException">
+            Thrown if <paramref name="redirectUri" /> is null or empty.
+            </exception></member>
+        <member name="M:Cronofy.CronofyOAuthClient.GetTokenFromCode(System.String,System.String)">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.CronofyOAuthClient.RevokeToken(System.String)">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.CronofyOAuthClient.GetTokenFromRefreshToken(System.String)">
+            <inheritdoc /></member>
+        <member name="T:Cronofy.CronofyOAuthClient.AuthorizationUrlBuilder">
+            <summary>
+            Builder class for authorization URLs.
+            </summary></member>
+        <member name="F:Cronofy.CronofyOAuthClient.AuthorizationUrlBuilder.DefaultScopes">
+            <summary>
+            The default scopes for a new OAuth authorization request.
+            </summary></member>
+        <member name="F:Cronofy.CronofyOAuthClient.AuthorizationUrlBuilder.clientId">
+            <summary>
+            The client ID of the OAuth application.
+            </summary></member>
+        <member name="F:Cronofy.CronofyOAuthClient.AuthorizationUrlBuilder.redirectUri">
+            <summary>
+            The URI to redirect the user's authorization response to.
+            </summary></member>
+        <member name="F:Cronofy.CronofyOAuthClient.AuthorizationUrlBuilder.scope">
+            <summary>
+            The scope the OAuth application is requesting from the user.
+            </summary></member>
+        <member name="F:Cronofy.CronofyOAuthClient.AuthorizationUrlBuilder.state">
+            <summary>
+            The state to persist through the OAuth authorization process.
+            </summary></member>
+        <member name="F:Cronofy.CronofyOAuthClient.AuthorizationUrlBuilder.avoidLinking">
+            <summary>
+            The value of the avoid linking parameter for the OAuth
+            authorization process.
+            </summary></member>
+        <member name="M:Cronofy.CronofyOAuthClient.AuthorizationUrlBuilder.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the
+            <see cref="T:Cronofy.CronofyOAuthClient.AuthorizationUrlBuilder" /> class.
+            </summary>
+            <param name="clientId">
+            The application's OAuth client_id, must not be blank.
+            </param>
+            <param name="redirectUri">
+            The URI to redirect the user's response for the authorization
+            request to, must not be empty.
+            </param>
+            <exception cref="T:System.ArgumentException">
+            Thrown if <paramref name="clientId" /> is blank, or if
+            <paramref name="redirectUri" /> is empty.
+            </exception></member>
+        <member name="M:Cronofy.CronofyOAuthClient.AuthorizationUrlBuilder.Scope(System.String[])">
+            <summary>
+            Sets the scope the authorization URL will request from the user.
+            </summary>
+            <param name="scope">
+            The scope to request from the user, must not be empty.
+            </param>
+            <returns>
+            A reference to the builder.
+            </returns>
+            <exception cref="T:System.ArgumentException">
+            Thrown if <paramref name="scope" /> is empty.
+            </exception></member>
+        <member name="M:Cronofy.CronofyOAuthClient.AuthorizationUrlBuilder.Scope(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Sets the scope the authorization URL will request from the user.
+            </summary>
+            <param name="scope">
+            The scope to request from the user, must not be empty.
+            </param>
+            <returns>
+            A reference to the builder.
+            </returns>
+            <exception cref="T:System.ArgumentException">
+            Thrown if <paramref name="scope" /> is empty.
+            </exception></member>
+        <member name="M:Cronofy.CronofyOAuthClient.AuthorizationUrlBuilder.State(System.String)">
+            <summary>
+            Sets the state to be passed through the authorization process.
+            </summary>
+            <param name="state">
+            The state to be passed through the authorization process, must
+            not be null or empty.
+            </param>
+            <returns>
+            A reference to the builder.
+            </returns>
+            <exception cref="T:System.ArgumentException">
+            Thrown if <paramref name="state" /> is null or empty.
+            </exception></member>
+        <member name="M:Cronofy.CronofyOAuthClient.AuthorizationUrlBuilder.AvoidLinking(System.Boolean)">
+            <summary>
+            Sets the avoid linking parameter for the OAuth authorization
+            process.
+            </summary>
+            <param name="avoidLinking">
+            If set to <c>true</c>, avoid linking calendars during the OAuth
+            authorization process.
+            </param>
+            <returns>
+            A reference to the builder.
+            </returns></member>
+        <member name="M:Cronofy.CronofyOAuthClient.AuthorizationUrlBuilder.Build">
+            <summary>
+            Generates an authorization URL based on the current state of the
+            builder.
+            </summary>
+            <returns>
+            An authorization URL based on the current state of the builder.
+            </returns></member>
+        <member name="M:Cronofy.CronofyOAuthClient.AuthorizationUrlBuilder.ToString">
+            <summary>
+            Returns a <see cref="T:System.String" /> that represents the
+            current <see cref="T:Cronofy.CronofyOAuthClient.AuthorizationUrlBuilder" />.
+            </summary>
+            <returns>
+            A <see cref="T:System.String" /> that represents the current
+            <see cref="T:Cronofy.CronofyOAuthClient.AuthorizationUrlBuilder" />.
+            </returns></member>
+        <member name="T:Cronofy.Requests.OAuthTokenRefreshRequest">
+            <summary>
+            Class for the serialization of an OAuth token refresh request.
+            </summary></member>
+        <member name="P:Cronofy.Requests.OAuthTokenRefreshRequest.ClientId">
+            <summary>
+            Gets or sets the OAuth application's client identifier.
+            </summary>
+            <value>
+            The OAuth application's client identifier.
+            </value></member>
+        <member name="P:Cronofy.Requests.OAuthTokenRefreshRequest.ClientSecret">
+            <summary>
+            Gets or sets the OAuth application's client secret.
+            </summary>
+            <value>
+            The OAuth application's client secret.
+            </value></member>
+        <member name="P:Cronofy.Requests.OAuthTokenRefreshRequest.GrantType">
+            <summary>
+            Gets or sets the grant type of the OAuth token request.
+            </summary>
+            <value>
+            The grant type of the OAuth token request.
+            </value></member>
+        <member name="P:Cronofy.Requests.OAuthTokenRefreshRequest.RefreshToken">
+            <summary>
+            Gets or sets the refresh token.
+            </summary>
+            <value>
+            The refresh token.
+            </value></member>
+        <member name="T:Cronofy.ICronofyOAuthClient">
+            <summary>
+            Interface for a Cronofy client that performs OAuth related operations.
+            </summary></member>
+        <member name="M:Cronofy.ICronofyOAuthClient.GetTokenFromCode(System.String,System.String)">
+            <summary>
+            Gets the OAuth token from an authorization code provided by a
+            successful authorization request.
+            </summary>
+            <param name="code">
+            The authorization code provided by a successful authorization
+            request, must not be empty.
+            </param>
+            <param name="redirectUri">
+            The redirect URI provided for the authorization requests, must not
+            be empty.
+            </param>
+            <returns>
+            Returns an <see cref="T:Cronofy.OAuthToken" /> for the provided authorization
+            code.
+            </returns>
+            <exception cref="T:System.ArgumentException">
+            Thrown if <paramref name="code" /> or <paramref name="redirectUri" />
+            are null or empty.
+            </exception>
+            <exception cref="T:Cronofy.CronofyException">
+            Thrown if an error is encountered whilst making the request.
+            </exception>
+            <remarks>
+            TODO Validation exceptions.
+            </remarks></member>
+        <member name="M:Cronofy.ICronofyOAuthClient.GetTokenFromRefreshToken(System.String)">
+            <summary>
+            Gets the OAuth token from a refresh token retrieved with a previous
+            OAuth token.
+            </summary>
+            <param name="refreshToken">
+            The refresh token that can be used to retrieve a new
+            <see cref="T:Cronofy.OAuthToken" />, must not be empty.
+            </param>
+            <returns>
+            Returns an <see cref="T:Cronofy.OAuthToken" /> for the provided refresh token.
+            </returns>
+            <exception cref="T:System.ArgumentException">
+            Thrown if <paramref name="refreshToken" /> is null or empty.
+            </exception>
+            <exception cref="T:Cronofy.CronofyException">
+            Thrown if an error is encountered whilst making the request.
+            </exception>
+            <remarks>
+            TODO Validation exceptions.
+            </remarks></member>
+        <member name="M:Cronofy.ICronofyOAuthClient.RevokeToken(System.String)">
+            <summary>
+            Revokes the given authorization token.
+            </summary>
+            <param name="token">
+            <para>
+            The refresh token or access token of the OAuth authorization to
+            revoke, must not be null or empty.
+            </para>
+            <para>
+            It is recommended that the refresh token is passed as it cannot
+            expire.
+            </para>
+            </param>
+            <exception cref="T:System.ArgumentException">
+            Thrown if <paramref name="token" /> is null or empty.
+            </exception>
+            <exception cref="T:Cronofy.CronofyException">
+            Thrown if an error is encountered whilst making the request.
+            </exception></member>
+        <member name="T:Cronofy.AttendeeStatus">
+            <summary>
+            Potential attendee status values.
+            </summary></member>
+        <member name="F:Cronofy.AttendeeStatus.Accepted">
+            <summary>
+            Status indicating the attendee has accepted their invitation to the
+            event.
+            </summary></member>
+        <member name="F:Cronofy.AttendeeStatus.Declined">
+            <summary>
+            Status indicating the attendee has declined their invitation to the
+            event.
+            </summary></member>
+        <member name="F:Cronofy.AttendeeStatus.NeedsAction">
+            <summary>
+            Status indicating the attendee has not responding to their
+            invitation to the event.
+            </summary></member>
+        <member name="F:Cronofy.AttendeeStatus.Tentative">
+            <summary>
+            Status indicating the attendee has tentatively accepted their
+            invitation to the event.
+            </summary></member>
+        <member name="F:Cronofy.AttendeeStatus.Unknown">
+            <summary>
+            Status indicating the attendee's status is unknown.
+            </summary></member>
+        <member name="T:Cronofy.Attendee">
+            <summary>
+            Class for representing an event attendee.
+            </summary></member>
+        <member name="P:Cronofy.Attendee.Email">
+            <summary>
+            Gets or sets the attendee's email.
+            </summary>
+            <value>
+            The attendee's email.
+            </value></member>
+        <member name="P:Cronofy.Attendee.DisplayName">
+            <summary>
+            Gets or sets the attendee's display name.
+            </summary>
+            <value>
+            The attendee's display name.
+            </value></member>
+        <member name="P:Cronofy.Attendee.Status">
+            <summary>
+            Gets or sets the attendee's status.
+            </summary>
+            <value>
+            The attendee's status.
+            </value>
+            <remarks>
+            See <see cref="T:Cronofy.AttendeeStatus" /> for potential values.
+            </remarks></member>
+        <member name="M:Cronofy.Attendee.GetHashCode">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.Attendee.Equals(System.Object)">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.Attendee.Equals(Cronofy.Attendee)">
+            <summary>
+            Determines whether the specified <see cref="T:Cronofy.Attendee" /> is
+            equal to the current <see cref="T:Cronofy.Attendee" />.
+            </summary>
+            <param name="other">
+            The <see cref="T:Cronofy.Attendee" /> to compare with the current
+            <see cref="T:Cronofy.Attendee" />.
+            </param>
+            <returns>
+            <c>true</c> if the specified <see cref="T:Cronofy.Attendee" /> is equal
+            to the current <see cref="T:Cronofy.Attendee" />; otherwise,
+            <c>false</c>.
+            </returns></member>
+        <member name="M:Cronofy.Attendee.ToString">
+            <inheritdoc /></member>
+        <member name="T:Cronofy.IHttpClientExtensions">
+            <summary>
+            Extensions for the <see cref="T:Cronofy.IHttpClient" /> interface for common
+            operations.
+            </summary></member>
+        <member name="F:Cronofy.IHttpClientExtensions.DefaultSerializerSettings">
+            <summary>
+            The default serializer settings for JSON.NET.
+            </summary></member>
+        <member name="M:Cronofy.IHttpClientExtensions.GetJsonResponse``1(Cronofy.IHttpClient,Cronofy.HttpRequest)">
+            <summary>
+            Performs the request and deserializes the JSON response into an
+            instance of <typeparamref name="T" />.
+            </summary>
+            <returns>
+            The response as an instance of <typeparamref name="T" />.
+            </returns>
+            <param name="httpClient">
+            The HTTP client to perform the request with.
+            </param>
+            <param name="request">
+            The request to perform.
+            </param>
+            <typeparam name="T">
+            The type to deserialize the response to.
+            </typeparam></member>
+        <member name="T:Cronofy.IBuilder`1">
+            <summary>
+            Generic builder interface.
+            </summary>
+            <typeparam name="T">
+            The type the builder creates.
+            </typeparam></member>
+        <member name="M:Cronofy.IBuilder`1.Build">
+            <summary>
+            Creates an instance of <typeparamref name="T" /> based upon the
+            current state of the builder.
+            </summary>
+            <returns>
+            An instance of <typeparamref name="T" /> based upon the current state
+            of the builder.
+            </returns>
+            <exception cref="T:System.ArgumentException">
+            Raised if the current state of the builder cannot create a valid
+            instance of <typeparamref name="T" />.
+            </exception></member>
+        <member name="T:Cronofy.CronofyException">
+            <summary>
+            Exception thrown by the Cronofy SDK when an error is encountered.
+            </summary></member>
+        <member name="M:Cronofy.CronofyException.#ctor(System.String)">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.CronofyException.#ctor(System.String,System.Exception)">
+            <inheritdoc /></member>
+        <member name="T:Cronofy.GetEventsRequestBuilder">
+            <summary>
+            Builder for generating <see cref="T:Cronofy.Requests.GetEventsRequest" />s.
+            </summary></member>
+        <member name="F:Cronofy.GetEventsRequestBuilder.timeZoneId">
+            <summary>
+            The request's time zone ID.
+            </summary></member>
+        <member name="F:Cronofy.GetEventsRequestBuilder.from">
+            <summary>
+            The request's from date.
+            </summary></member>
+        <member name="F:Cronofy.GetEventsRequestBuilder.to">
+            <summary>
+            The request's to date.
+            </summary></member>
+        <member name="F:Cronofy.GetEventsRequestBuilder.lastModified">
+            <summary>
+            The request's last modified time.
+            </summary></member>
+        <member name="F:Cronofy.GetEventsRequestBuilder.includeDeleted">
+            <summary>
+            The request's include deleted flag.
+            </summary></member>
+        <member name="F:Cronofy.GetEventsRequestBuilder.includeMoved">
+            <summary>
+            The request's include moved flag.
+            </summary></member>
+        <member name="F:Cronofy.GetEventsRequestBuilder.includeManaged">
+            <summary>
+            The request's include managed flag.
+            </summary></member>
+        <member name="F:Cronofy.GetEventsRequestBuilder.onlyManaged">
+            <summary>
+            The request's only managed flag.
+            </summary></member>
+        <member name="F:Cronofy.GetEventsRequestBuilder.calendarIds">
+            <summary>
+            The request's calendar IDs.
+            </summary></member>
+        <member name="M:Cronofy.GetEventsRequestBuilder.#ctor">
+            <summary>
+            Initializes a new instance of the
+            <see cref="T:Cronofy.GetEventsRequestBuilder" /> class.
+            </summary></member>
+        <member name="M:Cronofy.GetEventsRequestBuilder.TimeZoneId(System.String)">
+            <summary>
+            Sets the time zone ID for the request.
+            </summary>
+            <param name="timeZoneId">
+            The time zone ID for the request, must not be empty.
+            </param>
+            <returns>
+            A reference to the modified builder.
+            </returns>
+            <exception cref="T:System.ArgumentException">
+            Thrown if <paramref name="timeZoneId" /> is empty.
+            </exception></member>
+        <member name="M:Cronofy.GetEventsRequestBuilder.From(Cronofy.Date)">
+            <summary>
+            Sets the from date for the request.
+            </summary>
+            <param name="from">
+            The from date for the request.
+            </param>
+            <returns>
+            A reference to the modified builder.
+            </returns></member>
+        <member name="M:Cronofy.GetEventsRequestBuilder.From(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Sets the from date for the request.
+            </summary>
+            <param name="year">
+            The year of the from date.
+            </param>
+            <param name="month">
+            The month of the from date.
+            </param>
+            <param name="day">
+            The day of the from date.
+            </param>
+            <returns>
+            A reference to the modified builder.
+            </returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+            Thrown if the provided parameters do no generate a valid date.
+            </exception></member>
+        <member name="M:Cronofy.GetEventsRequestBuilder.To(Cronofy.Date)">
+            <summary>
+            Sets the to date for the request.
+            </summary>
+            <param name="to">
+            The to date for the request.
+            </param>
+            <returns>
+            A reference to the modified builder.
+            </returns></member>
+        <member name="M:Cronofy.GetEventsRequestBuilder.To(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Sets the from date for the request.
+            </summary>
+            <param name="year">
+            The year of the to date.
+            </param>
+            <param name="month">
+            The month of the to date.
+            </param>
+            <param name="day">
+            The day of the to date.
+            </param>
+            <returns>
+            A reference to the modified builder.
+            </returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+            Thrown if the provided parameters do no generate a valid date.
+            </exception></member>
+        <member name="M:Cronofy.GetEventsRequestBuilder.LastModified(System.DateTime)">
+            <summary>
+            Sets the last modified time for the request.
+            </summary>
+            <param name="lastModified">
+            The time the an event must have been modified on or after in order
+            to be returned.
+            </param>
+            <returns>
+            A reference to the modified builder.
+            </returns></member>
+        <member name="M:Cronofy.GetEventsRequestBuilder.IncludeDeleted(System.Boolean)">
+            <summary>
+            Sets the include deleted flag for the request.
+            </summary>
+            <param name="includeDeleted">
+            A flag specifying whether deleted events should be returned.
+            </param>
+            <returns>
+            A reference to the modified builder.
+            </returns></member>
+        <member name="M:Cronofy.GetEventsRequestBuilder.IncludeMoved(System.Boolean)">
+            <summary>
+            Sets the include moved flag for the request.
+            </summary>
+            <param name="includeMoved">
+            A flag specifying whether events that have moved out of the
+            specified window should be returned.
+            </param>
+            <returns>
+            A reference to the modified builder.
+            </returns></member>
+        <member name="M:Cronofy.GetEventsRequestBuilder.IncludeManaged(System.Boolean)">
+            <summary>
+            Sets the include managed flag for the request.
+            </summary>
+            <param name="includeManaged">
+            A flag specifying whether events that are managed by the application
+            should be returned.
+            </param>
+            <returns>
+            A reference to the modified builder.
+            </returns></member>
+        <member name="M:Cronofy.GetEventsRequestBuilder.OnlyManaged(System.Boolean)">
+            <summary>
+            Sets the only managed flag for the request.
+            </summary>
+            <param name="onlyManaged">
+            A flag specifying whether only events that are managed by the
+            application should be returned.
+            </param>
+            <returns>
+            A reference to the modified builder.
+            </returns></member>
+        <member name="M:Cronofy.GetEventsRequestBuilder.CalendarIds(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Sets the calendar IDs for the request.
+            </summary>
+            <param name="calendarIds">
+            The calendar IDs to restrict the events to, must not be null.
+            </param>
+            <returns>
+            A reference to the modified builder.
+            </returns>
+            <exception cref="T:System.ArgumentException">
+            Thrown if <paramref name="calendarIds" /> is null.
+            </exception></member>
+        <member name="M:Cronofy.GetEventsRequestBuilder.CalendarId(System.String)">
+            <summary>
+            Sets the calendar ID for the request.
+            </summary>
+            <param name="calendarId">
+            The calendar ID to restrict the events to, must not be null.
+            </param>
+            <returns>
+            A reference to the modified builder.
+            </returns>
+            <exception cref="T:System.ArgumentException">
+            Thrown if <paramref name="calendarId" /> is null.
+            </exception></member>
+        <member name="M:Cronofy.GetEventsRequestBuilder.Build">
+            <inheritdoc /></member>
+        <member name="T:Cronofy.Requests.GetEventsRequest">
+            <summary>
+            Class for the serialization of an get events request.
+            </summary></member>
+        <member name="P:Cronofy.Requests.GetEventsRequest.TimeZoneId">
+            <summary>
+            Gets or sets the time zone ID for the request.
+            </summary>
+            <value>
+            The time zone ID for the request.
+            </value></member>
+        <member name="P:Cronofy.Requests.GetEventsRequest.From">
+            <summary>
+            Gets or sets the from date for the request.
+            </summary>
+            <value>
+            The from date for the request.
+            </value></member>
+        <member name="P:Cronofy.Requests.GetEventsRequest.To">
+            <summary>
+            Gets or sets the to date for the request.
+            </summary>
+            <value>
+            The to date for the request.
+            </value></member>
+        <member name="P:Cronofy.Requests.GetEventsRequest.LastModified">
+            <summary>
+            Gets or sets the last modified time for the request.
+            </summary>
+            <value>
+            The last modified time for the request.
+            </value></member>
+        <member name="P:Cronofy.Requests.GetEventsRequest.IncludeDeleted">
+            <summary>
+            Gets or sets the include deleted flag for the request.
+            </summary>
+            <value>
+            The include deleted flag for the request.
+            </value></member>
+        <member name="P:Cronofy.Requests.GetEventsRequest.IncludeMoved">
+            <summary>
+            Gets or sets the include moved flag for the request.
+            </summary>
+            <value>
+            The include moved flag for the request.
+            </value></member>
+        <member name="P:Cronofy.Requests.GetEventsRequest.IncludeManaged">
+            <summary>
+            Gets or sets the include managed flag for the request.
+            </summary>
+            <value>
+            The include managed flag for the request.
+            </value></member>
+        <member name="P:Cronofy.Requests.GetEventsRequest.OnlyManaged">
+            <summary>
+            Gets or sets the only managed flag for the request.
+            </summary>
+            <value>
+            The only managed flag for the request.
+            </value></member>
+        <member name="P:Cronofy.Requests.GetEventsRequest.CalendarIds">
+            <summary>
+            Gets or sets the calendar IDs for the request.
+            </summary>
+            <value>
+            The calendar IDs for the request.
+            </value></member>
+        <member name="T:Cronofy.CronofyResponseException">
+            <summary>
+            Exception thrown by the Cronofy SDK when an error is encountered in a
+            HTTP response.
+            </summary></member>
+        <member name="F:Cronofy.CronofyResponseException.response">
+            <summary>
+            The response that caused the exception.
+            </summary></member>
+        <member name="M:Cronofy.CronofyResponseException.#ctor(System.String,Cronofy.HttpResponse)">
+            <summary>
+            Initializes a new instance of the
+            <see cref="T:Cronofy.CronofyResponseException" /> class.
+            </summary>
+            <param name="message">
+            A message that describes the error.
+            </param>
+            <param name="response">
+            The response that caused the exception, must not be null.
+            </param>
+            <exception cref="T:System.ArgumentException">
+            Thrown if <paramref name="response" /> is null.
+            </exception></member>
+        <member name="P:Cronofy.CronofyResponseException.Response">
+            <summary>
+            Gets the response that caused the exception.
+            </summary>
+            <value>
+            The response that caused the exception.
+            </value></member>
+        <member name="T:Cronofy.FreeBusy">
+            <summary>
+            Class representing a free-busy period.
+            </summary></member>
+        <member name="P:Cronofy.FreeBusy.CalendarId">
+            <summary>
+            Gets or sets the ID of the calendar the event is within.
+            </summary>
+            <value>
+            The ID of the calendar the event is within.
+            </value></member>
+        <member name="P:Cronofy.FreeBusy.Start">
+            <summary>
+            Gets or sets the start time of the free-busy period.
+            </summary>
+            <value>
+            The start time of the  free-busy period.
+            </value></member>
+        <member name="P:Cronofy.FreeBusy.End">
+            <summary>
+            Gets or sets the end time of the  free-busy period.
+            </summary>
+            <value>
+            The end time of the  free-busy period.
+            </value></member>
+        <member name="P:Cronofy.FreeBusy.FreeBusyStatus">
+            <summary>
+            Gets or sets the status of the  free-busy period.
+            </summary>
+            <value>
+            The period's free-busy status.
+            </value>
+            <remarks>
+            See <see cref="T:Cronofy.FreeBusyStatus" /> for potential values.
+            </remarks></member>
+        <member name="M:Cronofy.FreeBusy.GetHashCode">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.FreeBusy.Equals(System.Object)">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.FreeBusy.Equals(Cronofy.FreeBusy)">
+            <summary>
+            Determines whether the specified <see cref="T:Cronofy.FreeBusy" /> is
+            equal to the current <see cref="T:Cronofy.FreeBusy" />.
+            </summary>
+            <param name="other">
+            The <see cref="T:Cronofy.FreeBusy" /> to compare with the current
+            <see cref="T:Cronofy.FreeBusy" />.
+            </param>
+            <returns>
+            <c>true</c> if the specified <see cref="T:Cronofy.FreeBusy" /> is equal
+            to the current <see cref="T:Cronofy.FreeBusy" />; otherwise,
+            <c>false</c>.
+            </returns></member>
+        <member name="M:Cronofy.FreeBusy.ToString">
+            <inheritdoc /></member>
+        <member name="T:Cronofy.FreeBusyStatus">
+            <summary>
+            Potential free-busy status values.
+            </summary></member>
+        <member name="F:Cronofy.FreeBusyStatus.Busy">
+            <summary>
+            Status indicating the person is busy for the specified period.
+            </summary></member>
+        <member name="F:Cronofy.FreeBusyStatus.Free">
+            <summary>
+            Status indicating the person is free for the specified period.
+            </summary></member>
+        <member name="F:Cronofy.FreeBusyStatus.Tentative">
+            <summary>
+            Status indicating the person is probably busy for the specified
+            period.
+            </summary></member>
+        <member name="F:Cronofy.FreeBusyStatus.Unknown">
+            <summary>
+            Status indicating the status of the person for the period is
+            unknown.
+            </summary></member>
+        <member name="T:Cronofy.Requests.GetFreeBusyRequest">
+            <summary>
+            Class representing a free-busy request.
+            </summary></member>
+        <member name="P:Cronofy.Requests.GetFreeBusyRequest.TimeZoneId">
+            <summary>
+            Gets or sets the time zone ID for the request.
+            </summary>
+            <value>
+            The time zone ID for the request.
+            </value></member>
+        <member name="P:Cronofy.Requests.GetFreeBusyRequest.From">
+            <summary>
+            Gets or sets the from date for the request.
+            </summary>
+            <value>
+            The from date for the request.
+            </value></member>
+        <member name="P:Cronofy.Requests.GetFreeBusyRequest.To">
+            <summary>
+            Gets or sets the to date for the request.
+            </summary>
+            <value>
+            The to date for the request.
+            </value></member>
+        <member name="P:Cronofy.Requests.GetFreeBusyRequest.IncludeManaged">
+            <summary>
+            Gets or sets the include managed flag for the request.
+            </summary>
+            <value>
+            The include managed flag for the request.
+            </value></member>
+        <member name="P:Cronofy.Requests.GetFreeBusyRequest.CalendarIds">
+            <summary>
+            Gets or sets the calendar IDs for the request.
+            </summary>
+            <value>
+            The calendar IDs for the request.
+            </value></member>
+        <member name="T:Cronofy.GetFreeBusyRequestBuilder">
+            <summary>
+            Builder for generating <see cref="T:Cronofy.Requests.GetFreeBusyRequest" />s.
+            </summary></member>
+        <member name="F:Cronofy.GetFreeBusyRequestBuilder.timeZoneId">
+            <summary>
+            The request's time zone ID.
+            </summary></member>
+        <member name="F:Cronofy.GetFreeBusyRequestBuilder.from">
+            <summary>
+            The request's from date.
+            </summary></member>
+        <member name="F:Cronofy.GetFreeBusyRequestBuilder.to">
+            <summary>
+            The request's to date.
+            </summary></member>
+        <member name="F:Cronofy.GetFreeBusyRequestBuilder.includeManaged">
+            <summary>
+            The request's include managed flag.
+            </summary></member>
+        <member name="F:Cronofy.GetFreeBusyRequestBuilder.calendarIds">
+            <summary>
+            The request's calendar IDs.
+            </summary></member>
+        <member name="M:Cronofy.GetFreeBusyRequestBuilder.#ctor">
+            <summary>
+            Initializes a new instance of the
+            <see cref="T:Cronofy.GetFreeBusyRequestBuilder" /> class.
+            </summary></member>
+        <member name="M:Cronofy.GetFreeBusyRequestBuilder.TimeZoneId(System.String)">
+            <summary>
+            Sets the time zone ID for the request.
+            </summary>
+            <param name="timeZoneId">
+            The time zone ID for the request, must not be empty.
+            </param>
+            <returns>
+            A reference to the modified builder.
+            </returns>
+            <exception cref="T:System.ArgumentException">
+            Thrown if <paramref name="timeZoneId" /> is empty.
+            </exception></member>
+        <member name="M:Cronofy.GetFreeBusyRequestBuilder.From(Cronofy.Date)">
+            <summary>
+            Sets the from date for the request.
+            </summary>
+            <param name="from">
+            The from date for the request.
+            </param>
+            <returns>
+            A reference to the modified builder.
+            </returns></member>
+        <member name="M:Cronofy.GetFreeBusyRequestBuilder.From(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Sets the from date for the request.
+            </summary>
+            <param name="year">
+            The year of the from date.
+            </param>
+            <param name="month">
+            The month of the from date.
+            </param>
+            <param name="day">
+            The day of the from date.
+            </param>
+            <returns>
+            A reference to the modified builder.
+            </returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+            Thrown if the provided parameters do no generate a valid date.
+            </exception></member>
+        <member name="M:Cronofy.GetFreeBusyRequestBuilder.To(Cronofy.Date)">
+            <summary>
+            Sets the to date for the request.
+            </summary>
+            <param name="to">
+            The to date for the request.
+            </param>
+            <returns>
+            A reference to the modified builder.
+            </returns></member>
+        <member name="M:Cronofy.GetFreeBusyRequestBuilder.To(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Sets the from date for the request.
+            </summary>
+            <param name="year">
+            The year of the to date.
+            </param>
+            <param name="month">
+            The month of the to date.
+            </param>
+            <param name="day">
+            The day of the to date.
+            </param>
+            <returns>
+            A reference to the modified builder.
+            </returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+            Thrown if the provided parameters do no generate a valid date.
+            </exception></member>
+        <member name="M:Cronofy.GetFreeBusyRequestBuilder.IncludeManaged(System.Boolean)">
+            <summary>
+            Sets the include managed flag for the request.
+            </summary>
+            <param name="includeManaged">
+            A flag specifying whether free-busy information for events that are
+            managed by the application should be returned.
+            </param>
+            <returns>
+            A reference to the modified builder.
+            </returns></member>
+        <member name="M:Cronofy.GetFreeBusyRequestBuilder.CalendarIds(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Sets the calendar IDs for the request.
+            </summary>
+            <param name="calendarIds">
+            The calendar IDs to restrict the free-busy information to, must not
+            be null.
+            </param>
+            <returns>
+            A reference to the modified builder.
+            </returns>
+            <exception cref="T:System.ArgumentException">
+            Thrown if <paramref name="calendarIds" /> is null.
+            </exception></member>
+        <member name="M:Cronofy.GetFreeBusyRequestBuilder.CalendarId(System.String)">
+            <summary>
+            Sets the calendar ID for the request.
+            </summary>
+            <param name="calendarId">
+            The calendar ID to restrict the free-busy information to, must not
+            be null.
+            </param>
+            <returns>
+            A reference to the modified builder.
+            </returns>
+            <exception cref="T:System.ArgumentException">
+            Thrown if <paramref name="calendarId" /> is null.
+            </exception></member>
+        <member name="M:Cronofy.GetFreeBusyRequestBuilder.Build">
+            <inheritdoc /></member>
+        <member name="T:Cronofy.Responses.IPagedResultsResponse`1">
+            <summary>
+            Interface for a response that is part of a paged result set.
+            </summary>
+            <typeparam name="T">
+            The type of the items within the paged result set.
+            </typeparam></member>
+        <member name="P:Cronofy.Responses.IPagedResultsResponse`1.Pages">
+            <summary>
+            Gets the paging information for the response.
+            </summary>
+            <value>
+            The paging information for the response.
+            </value></member>
+        <member name="M:Cronofy.Responses.IPagedResultsResponse`1.GetResults">
+            <summary>
+            Gets the results from the page.
+            </summary>
+            <returns>
+            The results from the page.
+            </returns></member>
+        <member name="T:Cronofy.Responses.PagesResponse">
+            <summary>
+            Class for the deserialization of the paging information.
+            </summary></member>
+        <member name="P:Cronofy.Responses.PagesResponse.CurrentPage">
+            <summary>
+            Gets or sets the current page.
+            </summary>
+            <value>
+            The current page.
+            </value></member>
+        <member name="P:Cronofy.Responses.PagesResponse.TotalPages">
+            <summary>
+            Gets or sets the total number of pages.
+            </summary>
+            <value>
+            The total pages.
+            </value></member>
+        <member name="P:Cronofy.Responses.PagesResponse.NextPageUrl">
+            <summary>
+            Gets or sets the URL of the next page of events, if applicable.
+            </summary>
+            <value>
+            The URL of the next page of events, <c>null</c> if this is the
+            last page of results.
+            </value></member>
+        <member name="T:Cronofy.Responses.FreeBusyResponse">
+            <summary>
+            Class for the deserialization of a read events response.
+            </summary></member>
+        <member name="P:Cronofy.Responses.FreeBusyResponse.FreeBusy">
+            <summary>
+            Gets or sets the array of events.
+            </summary>
+            <value>
+            The array of events.
+            </value></member>
+        <member name="P:Cronofy.Responses.FreeBusyResponse.Pages">
+            <summary>
+            Gets or sets the paging information.
+            </summary>
+            <value>
+            The paging information.
+            </value></member>
+        <member name="M:Cronofy.Responses.FreeBusyResponse.GetResults">
+            <inheritdoc /></member>
+        <member name="T:Cronofy.Responses.FreeBusyResponse.FreeBusyPeriodResponse">
+            <summary>
+            Class for the deserialization of a free-busy period.
+            </summary></member>
+        <member name="P:Cronofy.Responses.FreeBusyResponse.FreeBusyPeriodResponse.CalendarId">
+            <summary>
+            Gets or sets the ID of the calendar the free-busy period is
+            within.
+            </summary>
+            <value>
+            The ID of the calendar the free-busy period is within.
+            </value></member>
+        <member name="P:Cronofy.Responses.FreeBusyResponse.FreeBusyPeriodResponse.Start">
+            <summary>
+            Gets or sets the start time of the free-busy period.
+            </summary>
+            <value>
+            The start time of the free-busy period.
+            </value></member>
+        <member name="P:Cronofy.Responses.FreeBusyResponse.FreeBusyPeriodResponse.End">
+            <summary>
+            Gets or sets the end time of the free-busy period.
+            </summary>
+            <value>
+            The end time of the free-busy period.
+            </value></member>
+        <member name="P:Cronofy.Responses.FreeBusyResponse.FreeBusyPeriodResponse.FreeBusyStatus">
+            <summary>
+            Gets or sets the account's free-busy status.
+            </summary>
+            <value>
+            The account's free-busy status.
+            </value></member>
+        <member name="M:Cronofy.Responses.FreeBusyResponse.FreeBusyPeriodResponse.ToFreeBusy">
+            <summary>
+            Converts the response into a <see cref="T:Cronofy.FreeBusy" />.
+            </summary>
+            <returns>
+            A <see cref="T:Cronofy.FreeBusy" /> based upon the response.
+            </returns></member>
+        <member name="T:Cronofy.TimeZoneIdentifiers">
+            <summary>
+            Class for time zone identifier constants.
+            </summary></member>
+        <member name="F:Cronofy.TimeZoneIdentifiers.UTC">
+            <summary>
+            The time zone identifier for Coordinated Universal Time (UTC).
+            </summary></member>
+        <member name="F:Cronofy.TimeZoneIdentifiers.Default">
+            <summary>
+            The default time zone identifier for times.
+            </summary></member>
+        <member name="T:Cronofy.Requests.OAuthTokenRevocationRequest">
+            <summary>
+            Class for the serialization of an OAuth token revocation request.
+            </summary></member>
+        <member name="P:Cronofy.Requests.OAuthTokenRevocationRequest.ClientId">
+            <summary>
+            Gets or sets the OAuth application's client identifier.
+            </summary>
+            <value>
+            The OAuth application's client identifier.
+            </value></member>
+        <member name="P:Cronofy.Requests.OAuthTokenRevocationRequest.ClientSecret">
+            <summary>
+            Gets or sets the OAuth application's client secret.
+            </summary>
+            <value>
+            The OAuth application's client secret.
+            </value></member>
+        <member name="P:Cronofy.Requests.OAuthTokenRevocationRequest.Token">
+            <summary>
+            Gets or sets the token of the OAuth authorization to be revoked.
+            </summary>
+            <value>
+            The token of the OAuth authorization to be revoked.
+            </value></member>
+        <member name="T:Cronofy.Account">
+            <summary>
+            Class for representing an account.
+            </summary></member>
+        <member name="P:Cronofy.Account.Id">
+            <summary>
+            Gets or sets the ID of the account.
+            </summary>
+            <value>
+            The ID of the account.
+            </value></member>
+        <member name="P:Cronofy.Account.Email">
+            <summary>
+            Gets or sets the email address of the account.
+            </summary>
+            <value>
+            The email address of the account.
+            </value></member>
+        <member name="P:Cronofy.Account.Name">
+            <summary>
+            Gets or sets the name of the account.
+            </summary>
+            <value>
+            The name of the account.
+            </value></member>
+        <member name="P:Cronofy.Account.DefaultTimeZoneId">
+            <summary>
+            Gets or sets the default time zone identifier of the account.
+            </summary>
+            <value>
+            The default time zone identifier of the account.
+            </value></member>
+        <member name="M:Cronofy.Account.GetHashCode">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.Account.Equals(System.Object)">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.Account.Equals(Cronofy.Account)">
+            <summary>
+            Determines whether the specified <see cref="T:Cronofy.Account" /> is
+            equal to the current <see cref="T:Cronofy.Account" />.
+            </summary>
+            <param name="other">
+            The <see cref="T:Cronofy.Account" /> to compare with the current
+            <see cref="T:Cronofy.Account" />.
+            </param>
+            <returns>
+            <c>true</c> if the specified <see cref="T:Cronofy.Account" /> is equal
+            to the current <see cref="T:Cronofy.Account" />; otherwise,
+            <c>false</c>.
+            </returns></member>
+        <member name="M:Cronofy.Account.ToString">
+            <inheritdoc /></member>
+        <member name="T:Cronofy.Responses.AccountResponse">
+            <summary>
+            Class for the deserialization of an account response.
+            </summary></member>
+        <member name="P:Cronofy.Responses.AccountResponse.Account">
+            <summary>
+            Gets or sets the details of the account.
+            </summary>
+            <value>
+            The details of the account.
+            </value></member>
+        <member name="M:Cronofy.Responses.AccountResponse.ToAccount">
+            <summary>
+            Converts the response into a <see cref="T:Cronofy.Account" />.
+            </summary>
+            <returns>
+            A <see cref="T:Cronofy.Account" /> based upon the response.
+            </returns></member>
+        <member name="T:Cronofy.Responses.AccountResponse.AccountDetailResponse">
+            <summary>
+            Class for the deserialization of an account response.
+            </summary></member>
+        <member name="P:Cronofy.Responses.AccountResponse.AccountDetailResponse.AccountId">
+            <summary>
+            Gets or sets the ID of the account.
+            </summary>
+            <value>
+            The ID of the account.
+            </value></member>
+        <member name="P:Cronofy.Responses.AccountResponse.AccountDetailResponse.Email">
+            <summary>
+            Gets or sets the email of the account.
+            </summary>
+            <value>
+            The email of the account.
+            </value></member>
+        <member name="P:Cronofy.Responses.AccountResponse.AccountDetailResponse.Name">
+            <summary>
+            Gets or sets the name of the account.
+            </summary>
+            <value>
+            The name of the account.
+            </value></member>
+        <member name="P:Cronofy.Responses.AccountResponse.AccountDetailResponse.DefaultTimeZoneId">
+            <summary>
+            Gets or sets the default time zone identifier of the account.
+            </summary>
+            <value>
+            The default time zone identifier of the account.
+            </value></member>
+        <member name="M:Cronofy.Responses.AccountResponse.AccountDetailResponse.ToAccount">
+            <summary>
+            Converts the response into a <see cref="T:Cronofy.Account" />.
+            </summary>
+            <returns>
+            A <see cref="T:Cronofy.Account" /> based upon the response.
+            </returns></member>
+        <member name="T:Cronofy.Responses.ProfilesResponse">
+            <summary>
+            Class for the deserialization of a profiles response.
+            </summary></member>
+        <member name="P:Cronofy.Responses.ProfilesResponse.Profiles">
+            <summary>
+            Gets or sets the array of profiles.
+            </summary>
+            <value>
+            The array of profiles.
+            </value></member>
+        <member name="T:Cronofy.Responses.ProfilesResponse.ProfileResponse">
+            <summary>
+            Class for the deserialization of a profile response.
+            </summary></member>
+        <member name="P:Cronofy.Responses.ProfilesResponse.ProfileResponse.ProviderName">
+            <summary>
+            Gets or sets the name of the provider.
+            </summary>
+            <value>
+            The name of the provider.
+            </value></member>
+        <member name="P:Cronofy.Responses.ProfilesResponse.ProfileResponse.ProfileId">
+            <summary>
+            Gets or sets the ID of the profile.
+            </summary>
+            <value>
+            The ID of the profile.
+            </value></member>
+        <member name="P:Cronofy.Responses.ProfilesResponse.ProfileResponse.ProfileName">
+            <summary>
+            Gets or sets the name of the profile.
+            </summary>
+            <value>
+            The name of the profile.
+            </value></member>
+        <member name="P:Cronofy.Responses.ProfilesResponse.ProfileResponse.ProfileConnected">
+            <summary>
+            Gets or sets a value indicating whether this profile is
+            connected.
+            </summary>
+            <value>
+            <c>true</c> if the profile is connected; otherwise,
+            <c>false</c>.
+            </value></member>
+        <member name="P:Cronofy.Responses.ProfilesResponse.ProfileResponse.ProfileRelinkUrl">
+            <summary>
+            Gets or sets the relink URL for the profile.
+            </summary>
+            <value>
+            The relink URL for the profile.
+            </value></member>
+        <member name="M:Cronofy.Responses.ProfilesResponse.ProfileResponse.ToProfile">
+            <summary>
+            Converts the response into a <see cref="T:Cronofy.Profile" />.
+            </summary>
+            <returns>
+            A <see cref="T:Cronofy.Profile" /> based upon the response.
+            </returns></member>
+        <member name="T:Cronofy.Channel">
+            <summary>
+            Class for representing a channel.
+            </summary></member>
+        <member name="P:Cronofy.Channel.Id">
+            <summary>
+            Gets or sets the ID of the channel.
+            </summary>
+            <value>
+            The ID of the channel.
+            </value></member>
+        <member name="P:Cronofy.Channel.CallbackUrl">
+            <summary>
+            Gets or sets the callback URL of the channel.
+            </summary>
+            <value>
+            The callback URL of the channel.
+            </value></member>
+        <member name="P:Cronofy.Channel.Filters">
+            <summary>
+            Gets or sets the active filters of the channel.
+            </summary>
+            <value>
+            The active filters of the channel.
+            </value></member>
+        <member name="M:Cronofy.Channel.GetHashCode">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.Channel.Equals(System.Object)">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.Channel.Equals(Cronofy.Channel)">
+            <summary>
+            Determines whether the specified <see cref="T:Cronofy.Channel" /> is
+            equal to the current <see cref="T:Cronofy.Channel" />.
+            </summary>
+            <param name="other">
+            The <see cref="T:Cronofy.Channel" /> to compare with the current
+            <see cref="T:Cronofy.Channel" />.
+            </param>
+            <returns>
+            <c>true</c> if the specified <see cref="T:Cronofy.Channel" /> is equal
+            to the current <see cref="T:Cronofy.Channel" />; otherwise,
+            <c>false</c>.
+            </returns></member>
+        <member name="M:Cronofy.Channel.ToString">
+            <inheritdoc /></member>
+        <member name="T:Cronofy.Channel.ChannelFilters">
+            <summary>
+            Class for representing the active filters of a channel.
+            </summary></member>
+        <member name="P:Cronofy.Channel.ChannelFilters.OnlyManaged">
+            <summary>
+            Gets or sets a value indicating whether the channel is filtered
+            to only managed events.
+            </summary>
+            <value>
+            <c>true</c> if the channel is filtered to only managed events;
+            otherwise, <c>false</c>.
+            </value></member>
+        <member name="P:Cronofy.Channel.ChannelFilters.CalendarIds">
+            <summary>
+            Gets or sets the calendar IDs the channel is filtered to.
+            </summary>
+            <value>
+            The calendar IDs the channel is filtered to.
+            </value></member>
+        <member name="M:Cronofy.Channel.ChannelFilters.GetHashCode">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.Channel.ChannelFilters.Equals(System.Object)">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.Channel.ChannelFilters.Equals(Cronofy.Channel.ChannelFilters)">
+            <summary>
+            Determines whether the specified <see cref="T:Cronofy.Channel.ChannelFilters" />
+            are equal to the current <see cref="T:Cronofy.Channel.ChannelFilters" />.
+            </summary>
+            <param name="other">
+            The <see cref="T:Cronofy.Channel.ChannelFilters" /> to compare with the current
+            <see cref="T:Cronofy.Channel.ChannelFilters" />.
+            </param>
+            <returns>
+            <c>true</c> if the specified <see cref="T:Cronofy.Channel.ChannelFilters" /> are
+            equal to the current <see cref="T:Cronofy.Channel.ChannelFilters" />; otherwise,
+            <c>false</c>.
+            </returns></member>
+        <member name="M:Cronofy.Channel.ChannelFilters.ToString">
+            <inheritdoc /></member>
+        <member name="T:Cronofy.Requests.CreateChannelRequest">
+            <summary>
+            Class for the serialization of a create channel request.
+            </summary></member>
+        <member name="P:Cronofy.Requests.CreateChannelRequest.CallbackUrl">
+            <summary>
+            Gets or sets the callback URL for the request.
+            </summary>
+            <value>
+            The callback URL for the request.
+            </value></member>
+        <member name="P:Cronofy.Requests.CreateChannelRequest.Filters">
+            <summary>
+            Gets or sets the filters for the channel.
+            </summary>
+            <value>
+            The filters for the channel.
+            </value></member>
+        <member name="T:Cronofy.Requests.CreateChannelRequest.ChannelFilters">
+            <summary>
+            Class for the serialization of the filtering options of a create
+            channel request.
+            </summary></member>
+        <member name="P:Cronofy.Requests.CreateChannelRequest.ChannelFilters.OnlyManaged">
+            <summary>
+            Gets or sets the only managed flag.
+            </summary>
+            <value>
+            The only managed flag.
+            </value></member>
+        <member name="P:Cronofy.Requests.CreateChannelRequest.ChannelFilters.CalendarIds">
+            <summary>
+            Gets or sets the calendar IDs for the request.
+            </summary>
+            <value>
+            The calendar IDs for the request.
+            </value></member>
+        <member name="T:Cronofy.Responses.ChannelResponse">
+            <summary>
+            Class for the deserialization of a channel response.
+            </summary></member>
+        <member name="P:Cronofy.Responses.ChannelResponse.Channel">
+            <summary>
+            Gets or sets the details of the channel.
+            </summary>
+            <value>
+            The details of the channel.
+            </value></member>
+        <member name="M:Cronofy.Responses.ChannelResponse.ToChannel">
+            <summary>
+            Converts the response into a <see cref="T:Cronofy.Channel" />.
+            </summary>
+            <returns>
+            A <see cref="T:Cronofy.Channel" /> based upon the response.
+            </returns></member>
+        <member name="T:Cronofy.Responses.ChannelsResponse">
+            <summary>
+            Class for the deserialization of a channels response.
+            </summary></member>
+        <member name="P:Cronofy.Responses.ChannelsResponse.Channels">
+            <summary>
+            Gets or sets the details of the channels.
+            </summary>
+            <value>
+            The details of the channels.
+            </value></member>
+        <member name="T:Cronofy.Responses.ChannelDetailResponse">
+            <summary>
+            Class for the deserialization of a channel response.
+            </summary></member>
+        <member name="P:Cronofy.Responses.ChannelDetailResponse.ChannelId">
+            <summary>
+            Gets or sets the ID of the channel.
+            </summary>
+            <value>
+            The ID of the channel.
+            </value></member>
+        <member name="P:Cronofy.Responses.ChannelDetailResponse.CallbackUrl">
+            <summary>
+            Gets or sets the callback URL of the channel.
+            </summary>
+            <value>
+            The callback URL of the channel.
+            </value></member>
+        <member name="P:Cronofy.Responses.ChannelDetailResponse.Filters">
+            <summary>
+            Gets or sets the filters for the channel.
+            </summary>
+            <value>
+            The filters for the channel.
+            </value></member>
+        <member name="M:Cronofy.Responses.ChannelDetailResponse.ToChannel">
+            <summary>
+            Converts the response into a <see cref="T:Cronofy.Channel" />.
+            </summary>
+            <returns>
+            A <see cref="T:Cronofy.Channel" /> based upon the response.
+            </returns></member>
+        <member name="T:Cronofy.Responses.ChannelDetailResponse.ChannelFilters">
+            <summary>
+            Class for the deserialization of the filtering options of a channel
+            response.
+            </summary></member>
+        <member name="P:Cronofy.Responses.ChannelDetailResponse.ChannelFilters.OnlyManaged">
+            <summary>
+            Gets or sets the only managed flag.
+            </summary>
+            <value>
+            The only managed flag.
+            </value></member>
+        <member name="P:Cronofy.Responses.ChannelDetailResponse.ChannelFilters.CalendarIds">
+            <summary>
+            Gets or sets the calendar ID filters.
+            </summary>
+            <value>
+            The calendar ID filters.
+            </value></member>
+        <member name="T:Cronofy.CreateChannelBuilder">
+            <summary>
+            Builder for generating <see cref="T:Cronofy.Requests.CreateChannelRequest" />s.
+            </summary></member>
+        <member name="F:Cronofy.CreateChannelBuilder.callbackUrl">
+            <summary>
+            The callback URL for the request.
+            </summary></member>
+        <member name="F:Cronofy.CreateChannelBuilder.onlyManaged">
+            <summary>
+            The request's only managed flag.
+            </summary></member>
+        <member name="F:Cronofy.CreateChannelBuilder.calendarIds">
+            <summary>
+            The request's calendar IDs.
+            </summary></member>
+        <member name="M:Cronofy.CreateChannelBuilder.CallbackUrl(System.String)">
+            <summary>
+            Sets the callback URL for the request.
+            </summary>
+            <param name="callbackUrl">
+            The callback URL for the request, must not be empty.
+            </param>
+            <returns>
+            A reference to the modified builder.
+            </returns>
+            <exception cref="T:System.ArgumentException">
+            Thrown if <paramref name="callbackUrl" /> is empty.
+            </exception></member>
+        <member name="M:Cronofy.CreateChannelBuilder.OnlyManaged(System.Boolean)">
+            <summary>
+            Sets the only managed flag for the request.
+            </summary>
+            <param name="onlyManaged">
+            A flag specifying whether only events that are managed by the
+            application should be returned.
+            </param>
+            <returns>
+            A reference to the modified builder.
+            </returns></member>
+        <member name="M:Cronofy.CreateChannelBuilder.CalendarIds(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Sets the calendar IDs for the request.
+            </summary>
+            <param name="calendarIds">
+            The calendar IDs to restrict the notification channel to, must not
+            be null.
+            </param>
+            <returns>
+            A reference to the modified builder.
+            </returns>
+            <exception cref="T:System.ArgumentException">
+            Thrown if <paramref name="calendarIds" /> is null.
+            </exception></member>
+        <member name="M:Cronofy.CreateChannelBuilder.CalendarId(System.String)">
+            <summary>
+            Sets the calendar ID for the request.
+            </summary>
+            <param name="calendarId">
+            The calendar ID to restrict the notification channel to, must not
+            be null.
+            </param>
+            <returns>
+            A reference to the modified builder.
+            </returns>
+            <exception cref="T:System.ArgumentException">
+            Thrown if <paramref name="calendarId" /> is null.
+            </exception></member>
+        <member name="M:Cronofy.CreateChannelBuilder.Build">
+            <inheritdoc /></member>
+        <member name="T:Cronofy.EnumerableUtils">
+            <summary>
+            Set of utilities for working with enumerable collections.
+            </summary></member>
+        <member name="M:Cronofy.EnumerableUtils.NullTolerantSequenceEqual``1(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Version of <see cref="M:System.Linq.Enumerable.SequenceEqual``1(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``0})" /> that
+            tolerates either input being <c>null</c>.
+            </summary>
+            <typeparam name="T">
+            The type of the sequences.
+            </typeparam>
+            <param name="left">
+            The first sequence to compare.
+            </param>
+            <param name="right">
+            The second sequence to compare.
+            </param>
+            <returns>
+            <c>true</c>, if both sequences are null or if they contain the same
+            sequence of elements; otherwise <c>false</c>.
+            </returns></member>
+        <member name="T:Cronofy.Requests.PushNotificationRequest">
+            <summary>
+            Class for the deserialization of push notification requests.
+            </summary></member>
+        <member name="P:Cronofy.Requests.PushNotificationRequest.Notification">
+            <summary>
+            Gets or sets the details of the notification.
+            </summary>
+            <value>
+            The details of the notification.
+            </value></member>
+        <member name="P:Cronofy.Requests.PushNotificationRequest.Channel">
+            <summary>
+            Gets or sets the details of the channel.
+            </summary>
+            <value>
+            The details of the channel.
+            </value></member>
+        <member name="M:Cronofy.Requests.PushNotificationRequest.GetHashCode">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.Requests.PushNotificationRequest.Equals(System.Object)">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.Requests.PushNotificationRequest.Equals(Cronofy.Requests.PushNotificationRequest)">
+            <summary>
+            Determines whether the specified
+            <see cref="T:Cronofy.Requests.PushNotificationRequest" /> is equal to the current
+            <see cref="T:Cronofy.Requests.PushNotificationRequest" />.
+            </summary>
+            <param name="other">
+            The <see cref="T:Cronofy.Requests.PushNotificationRequest" /> to compare with the
+            current <see cref="T:Cronofy.Requests.PushNotificationRequest" />.
+            </param>
+            <returns>
+            <c>true</c> if the specified <see cref="T:Cronofy.Requests.PushNotificationRequest" />
+            is equal to the current <see cref="T:Cronofy.Requests.PushNotificationRequest" />;
+            otherwise, <c>false</c>.
+            </returns></member>
+        <member name="M:Cronofy.Requests.PushNotificationRequest.ToString">
+            <inheritdoc /></member>
+        <member name="T:Cronofy.Requests.PushNotificationRequest.NotificationDetail">
+            <summary>
+            Class for the deserialization of push notification details.
+            </summary></member>
+        <member name="P:Cronofy.Requests.PushNotificationRequest.NotificationDetail.Type">
+            <summary>
+            Gets or sets the type of the notification.
+            </summary>
+            <value>
+            The type of the notification.
+            </value></member>
+        <member name="P:Cronofy.Requests.PushNotificationRequest.NotificationDetail.ChangesSince">
+            <summary>
+            Gets or sets the time that there have been changes since.
+            </summary>
+            <value>
+            The time that there have been changes since.
+            </value></member>
+        <member name="P:Cronofy.Requests.PushNotificationRequest.NotificationDetail.ChangesSinceDeserializer">
+            <summary>
+            Gets or sets the changes since property as a string.
+            </summary>
+            <value>
+            The changes since property as a string.
+            </value>
+            <remarks>
+            Only present to support deserialization using
+            <see cref="T:System.Runtime.Serialization.DataContractAttribute" />s.
+            </remarks></member>
+        <member name="M:Cronofy.Requests.PushNotificationRequest.NotificationDetail.GetHashCode">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.Requests.PushNotificationRequest.NotificationDetail.Equals(System.Object)">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.Requests.PushNotificationRequest.NotificationDetail.Equals(Cronofy.Requests.PushNotificationRequest.NotificationDetail)">
+            <summary>
+            Determines whether the specified
+            <see cref="T:Cronofy.Requests.PushNotificationRequest.NotificationDetail" /> is equal to the current
+            <see cref="T:Cronofy.Requests.PushNotificationRequest.NotificationDetail" />.
+            </summary>
+            <param name="other">
+            The <see cref="T:Cronofy.Requests.PushNotificationRequest.NotificationDetail" /> to compare with the
+            current <see cref="T:Cronofy.Requests.PushNotificationRequest.NotificationDetail" />.
+            </param>
+            <returns>
+            <c>true</c> if the specified <see cref="T:Cronofy.Requests.PushNotificationRequest.NotificationDetail" />
+            is equal to the current <see cref="T:Cronofy.Requests.PushNotificationRequest.NotificationDetail" />;
+            otherwise, <c>false</c>.
+            </returns></member>
+        <member name="M:Cronofy.Requests.PushNotificationRequest.NotificationDetail.ToString">
+            <inheritdoc /></member>
+        <member name="T:Cronofy.Requests.PushNotificationRequest.ChannelDetail">
+            <summary>
+            Class for the deserialization of channel details.
+            </summary></member>
+        <member name="P:Cronofy.Requests.PushNotificationRequest.ChannelDetail.Id">
+            <summary>
+            Gets or sets the ID of the channel.
+            </summary>
+            <value>
+            The ID of the channel.
+            </value></member>
+        <member name="P:Cronofy.Requests.PushNotificationRequest.ChannelDetail.CallbackUrl">
+            <summary>
+            Gets or sets the callback URL of the channel.
+            </summary>
+            <value>
+            The callback URL of the channel.
+            </value></member>
+        <member name="P:Cronofy.Requests.PushNotificationRequest.ChannelDetail.Filters">
+            <summary>
+            Gets or sets the filters for the channel.
+            </summary>
+            <value>
+            The filters for the channel.
+            </value></member>
+        <member name="M:Cronofy.Requests.PushNotificationRequest.ChannelDetail.GetHashCode">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.Requests.PushNotificationRequest.ChannelDetail.Equals(System.Object)">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.Requests.PushNotificationRequest.ChannelDetail.Equals(Cronofy.Requests.PushNotificationRequest.ChannelDetail)">
+            <summary>
+            Determines whether the specified <see cref="T:Cronofy.Requests.PushNotificationRequest.ChannelDetail" /> is
+            equal to the current <see cref="T:Cronofy.Requests.PushNotificationRequest.ChannelDetail" />.
+            </summary>
+            <param name="other">
+            The <see cref="T:Cronofy.Requests.PushNotificationRequest.ChannelDetail" /> to compare with the current
+            <see cref="T:Cronofy.Requests.PushNotificationRequest.ChannelDetail" />.
+            </param>
+            <returns>
+            <c>true</c> if the specified <see cref="T:Cronofy.Requests.PushNotificationRequest.ChannelDetail" /> is
+            equal to the current <see cref="T:Cronofy.Requests.PushNotificationRequest.ChannelDetail" />; otherwise,
+            <c>false</c>.
+            </returns></member>
+        <member name="M:Cronofy.Requests.PushNotificationRequest.ChannelDetail.ToString">
+            <inheritdoc /></member>
+        <member name="T:Cronofy.Requests.PushNotificationRequest.ChannelDetail.ChannelFilters">
+            <summary>
+            Class for the deserialization of the filtering options of a channel
+            response.
+            </summary></member>
+        <member name="P:Cronofy.Requests.PushNotificationRequest.ChannelDetail.ChannelFilters.OnlyManaged">
+            <summary>
+            Gets or sets the only managed flag.
+            </summary>
+            <value>
+            The only managed flag.
+            </value></member>
+        <member name="P:Cronofy.Requests.PushNotificationRequest.ChannelDetail.ChannelFilters.CalendarIds">
+            <summary>
+            Gets or sets the calendar ID filters.
+            </summary>
+            <value>
+            The calendar ID filters.
+            </value></member>
+        <member name="M:Cronofy.Requests.PushNotificationRequest.ChannelDetail.ChannelFilters.GetHashCode">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.Requests.PushNotificationRequest.ChannelDetail.ChannelFilters.Equals(System.Object)">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.Requests.PushNotificationRequest.ChannelDetail.ChannelFilters.Equals(Cronofy.Requests.PushNotificationRequest.ChannelDetail.ChannelFilters)">
+            <summary>
+            Determines whether the specified
+            <see cref="T:Cronofy.Requests.PushNotificationRequest.ChannelDetail.ChannelFilters" /> is equal to the current
+            <see cref="T:Cronofy.Requests.PushNotificationRequest.ChannelDetail" />.
+            </summary>
+            <param name="other">
+            The <see cref="T:Cronofy.Requests.PushNotificationRequest.ChannelDetail" /> to compare with the current
+            <see cref="T:Cronofy.Requests.PushNotificationRequest.ChannelDetail" />.
+            </param>
+            <returns>
+            <c>true</c> if the specified <see cref="T:Cronofy.Requests.PushNotificationRequest.ChannelDetail" /> is
+            equal to the current <see cref="T:Cronofy.Requests.PushNotificationRequest.ChannelDetail" />; otherwise,
+            <c>false</c>.
+            </returns></member>
+        <member name="M:Cronofy.Requests.PushNotificationRequest.ChannelDetail.ChannelFilters.ToString">
+            <inheritdoc /></member>
+        <member name="T:Cronofy.Requests.CreateCalendarRequest">
+            <summary>
+            Class for the serialization of a create calendar request.
+            </summary></member>
+        <member name="P:Cronofy.Requests.CreateCalendarRequest.ProfileId">
+            <summary>
+            Gets or sets the profile ID for the request.
+            </summary>
+            <value>
+            The profile ID for the request.
+            </value></member>
+        <member name="P:Cronofy.Requests.CreateCalendarRequest.Name">
+            <summary>
+            Gets or sets the name for the calendar.
+            </summary>
+            <value>
+            The name for the channel.
+            </value></member>
+        <member name="T:Cronofy.Responses.CreateCalendarResponse">
+            <summary>
+            Class for the deserialization of a calendar list response.
+            </summary></member>
+        <member name="P:Cronofy.Responses.CreateCalendarResponse.Calendar">
+            <summary>
+            Gets or sets the array of calendars.
+            </summary>
+            <value>
+            The array of calendars.
+            </value></member>
+        <member name="M:Cronofy.Responses.CreateCalendarResponse.ToCalendar">
+            <summary>
+            Converts the response into a <see cref="T:Cronofy.Calendar" />.
+            </summary>
+            <returns>
+            A <see cref="T:Cronofy.Calendar" /> based upon the response.
+            </returns></member>
+        <member name="T:Cronofy.Responses.CreateCalendarResponse.CalendarResponse">
+            <summary>
+            Class for the deserialization of a calendar response.
+            </summary></member>
+        <member name="P:Cronofy.Responses.CreateCalendarResponse.CalendarResponse.ProviderName">
+            <summary>
+            Gets or sets the name of the calendar provider.
+            </summary>
+            <value>
+            The name of the calendar provider.
+            </value></member>
+        <member name="P:Cronofy.Responses.CreateCalendarResponse.CalendarResponse.ProfileId">
+            <summary>
+            Gets or sets the ID of the calendar's profile.
+            </summary>
+            <value>
+            The ID of the calendar's profile.
+            </value></member>
+        <member name="P:Cronofy.Responses.CreateCalendarResponse.CalendarResponse.ProfileName">
+            <summary>
+            Gets or sets the name of the calendar's profile.
+            </summary>
+            <value>
+            The name of the calendar's profile.
+            </value></member>
+        <member name="P:Cronofy.Responses.CreateCalendarResponse.CalendarResponse.CalendarId">
+            <summary>
+            Gets or sets the ID of the calendar.
+            </summary>
+            <value>
+            The ID of the calendar.
+            </value></member>
+        <member name="P:Cronofy.Responses.CreateCalendarResponse.CalendarResponse.CalendarName">
+            <summary>
+            Gets or sets the name of the calendar.
+            </summary>
+            <value>
+            The name of the calendar.
+            </value></member>
+        <member name="P:Cronofy.Responses.CreateCalendarResponse.CalendarResponse.CalendarReadonly">
+            <summary>
+            Gets or sets a value indicating whether this calendar is
+            readonly.
+            </summary>
+            <value>
+            <c>true</c> if the calendar readonly; otherwise, <c>false</c>.
+            </value></member>
+        <member name="P:Cronofy.Responses.CreateCalendarResponse.CalendarResponse.CalendarDeleted">
+            <summary>
+            Gets or sets a value indicating whether this calendar has been
+            deleted.
+            </summary>
+            <value>
+            <c>true</c> if the calendar has been deleted; otherwise,
+            <c>false</c>.
+            </value></member>
+        <member name="M:Cronofy.Responses.CreateCalendarResponse.CalendarResponse.ToCalendar">
+            <summary>
+            Converts the response into a <see cref="T:Cronofy.Calendar" />.
+            </summary>
+            <returns>
+            A <see cref="T:Cronofy.Calendar" /> based upon the response.
+            </returns></member>
+        <member name="T:Cronofy.EventTimeConverter">
+            <summary>
+            Convertor for translating <see cref="T:Cronofy.EventTime" />s to and from JSON.
+            </summary></member>
+        <member name="F:Cronofy.EventTimeConverter.DateTimeOffsetFormats">
+            <summary>
+            The date time offset formats using for parsing times.
+            </summary></member>
+        <member name="M:Cronofy.EventTimeConverter.CanConvert(System.Type)">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.EventTimeConverter.ReadJson(Newtonsoft.Json.JsonReader,System.Type,System.Object,Newtonsoft.Json.JsonSerializer)">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.EventTimeConverter.WriteJson(Newtonsoft.Json.JsonWriter,System.Object,Newtonsoft.Json.JsonSerializer)">
+            <inheritdoc /></member>
+        <member name="T:Cronofy.TimestampConverter">
+            <summary>
+            Convertor for translating <see cref="T:System.DateTime" />s from JSON.
+            </summary></member>
+        <member name="F:Cronofy.TimestampConverter.MinTime">
+            <summary>
+            The minimum time that can be parsed, as a string.
+            </summary></member>
+        <member name="M:Cronofy.TimestampConverter.CanConvert(System.Type)">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.TimestampConverter.ReadJson(Newtonsoft.Json.JsonReader,System.Type,System.Object,Newtonsoft.Json.JsonSerializer)">
+            <inheritdoc /></member>
+        <member name="M:Cronofy.TimestampConverter.WriteJson(Newtonsoft.Json.JsonWriter,System.Object,Newtonsoft.Json.JsonSerializer)">
+            <inheritdoc /></member>
+    </members>
+</doc>

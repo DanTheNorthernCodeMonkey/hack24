@@ -22,8 +22,8 @@ namespace Cronofy_WebAPI.Controllers
             _configuration = configuration;
         }
 
-        [Route(@"{startDateString}/{endDateString}/{description}/{summary}")]
-        public HttpResponseMessage Post([FromUri]string startDateString, [FromUri]string endDateString, string description, string summary)
+        [Route(@"{startDate}/{endDate}/{description}/{summaryInfo}")]
+        public HttpResponseMessage Post([FromUri]string startDate, [FromUri]string endDate, string description, string summaryInfo)
         {
             try
             {
@@ -34,14 +34,14 @@ namespace Cronofy_WebAPI.Controllers
                 var calendarId =
                     calendars.Where(x => x.Profile.ProviderName == "google").Select(x => x.CalendarId).First();
 
-                var parsedStartDateString = DateTimeParser.Parse(startDateString);
-                var parsedEndDateString = DateTimeParser.Parse(endDateString);
+                var parsedStartDateString = DateTimeParser.Parse(startDate);
+                var parsedEndDateString = DateTimeParser.Parse(endDate);
 
                 var uniqueId = Guid.NewGuid();
 
                 var eventBuilder = new UpsertEventRequestBuilder()
                     .EventId(uniqueId.ToString())
-                    .Summary(summary)
+                    .Summary(summaryInfo)
                     .Description(description)
                     .Start(parsedStartDateString.Year, parsedStartDateString.Month, parsedStartDateString.Day,
                         parsedStartDateString.DateTime.Hour, parsedStartDateString.DateTime.Minute)
