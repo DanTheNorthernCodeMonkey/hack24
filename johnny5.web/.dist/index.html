@@ -7,10 +7,36 @@
     <link rel="icon" type="image/png" href="favicon.png">
 </head>
 <body>
+<nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+                <i class="fa fa-bars"></i>
+            </button>
+            <a class="navbar-brand page-scroll" href="#page-top">
+                <i class="fa fa-play-circle"></i>  In the Loop
+            </a>
+        </div>
 
-<div class="col-md-offset-3 col-md-6 hero-unit">
-    <h1>Johnny 5 - Meeting Organiser</h1>
-</div>
+    </div>
+</nav>
+
+<header class="intro">
+    <div class="intro-body">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <h1 class="brand-heading">In the Loop</h1>
+                    <p class="intro-text">Something about scheduling things</p>
+                    <a href="#app" class="btn btn-circle2 page-scroll">
+                        <i class="fa fa-angle-double-down animated"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
 <div id="app">
 
 </div>
@@ -18,12 +44,24 @@
 
 
 <script src="scripts/thirdParty.js" type="text/javascript" charset="utf-8"></script>
+<script src="scripts/jquery.easing.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="scripts/bundle.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
-    _386 = { onePass: true, speedFactor: 1.25 };
-
-
-
+    $(function() {
+        $('a.page-scroll').bind('click', function(event) {
+            var $anchor = $(this);
+            $('html, body').animate({
+                scrollTop: $($anchor.attr('href')).offset().top
+            }, 2000);
+        });
+    });
+    function collapseNavbar() {
+        if ($(".navbar").offset().top > 50) {
+            $(".navbar-fixed-top").addClass("top-nav-collapse");
+        } else {
+            $(".navbar-fixed-top").removeClass("top-nav-collapse");
+        }
+    }
 </script>
 
 </body>
