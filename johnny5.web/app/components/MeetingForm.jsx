@@ -2,9 +2,9 @@ var React = require('react');
 var SlotList = require('./SlotList.jsx');
 var DateTimePicker = require('react-widgets').DateTimePicker
 var Moment = require('moment')
+var notify = require('react-notify-toast').notify;
 var momentLocalizer = require('react-widgets/lib/localizers/moment')
 var numberLocalizer = require('react-widgets/lib/localizers/simple-number')
-
 numberLocalizer();
 momentLocalizer(Moment);
 
@@ -26,10 +26,10 @@ var meetingForm = React.createClass({
     },
     getSlots: function(e){
         e.preventDefault();
-        var self = this;
-        $.get('http://hack24cronofy.azurewebsites.net/api/availability' + '/20160319T0000Z' + '/20160320T0000Z' + '/60', function(data){
-            self.setState( {slots: data});
-        });
+        //var self = this;
+        //$.get('http://hack24cronofy.azurewebsites.net/api/availability' + '/20160319T0000Z' + '/20160320T0000Z' + '/60', function(data){
+        //    self.setState( {slots: data});
+        //});
     },
     onChange : function(event){
         if(event.target.id == "summary")
@@ -63,7 +63,7 @@ var meetingForm = React.createClass({
                                 </div>
                             </div>
                             <div className="form-group">
-                                <label className="col-md-4 control-label">Start Date and Time</label>
+                                <label className="col-md-4 control-label">Start Date</label>
                                 <div className="col-md-8">
                                     <DateTimePicker
                                         defaultValue={new Date()}/>
@@ -71,7 +71,7 @@ var meetingForm = React.createClass({
 
                             </div>
                             <div className="form-group">
-                                <label className="col-md-4 control-label">End Date and Time</label>
+                                <label className="col-md-4 control-label">End Date</label>
                                 <div className="col-md-8">
                                     <DateTimePicker
                                         defaultValue={new Date()}/>
@@ -79,7 +79,7 @@ var meetingForm = React.createClass({
 
                             </div>
 
-                            <button type="submit" className="pull-right btn btn-default" onClick={this.getSlots}>Submit</button>
+                            <button id="submitEvent" type="submit" className="pull-right btn btn-default" >Submit</button>
                         </form>
                         <div className="row results">
                             <SlotList slots={this.state.slots} MakeShitHappen={this.MakeShitHappen} />

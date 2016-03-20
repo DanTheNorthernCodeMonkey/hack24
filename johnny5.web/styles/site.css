@@ -20,3 +20,8 @@ body{
 	-moz-transition: background .3s ease-in-out;
 	transition: background .3s ease-in-out;
 }
+
+.content-section{
+	padding-top:250px;
+	padding-bottom:250px;
+}

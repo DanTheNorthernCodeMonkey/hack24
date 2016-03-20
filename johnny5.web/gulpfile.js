@@ -12,6 +12,7 @@ var paths = {
         'styles/bootstrap.css',
         'styles/grayscale.css',
         'styles/react-widgets.css',
+        'styles/toastr.css',
         'styles/site.css'
 
     ],
@@ -24,6 +25,7 @@ var paths = {
         'scripts/react-widgets-globalize.js',
         'scripts/react-widgets-moment.js',
         'scripts/react-widgets-simple-number.js',
+        'scripts/toastr.js',
         'scripts/grayscale.js'
     ],
     fonts: [
