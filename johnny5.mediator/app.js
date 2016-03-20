@@ -6,8 +6,6 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var router = express.Router();
 var routes = require('./routes');
-var cronofyController = require('./controllers/cronofy/setController');
-var essendexController = require('./controllers/essendex/sendSms');
 
 var app = express();
 

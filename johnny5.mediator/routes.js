@@ -1,5 +1,5 @@
 var cronofyController = require('./controllers/cronofy/setController');
-var essendexController = require('./controllers/essendex/sendSms');
+var essendexController = require('./controllers/essendex/sendSMS');
 var speechController = require('./controllers/speechController');
 module.exports.initRoutes = function (app) {
 
