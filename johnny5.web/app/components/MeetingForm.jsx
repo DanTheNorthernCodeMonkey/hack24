@@ -1,6 +1,12 @@
 var React = require('react');
 var SlotList = require('./SlotList.jsx');
-
+var DateTimePicker = require('react-widgets').DateTimePicker
+var Moment = require('moment')
+var notify = require('react-notify-toast').notify;
+var momentLocalizer = require('react-widgets/lib/localizers/moment')
+var numberLocalizer = require('react-widgets/lib/localizers/simple-number')
+numberLocalizer();
+momentLocalizer(Moment);
 
 var meetingForm = React.createClass({
     getInitialState: function(){
@@ -20,10 +26,10 @@ var meetingForm = React.createClass({
     },
     getSlots: function(e){
         e.preventDefault();
-        var self = this;
-        $.get('http://hack24cronofy.azurewebsites.net/api/availability' + '/20160319T0000Z' + '/20160320T0000Z' + '/60', function(data){
-            self.setState( {slots: data});
-        });
+        //var self = this;
+        //$.get('http://hack24cronofy.azurewebsites.net/api/availability' + '/20160319T0000Z' + '/20160320T0000Z' + '/60', function(data){
+        //    self.setState( {slots: data});
+        //});
     },
     onChange : function(event){
         if(event.target.id == "summary")
@@ -35,46 +41,52 @@ var meetingForm = React.createClass({
 
 
         return (
-            <div className="col-md-offset-3 col-md-5">
-                <form className="form-horizontal">
-                    <div className="form-group">
-                        <label className="col-md-4 control-label">Meeting Summary</label>
-                        <div className="col-md-8">
-                            <input type="text" className="form-control" id="summary" placeholder="Summary" value={this.state.summary} onChange={this.onChange}/>
-                        </div>
+            <div>
+                <div className="row">
+                    <div className="col-md-offset-3 col-md-5">
+                        <h1>New Event</h1>
                     </div>
-                    <div className="form-group">
-                        <label className="col-md-4 control-label">Meeting Description</label>
-                        <div className="col-md-8">
-                            <input type="text" className="form-control" id="description" placeholder="Description" value={this.state.description} onChange={this.onChange}/>
-                        </div>
-                    </div>
-                    <div className="form-group">
-                        <label className="col-md-4 control-label">Day</label>
-                        <div className="col-md-1">
-                            <input type="text" className="form-control" id="startdd" placeholder="DD" />
-                        </div>
-                        <div className="col-md-1">
-                            <input type="text" className="form-control" id="startmm" placeholder="MM" />
-
-                        </div>
-                        <div className="col-md-1">
-                            <input type="text" className="form-control" id="startyy" placeholder="YY" />
-
-                        </div>
-                    </div>
-                    <div className="form-group">
-                        <label className="col-md-4 control-label">Duration (increments of 15 minutes)</label>
-                        <div className="col-md-1">
-                            <input type="text" className="form-control" id="startyy" placeholder="00" />
-                        </div>
-                    </div>
-                    <button type="submit" className="pull-right btn btn-default" onClick={this.getSlots}>Submit</button>
-                </form>
-                <div className="row results">
-                    <SlotList slots={this.state.slots} MakeShitHappen={this.MakeShitHappen} />
                 </div>
+                <div className="row">
+                    <div className="col-md-offset-3 col-md-5">
+                        <form className="form-horizontal">
+                            <div className="form-group">
+                                <label className="col-md-4 control-label">Summary</label>
+                                <div className="col-md-8">
+                                    <input type="text" className="form-control" id="summary" placeholder="Summary" value={this.state.summary} onChange={this.onChange}/>
+                                </div>
+                            </div>
+                            <div className="form-group">
+                                <label className="col-md-4 control-label">Description</label>
+                                <div className="col-md-8">
+                                    <input type="text" className="form-control" id="description" placeholder="Description" value={this.state.description} onChange={this.onChange}/>
+                                </div>
+                            </div>
+                            <div className="form-group">
+                                <label className="col-md-4 control-label">Start Date</label>
+                                <div className="col-md-8">
+                                    <DateTimePicker
+                                        defaultValue={new Date()}/>
+                                </div>
 
+                            </div>
+                            <div className="form-group">
+                                <label className="col-md-4 control-label">End Date</label>
+                                <div className="col-md-8">
+                                    <DateTimePicker
+                                        defaultValue={new Date()}/>
+                                </div>
+
+                            </div>
+
+                            <button id="submitEvent" type="submit" className="pull-right btn btn-default" >Submit</button>
+                        </form>
+                        <div className="row results">
+                            <SlotList slots={this.state.slots} MakeShitHappen={this.MakeShitHappen} />
+                        </div>
+
+                    </div>
+                </div>
             </div>
         )
     }

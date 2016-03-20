@@ -1,25 +1,12 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var MeetingForm = require('./components/MeetingForm.jsx');
-
-var App = React.createClass({
-    render: function () {
-        return (
-            <div>
-                <div className="row">
-
-                </div>
-                <div className="row">
-                    <MeetingForm/>
-                </div>
-            </div>
-        )
-    }
-});
-
+var Login = require('./components/Login.jsx');
+var Notifications = require('react-notify-toast').notify;
 
 function render() {
-    ReactDOM.render(<App />, document.getElementById('app'));
+    ReactDOM.render(<MeetingForm />, document.getElementById('add'));
+    ReactDOM.render(<Login />, document.getElementById('login'));
 }
 
 render();

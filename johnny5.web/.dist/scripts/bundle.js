@@ -1,7 +1,57 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 var React = require('react');
-var SlotList = require('./SlotList.jsx');
 
+var Login = React.createClass({displayName: "Login",
+    moveIt: function(e) {
+   e.preventDefault;
+            $('html, body').animate({
+                scrollTop: $('#add').offset().top
+            }, 2000);
+    },
+  render: function() {
+    return (
+        React.createElement("div", null, 
+            React.createElement("div", {className: "row"}, 
+                React.createElement("div", {className: "col-md-offset-3 col-md-5"}, 
+                    React.createElement("h1", null, "Login")
+                )
+            ), 
+            React.createElement("div", {className: "row"}, 
+                React.createElement("div", {className: "col-md-offset-3 col-md-5"}, 
+                    React.createElement("form", {className: "form-horizontal"}, 
+                        React.createElement("div", {className: "form-group"}, 
+                            React.createElement("label", {className: "col-md-4 control-label"}, "Username"), 
+                            React.createElement("div", {className: "col-md-8"}, 
+                                React.createElement("input", {type: "text", className: "form-control", id: "summary", placeholder: "Username"})
+                            )
+                        ), 
+                        React.createElement("div", {className: "form-group"}, 
+                            React.createElement("label", {className: "col-md-4 control-label"}, "Password"), 
+                            React.createElement("div", {className: "col-md-8"}, 
+                                React.createElement("input", {type: "password", className: "form-control", id: "description", placeholder: "Password"})
+                            )
+                        ), 
+                        React.createElement("button", {type: "submit", className: "pull-right btn btn-default", onClick: this.moveIt}, "Submit")
+                        )
+                    )
+                )
+            )
+    );
+  }
+});
+
+module.exports = Login;
+
+},{"react":254}],2:[function(require,module,exports){
+var React = require('react');
+var SlotList = require('./SlotList.jsx');
+var DateTimePicker = require('react-widgets').DateTimePicker
+var Moment = require('moment')
+var notify = require('react-notify-toast').notify;
+var momentLocalizer = require('react-widgets/lib/localizers/moment')
+var numberLocalizer = require('react-widgets/lib/localizers/simple-number')
+numberLocalizer();
+momentLocalizer(Moment);
 
 var meetingForm = React.createClass({displayName: "meetingForm",
     getInitialState: function(){
@@ -21,10 +71,10 @@ var meetingForm = React.createClass({displayName: "meetingForm",
     },
     getSlots: function(e){
         e.preventDefault();
-        var self = this;
-        $.get('http://hack24cronofy.azurewebsites.net/api/availability' + '/20160319T0000Z' + '/20160320T0000Z' + '/60', function(data){
-            self.setState( {slots: data});
-        });
+        //var self = this;
+        //$.get('http://hack24cronofy.azurewebsites.net/api/availability' + '/20160319T0000Z' + '/20160320T0000Z' + '/60', function(data){
+        //    self.setState( {slots: data});
+        //});
     },
     onChange : function(event){
         if(event.target.id == "summary")
@@ -36,46 +86,52 @@ var meetingForm = React.createClass({displayName: "meetingForm",
 
 
         return (
-            React.createElement("div", {className: "col-md-offset-3 col-md-5"}, 
-                React.createElement("form", {className: "form-horizontal"}, 
-                    React.createElement("div", {className: "form-group"}, 
-                        React.createElement("label", {className: "col-md-4 control-label"}, "Meeting Summary"), 
-                        React.createElement("div", {className: "col-md-8"}, 
-                            React.createElement("input", {type: "text", className: "form-control", id: "summary", placeholder: "Summary", value: this.state.summary, onChange: this.onChange})
-                        )
-                    ), 
-                    React.createElement("div", {className: "form-group"}, 
-                        React.createElement("label", {className: "col-md-4 control-label"}, "Meeting Description"), 
-                        React.createElement("div", {className: "col-md-8"}, 
-                            React.createElement("input", {type: "text", className: "form-control", id: "description", placeholder: "Description", value: this.state.description, onChange: this.onChange})
-                        )
-                    ), 
-                    React.createElement("div", {className: "form-group"}, 
-                        React.createElement("label", {className: "col-md-4 control-label"}, "Day"), 
-                        React.createElement("div", {className: "col-md-1"}, 
-                            React.createElement("input", {type: "text", className: "form-control", id: "startdd", placeholder: "DD"})
-                        ), 
-                        React.createElement("div", {className: "col-md-1"}, 
-                            React.createElement("input", {type: "text", className: "form-control", id: "startmm", placeholder: "MM"})
-
-                        ), 
-                        React.createElement("div", {className: "col-md-1"}, 
-                            React.createElement("input", {type: "text", className: "form-control", id: "startyy", placeholder: "YY"})
-
-                        )
-                    ), 
-                    React.createElement("div", {className: "form-group"}, 
-                        React.createElement("label", {className: "col-md-4 control-label"}, "Duration (increments of 15 minutes)"), 
-                        React.createElement("div", {className: "col-md-1"}, 
-                            React.createElement("input", {type: "text", className: "form-control", id: "startyy", placeholder: "00"})
-                        )
-                    ), 
-                    React.createElement("button", {type: "submit", className: "pull-right btn btn-default", onClick: this.getSlots}, "Submit")
+            React.createElement("div", null, 
+                React.createElement("div", {className: "row"}, 
+                    React.createElement("div", {className: "col-md-offset-3 col-md-5"}, 
+                        React.createElement("h1", null, "New Event")
+                    )
                 ), 
-                React.createElement("div", {className: "row results"}, 
-                    React.createElement(SlotList, {slots: this.state.slots, MakeShitHappen: this.MakeShitHappen})
-                )
+                React.createElement("div", {className: "row"}, 
+                    React.createElement("div", {className: "col-md-offset-3 col-md-5"}, 
+                        React.createElement("form", {className: "form-horizontal"}, 
+                            React.createElement("div", {className: "form-group"}, 
+                                React.createElement("label", {className: "col-md-4 control-label"}, "Summary"), 
+                                React.createElement("div", {className: "col-md-8"}, 
+                                    React.createElement("input", {type: "text", className: "form-control", id: "summary", placeholder: "Summary", value: this.state.summary, onChange: this.onChange})
+                                )
+                            ), 
+                            React.createElement("div", {className: "form-group"}, 
+                                React.createElement("label", {className: "col-md-4 control-label"}, "Description"), 
+                                React.createElement("div", {className: "col-md-8"}, 
+                                    React.createElement("input", {type: "text", className: "form-control", id: "description", placeholder: "Description", value: this.state.description, onChange: this.onChange})
+                                )
+                            ), 
+                            React.createElement("div", {className: "form-group"}, 
+                                React.createElement("label", {className: "col-md-4 control-label"}, "Start Date"), 
+                                React.createElement("div", {className: "col-md-8"}, 
+                                    React.createElement(DateTimePicker, {
+                                        defaultValue: new Date()})
+                                )
 
+                            ), 
+                            React.createElement("div", {className: "form-group"}, 
+                                React.createElement("label", {className: "col-md-4 control-label"}, "End Date"), 
+                                React.createElement("div", {className: "col-md-8"}, 
+                                    React.createElement(DateTimePicker, {
+                                        defaultValue: new Date()})
+                                )
+
+                            ), 
+
+                            React.createElement("button", {id: "submitEvent", type: "submit", className: "pull-right btn btn-default"}, "Submit")
+                        ), 
+                        React.createElement("div", {className: "row results"}, 
+                            React.createElement(SlotList, {slots: this.state.slots, MakeShitHappen: this.MakeShitHappen})
+                        )
+
+                    )
+                )
             )
         )
     }
@@ -83,7 +139,7 @@ var meetingForm = React.createClass({displayName: "meetingForm",
 
 module.exports = meetingForm;
 
-},{"./SlotList.jsx":3,"react":163}],2:[function(require,module,exports){
+},{"./SlotList.jsx":4,"moment":7,"react":254,"react-notify-toast":9,"react-widgets":38,"react-widgets/lib/localizers/moment":39,"react-widgets/lib/localizers/simple-number":40}],3:[function(require,module,exports){
 var React = require('react');
 var Moment = require('moment');
 
@@ -109,7 +165,7 @@ var Slot = React.createClass({displayName: "Slot",
 
 module.exports = Slot;
 
-},{"moment":6,"react":163}],3:[function(require,module,exports){
+},{"moment":7,"react":254}],4:[function(require,module,exports){
 var React = require('react');
 var Slot = require('./Slot.jsx');
 
@@ -144,34 +200,21 @@ var SlotList = React.createClass({displayName: "SlotList",
 
 module.exports = SlotList;
 
-},{"./Slot.jsx":2,"react":163}],4:[function(require,module,exports){
+},{"./Slot.jsx":3,"react":254}],5:[function(require,module,exports){
 var React = require('react');
 var ReactDOM = require('react-dom');
 var MeetingForm = require('./components/MeetingForm.jsx');
-
-var App = React.createClass({displayName: "App",
-    render: function () {
-        return (
-            React.createElement("div", null, 
-                React.createElement("div", {className: "row"}
-
-                ), 
-                React.createElement("div", {className: "row"}, 
-                    React.createElement(MeetingForm, null)
-                )
-            )
-        )
-    }
-});
-
+var Login = require('./components/Login.jsx');
+var Notifications = require('react-notify-toast').notify;
 
 function render() {
-    ReactDOM.render(React.createElement(App, null), document.getElementById('app'));
+    ReactDOM.render(React.createElement(MeetingForm, null), document.getElementById('add'));
+    ReactDOM.render(React.createElement(Login, null), document.getElementById('login'));
 }
 
 render();
 
-},{"./components/MeetingForm.jsx":1,"react":163,"react-dom":7}],5:[function(require,module,exports){
+},{"./components/Login.jsx":1,"./components/MeetingForm.jsx":2,"react":254,"react-dom":8,"react-notify-toast":9}],6:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -264,7 +307,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 //! moment.js
 //! version : 2.12.0
 //! authors : Tim Wood, Iskren Chernev, Moment.js contributors
@@ -3953,12 +3996,9840 @@ process.umask = function() { return 0; };
     return _moment;
 
 }));
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 'use strict';
 
 module.exports = require('react/lib/ReactDOM');
 
-},{"react/lib/ReactDOM":42}],8:[function(require,module,exports){
+},{"react/lib/ReactDOM":133}],9:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.notify = undefined;
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = require('react-dom');
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _objectAssign = require('object-assign');
+
+var _objectAssign2 = _interopRequireDefault(_objectAssign);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var notificationWrapperId = 'notification-wrapper';
+var defaultTimeout = 5000; // ms
+var animationDuration = 300; // ms
+
+/* Colors */
+var colorWhite = 'white';
+var colorError = '#E85742';
+var colorSuccess = '#55CA92';
+var colorWarning = '#F5E273';
+var textColorWarning = '#333333';
+
+/* React Notification Component */
+
+var Toast = (function (_React$Component) {
+	_inherits(Toast, _React$Component);
+
+	function Toast() {
+		var _temp, _this, _ret;
+
+		_classCallCheck(this, Toast);
+
+		return _ret = (_temp = (_this = _possibleConstructorReturn(this, Object.getPrototypeOf(Toast).apply(this, arguments)), _this), _this.state = {
+			styleParent: null
+		}, _temp), _possibleConstructorReturn(_this, _ret);
+	}
+
+	_createClass(Toast, [{
+		key: 'getStyles',
+		value: function getStyles() {
+			var styles = {};
+
+			var containerStyle = {
+				position: 'fixed',
+				width: '50%',
+				margin: '0 auto',
+				right: '0',
+				top: '-100px',
+				left: '0',
+				textAlign: 'center',
+				zIndex: '999',
+				pointerEvents: 'none',
+				transition: 'all ' + animationDuration + 'ms ease',
+				transform: 'translateY(0px)',
+				// Vendor Prefixes
+				msTransition: 'all ' + animationDuration + 'ms ease',
+				msTransform: 'translateY(0px)',
+				WebkitTransition: 'all ' + animationDuration + 'ms ease',
+				WebkitTransform: 'translateY(0px)',
+				OTransition: 'all ' + animationDuration + 'ms ease',
+				OTransform: 'translateY(0px)',
+				MozTransition: 'all ' + animationDuration + 'ms ease',
+				MozTransform: 'translateY(0px)'
+			};
+
+			var contentStyle = {
+				cursor: 'pointer',
+				display: 'inline',
+				width: 'auto',
+				borderRadius: '0 0 4px 4px',
+				backgroundColor: 'white',
+				padding: '10px 30px',
+				pointerEvents: 'all'
+			};
+
+			/* If type is set, merge toast action styles with base */
+			switch (this.props.type) {
+				case 'success':
+					var successStyle = {
+						backgroundColor: colorSuccess,
+						color: colorWhite
+					};
+					styles.content = (0, _objectAssign2.default)({}, contentStyle, successStyle);
+					break;
+
+				case 'error':
+					var errorStyle = {
+						backgroundColor: colorError,
+						color: colorWhite
+					};
+					styles.content = (0, _objectAssign2.default)({}, contentStyle, errorStyle);
+					break;
+
+				case 'warning':
+					var warningStyle = {
+						backgroundColor: colorWarning,
+						color: textColorWarning
+					};
+					styles.content = (0, _objectAssign2.default)({}, contentStyle, warningStyle);
+					break;
+
+				default:
+					styles.content = (0, _objectAssign2.default)({}, contentStyle);
+					break;
+			}
+
+			styles.container = containerStyle;
+
+			return styles;
+		}
+	}, {
+		key: 'getVisibleState',
+		value: function getVisibleState(context) {
+			var base = this.getStyles().container;
+
+			// Show
+			var stylesShow = {
+				transform: 'translateY(108px)',
+				msTransform: 'translateY(108px)',
+				WebkitTransform: 'translateY(108px)',
+				OTransform: 'translateY(108px)',
+				MozTransform: 'translateY(108px)'
+			};
+
+			setTimeout(function () {
+				context.updateStyle(base, stylesShow);
+			}, 100); // wait 100ms after the component is called to animate toast.
+
+			// Hide after timeout
+			var stylesHide = {
+				transform: 'translateY(-108px)',
+				msTransform: 'translateY(-108px)',
+				WebkitTransform: 'translateY(-108px)',
+				OTransform: 'translateY(-108px)',
+				MozTransform: 'translateY(-108px)'
+			};
+
+			setTimeout(function () {
+				context.updateStyle(base, stylesHide);
+			}, this.props.timeout);
+		}
+	}, {
+		key: 'updateStyle',
+		value: function updateStyle(base, update) {
+			this.setState({ styleParent: (0, _objectAssign2.default)({}, base, update) });
+		}
+	}, {
+		key: 'getBaseStyle',
+		value: function getBaseStyle() {
+			this.setState({ styleParent: this.getStyles().container });
+		}
+	}, {
+		key: 'componentDidMount',
+		value: function componentDidMount() {
+			this.getBaseStyle();
+			this.getVisibleState(this);
+		}
+	}, {
+		key: 'render',
+		value: function render() {
+			var _props = this.props;
+			var text = _props.text;
+			var type = _props.type;
+
+			var styles = this.getStyles();
+			var styleParent = this.state.styleParent;
+
+			return _react2.default.createElement(
+				'div',
+				{ className: 'toast-notification', style: styleParent },
+				_react2.default.createElement(
+					'span',
+					{ className: type, style: styles.content },
+					text
+				)
+			);
+		}
+	}]);
+
+	return Toast;
+})(_react2.default.Component);
+
+/* Private Functions */
+
+/* Render React component */
+
+Toast.propTypes = {
+	text: _react.PropTypes.string,
+	timeout: _react.PropTypes.number,
+	type: _react.PropTypes.string,
+	style: _react.PropTypes.oneOfType([_react.PropTypes.object, _react.PropTypes.bool])
+};
+function renderToast(text, type, timeout) {
+	_reactDom2.default.render(_react2.default.createElement(Toast, { text: text, timeout: timeout, type: type }), document.getElementById(notificationWrapperId));
+}
+
+/* Unmount React component */
+function hideToast() {
+	_reactDom2.default.unmountComponentAtNode(document.getElementById(notificationWrapperId));
+}
+
+/* Public functions */
+
+/* Show Animated Toast Message */
+function show(text, type, timeout) {
+	if (!document.getElementById(notificationWrapperId).hasChildNodes()) {
+		var renderTimeout = timeout;
+
+		// Use default timeout if not set.
+		if (!renderTimeout) {
+			renderTimeout = defaultTimeout;
+		}
+
+		// Render Component with Props.
+		renderToast(text, type, renderTimeout);
+
+		// Unmount react component after the animation finished.
+		setTimeout(function () {
+			hideToast();
+		}, renderTimeout + animationDuration);
+	}
+}
+
+/* Export notification container */
+
+var _class = (function (_React$Component2) {
+	_inherits(_class, _React$Component2);
+
+	function _class() {
+		_classCallCheck(this, _class);
+
+		return _possibleConstructorReturn(this, Object.getPrototypeOf(_class).apply(this, arguments));
+	}
+
+	_createClass(_class, [{
+		key: 'render',
+		value: function render() {
+			return _react2.default.createElement('div', { id: notificationWrapperId });
+		}
+	}]);
+
+	return _class;
+})(_react2.default.Component);
+
+/* Export notification functions */
+
+exports.default = _class;
+var notify = exports.notify = {
+	show: show
+};
+},{"object-assign":10,"react":254,"react-dom":8}],10:[function(require,module,exports){
+'use strict';
+var propIsEnumerable = Object.prototype.propertyIsEnumerable;
+
+function ToObject(val) {
+	if (val == null) {
+		throw new TypeError('Object.assign cannot be called with null or undefined');
+	}
+
+	return Object(val);
+}
+
+function ownEnumerableKeys(obj) {
+	var keys = Object.getOwnPropertyNames(obj);
+
+	if (Object.getOwnPropertySymbols) {
+		keys = keys.concat(Object.getOwnPropertySymbols(obj));
+	}
+
+	return keys.filter(function (key) {
+		return propIsEnumerable.call(obj, key);
+	});
+}
+
+module.exports = Object.assign || function (target, source) {
+	var from;
+	var keys;
+	var to = ToObject(target);
+
+	for (var s = 1; s < arguments.length; s++) {
+		from = arguments[s];
+		keys = ownEnumerableKeys(Object(from));
+
+		for (var i = 0; i < keys.length; i++) {
+			to[keys[i]] = from[keys[i]];
+		}
+	}
+
+	return to;
+};
+
+},{}],11:[function(require,module,exports){
+'use strict';
+
+var babelHelpers = require('./util/babelHelpers.js');
+
+exports.__esModule = true;
+
+var _VIEW, _OPPOSITE_DIRECTION, _MULTIPLIER;
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _classnames = require('classnames');
+
+var _classnames2 = babelHelpers.interopRequireDefault(_classnames);
+
+var _utilCompat = require('./util/compat');
+
+var _utilCompat2 = babelHelpers.interopRequireDefault(_utilCompat);
+
+var _Header = require('./Header');
+
+var _Header2 = babelHelpers.interopRequireDefault(_Header);
+
+var _Footer = require('./Footer');
+
+var _Footer2 = babelHelpers.interopRequireDefault(_Footer);
+
+var _Month = require('./Month');
+
+var _Month2 = babelHelpers.interopRequireDefault(_Month);
+
+var _Year = require('./Year');
+
+var _Year2 = babelHelpers.interopRequireDefault(_Year);
+
+var _Decade = require('./Decade');
+
+var _Decade2 = babelHelpers.interopRequireDefault(_Decade);
+
+var _Century = require('./Century');
+
+var _Century2 = babelHelpers.interopRequireDefault(_Century);
+
+var _utilLocalizers = require('./util/localizers');
+
+var _utilPropTypes = require('./util/propTypes');
+
+var _utilPropTypes2 = babelHelpers.interopRequireDefault(_utilPropTypes);
+
+var _uncontrollable = require('uncontrollable');
+
+var _uncontrollable2 = babelHelpers.interopRequireDefault(_uncontrollable);
+
+var _SlideTransition = require('./SlideTransition');
+
+var _SlideTransition2 = babelHelpers.interopRequireDefault(_SlideTransition);
+
+var _utilDates = require('./util/dates');
+
+var _utilDates2 = babelHelpers.interopRequireDefault(_utilDates);
+
+var _utilConstants = require('./util/constants');
+
+var _utilConstants2 = babelHelpers.interopRequireDefault(_utilConstants);
+
+var _util_ = require('./util/_');
+
+var _util_2 = babelHelpers.interopRequireDefault(_util_);
+
+//values, omit
+
+var _utilWidgetHelpers = require('./util/widgetHelpers');
+
+var _utilInteraction = require('./util/interaction');
+
+var dir = _utilConstants2['default'].directions,
+    values = function values(obj) {
+  return Object.keys(obj).map(function (k) {
+    return obj[k];
+  });
+},
+    invert = function invert(obj) {
+  return _util_2['default'].transform(obj, function (o, val, key) {
+    o[val] = key;
+  }, {});
+};
+
+var views = _utilConstants2['default'].calendarViews,
+    VIEW_OPTIONS = values(views),
+    ALT_VIEW = invert(_utilConstants2['default'].calendarViewHierarchy),
+    NEXT_VIEW = _utilConstants2['default'].calendarViewHierarchy,
+    VIEW_UNIT = _utilConstants2['default'].calendarViewUnits,
+    VIEW = (_VIEW = {}, _VIEW[views.MONTH] = _Month2['default'], _VIEW[views.YEAR] = _Year2['default'], _VIEW[views.DECADE] = _Decade2['default'], _VIEW[views.CENTURY] = _Century2['default'], _VIEW);
+
+var ARROWS_TO_DIRECTION = {
+  ArrowDown: dir.DOWN,
+  ArrowUp: dir.UP,
+  ArrowRight: dir.RIGHT,
+  ArrowLeft: dir.LEFT
+};
+
+var OPPOSITE_DIRECTION = (_OPPOSITE_DIRECTION = {}, _OPPOSITE_DIRECTION[dir.LEFT] = dir.RIGHT, _OPPOSITE_DIRECTION[dir.RIGHT] = dir.LEFT, _OPPOSITE_DIRECTION);
+
+var MULTIPLIER = (_MULTIPLIER = {}, _MULTIPLIER[views.YEAR] = 1, _MULTIPLIER[views.DECADE] = 10, _MULTIPLIER[views.CENTURY] = 100, _MULTIPLIER);
+
+var format = function format(props, f) {
+  return _utilLocalizers.date.getFormat(f, props[f + 'Format']);
+};
+
+var propTypes = {
+
+  disabled: _utilPropTypes2['default'].disabled,
+  readOnly: _utilPropTypes2['default'].readOnly,
+
+  onChange: _react2['default'].PropTypes.func,
+  value: _react2['default'].PropTypes.instanceOf(Date),
+
+  min: _react2['default'].PropTypes.instanceOf(Date),
+  max: _react2['default'].PropTypes.instanceOf(Date),
+
+  currentDate: _react2['default'].PropTypes.instanceOf(Date),
+  onCurrentDateChange: _react2['default'].PropTypes.func,
+
+  initialView: _react2['default'].PropTypes.oneOf(VIEW_OPTIONS),
+
+  finalView: function finalView(props, propname, componentName) {
+    var err = _react2['default'].PropTypes.oneOf(VIEW_OPTIONS)(props, propname, componentName);
+
+    if (err) return err;
+    if (VIEW_OPTIONS.indexOf(props[propname]) < VIEW_OPTIONS.indexOf(props.initialView)) return new Error(('The `' + propname + '` prop: `' + props[propname] + '` cannot be \'lower\' than the `initialView`\n        prop. This creates a range that cannot be rendered.').replace(/\n\t/g, ''));
+  },
+
+  onNavigate: _react2['default'].PropTypes.func,
+  culture: _react2['default'].PropTypes.string,
+  footer: _react2['default'].PropTypes.bool,
+
+  dayComponent: _utilPropTypes2['default'].elementType,
+  headerFormat: _utilPropTypes2['default'].dateFormat,
+  footerFormat: _utilPropTypes2['default'].dateFormat,
+
+  dayFormat: _utilPropTypes2['default'].dateFormat,
+  dateFormat: _utilPropTypes2['default'].dateFormat,
+  monthFormat: _utilPropTypes2['default'].dateFormat,
+  yearFormat: _utilPropTypes2['default'].dateFormat,
+  decadeFormat: _utilPropTypes2['default'].dateFormat,
+  centuryFormat: _utilPropTypes2['default'].dateFormat,
+
+  messages: _react2['default'].PropTypes.shape({
+    moveBack: _react2['default'].PropTypes.string,
+    moveForward: _react2['default'].PropTypes.string
+  })
+};
+
+var Calendar = _react2['default'].createClass(babelHelpers.createDecoratedObject([{
+  key: 'displayName',
+  initializer: function initializer() {
+    return 'Calendar';
+  }
+}, {
+  key: 'mixins',
+  initializer: function initializer() {
+    return [require('./mixins/TimeoutMixin'), require('./mixins/PureRenderMixin'), require('./mixins/RtlParentContextMixin'), require('./mixins/AriaDescendantMixin')(), require('./mixins/FocusMixin')({
+      willHandle: function willHandle() {
+        if (+this.props.tabIndex === -1) return false;
+      }
+    })];
+  }
+}, {
+  key: 'propTypes',
+  initializer: function initializer() {
+    return propTypes;
+  }
+}, {
+  key: 'getInitialState',
+  value: function getInitialState() {
+    return {
+      selectedIndex: 0,
+      view: this.props.initialView || 'month'
+    };
+  }
+}, {
+  key: 'getDefaultProps',
+  value: function getDefaultProps() {
+    return {
+
+      value: null,
+      min: new Date(1900, 0, 1),
+      max: new Date(2099, 11, 31),
+      currentDate: new Date(),
+
+      initialView: 'month',
+      finalView: 'century',
+
+      tabIndex: '0',
+      footer: false,
+
+      ariaActiveDescendantKey: 'calendar',
+      messages: msgs({})
+    };
+  }
+}, {
+  key: 'componentWillMount',
+  value: function componentWillMount() {
+    this.changeCurrentDate(this.props.value);
+  }
+}, {
+  key: 'componentWillReceiveProps',
+  value: function componentWillReceiveProps(nextProps) {
+    var bottom = VIEW_OPTIONS.indexOf(nextProps.initialView),
+        top = VIEW_OPTIONS.indexOf(nextProps.finalView),
+        current = VIEW_OPTIONS.indexOf(this.state.view),
+        view = this.state.view,
+        val = this.inRangeValue(nextProps.value);
+
+    if (current < bottom) this.setState({ view: view = nextProps.initialView });else if (current > top) this.setState({ view: view = nextProps.finalView });
+
+    //if the value changes reset views to the new one
+    if (!_utilDates2['default'].eq(val, dateOrNull(this.props.value), VIEW_UNIT[view])) {
+      this.changeCurrentDate(val, nextProps.currentDate);
+    }
+  }
+}, {
+  key: 'render',
+  value: function render() {
+    var _this = this;
+
+    var _props = this.props;
+    var className = _props.className;
+    var value = _props.value;
+    var footerFormat = _props.footerFormat;
+    var disabled = _props.disabled;
+    var readOnly = _props.readOnly;
+    var finalView = _props.finalView;
+    var footer = _props.footer;
+    var messages = _props.messages;
+    var min = _props.min;
+    var max = _props.max;
+    var culture = _props.culture;
+    var duration = _props.duration;
+    var currentDate = _props.currentDate;
+    var _state = this.state;
+    var view = _state.view;
+    var slideDirection = _state.slideDirection;
+    var focused = _state.focused;
+
+    var View = VIEW[view],
+        unit = VIEW_UNIT[view],
+        todaysDate = new Date(),
+        todayNotInRange = !_utilDates2['default'].inRange(todaysDate, min, max, view);
+
+    unit = unit === 'day' ? 'date' : unit;
+
+    var viewID = _utilWidgetHelpers.instanceId(this, '_calendar'),
+        labelID = _utilWidgetHelpers.instanceId(this, '_calendar_label'),
+        key = view + '_' + _utilDates2['default'][view](currentDate);
+
+    var elementProps = _util_2['default'].omit(this.props, Object.keys(propTypes)),
+        viewProps = _util_2['default'].pick(this.props, Object.keys(View.propTypes));
+
+    var isDisabled = disabled || readOnly;
+
+    messages = msgs(this.props.messages);
+
+    return _react2['default'].createElement(
+      'div',
+      babelHelpers._extends({}, elementProps, {
+        role: 'group',
+        onKeyDown: this._keyDown,
+        onBlur: this.handleBlur,
+        onFocus: this.handleFocus,
+        className: _classnames2['default'](className, 'rw-calendar', 'rw-widget', {
+          'rw-state-focus': focused,
+          'rw-state-disabled': disabled,
+          'rw-state-readonly': readOnly,
+          'rw-rtl': this.isRtl()
+        })
+      }),
+      _react2['default'].createElement(_Header2['default'], {
+        label: this._label(),
+        labelId: labelID,
+        messages: messages,
+        upDisabled: isDisabled || view === finalView,
+        prevDisabled: isDisabled || !_utilDates2['default'].inRange(this.nextDate(dir.LEFT), min, max, view),
+        nextDisabled: isDisabled || !_utilDates2['default'].inRange(this.nextDate(dir.RIGHT), min, max, view),
+        onViewChange: this.navigate.bind(null, dir.UP, null),
+        onMoveLeft: this.navigate.bind(null, dir.LEFT, null),
+        onMoveRight: this.navigate.bind(null, dir.RIGHT, null)
+      }),
+      _react2['default'].createElement(
+        _SlideTransition2['default'],
+        {
+          ref: 'animation',
+          duration: duration,
+          direction: slideDirection,
+          onAnimate: function () {
+            return focused && _this.focus();
+          }
+        },
+        _react2['default'].createElement(View, babelHelpers._extends({}, viewProps, {
+          tabIndex: '-1',
+          key: key,
+          id: viewID,
+          className: 'rw-calendar-grid',
+          'aria-labelledby': labelID,
+          today: todaysDate,
+          value: value,
+          focused: currentDate,
+          onChange: this.change,
+          onKeyDown: this._keyDown,
+          ariaActiveDescendantKey: 'calendarView'
+        }))
+      ),
+      footer && _react2['default'].createElement(_Footer2['default'], {
+        value: todaysDate,
+        format: footerFormat,
+        culture: culture,
+        disabled: disabled || todayNotInRange,
+        readOnly: readOnly,
+        onClick: this.select
+      })
+    );
+  }
+}, {
+  key: 'navigate',
+  decorators: [_utilInteraction.widgetEditable],
+  value: function navigate(direction, date) {
+    var view = this.state.view,
+        slideDir = direction === dir.LEFT || direction === dir.UP ? 'right' : 'left';
+
+    if (!date) date = [dir.LEFT, dir.RIGHT].indexOf(direction) !== -1 ? this.nextDate(direction) : this.props.currentDate;
+
+    if (direction === dir.DOWN) view = ALT_VIEW[view] || view;
+
+    if (direction === dir.UP) view = NEXT_VIEW[view] || view;
+
+    if (this.isValidView(view) && _utilDates2['default'].inRange(date, this.props.min, this.props.max, view)) {
+      _utilWidgetHelpers.notify(this.props.onNavigate, [date, slideDir, view]);
+      this.focus(true);
+
+      this.changeCurrentDate(date);
+
+      this.setState({
+        slideDirection: slideDir,
+        view: view
+      });
+    }
+  }
+}, {
+  key: 'focus',
+  value: function focus() {
+    if (+this.props.tabIndex > -1) _utilCompat2['default'].findDOMNode(this).focus();
+  }
+}, {
+  key: 'change',
+  decorators: [_utilInteraction.widgetEditable],
+  value: function change(date) {
+    if (this.state.view === this.props.initialView) {
+      this.changeCurrentDate(date);
+      _utilWidgetHelpers.notify(this.props.onChange, date);
+      this.focus();
+      return;
+    }
+
+    this.navigate(dir.DOWN, date);
+  }
+}, {
+  key: 'changeCurrentDate',
+  decorators: [_utilInteraction.widgetEditable],
+  value: function changeCurrentDate(date) {
+    var currentDate = arguments.length <= 1 || arguments[1] === undefined ? this.props.currentDate : arguments[1];
+
+    var inRangeDate = this.inRangeValue(date ? new Date(date) : currentDate);
+    if (_utilDates2['default'].eq(inRangeDate, dateOrNull(currentDate), VIEW_UNIT[this.state.view])) return;
+    _utilWidgetHelpers.notify(this.props.onCurrentDateChange, inRangeDate);
+  }
+}, {
+  key: 'select',
+  decorators: [_utilInteraction.widgetEditable],
+  value: function select(date) {
+    var view = this.props.initialView,
+        slideDir = view !== this.state.view || _utilDates2['default'].gt(date, this.state.currentDate) ? 'left' // move down to a the view
+    : 'right';
+
+    _utilWidgetHelpers.notify(this.props.onChange, date);
+
+    if (this.isValidView(view) && _utilDates2['default'].inRange(date, this.props.min, this.props.max, view)) {
+      this.focus();
+
+      this.changeCurrentDate(date);
+
+      this.setState({
+        slideDirection: slideDir,
+        view: view
+      });
+    }
+  }
+}, {
+  key: 'nextDate',
+  value: function nextDate(direction) {
+    var method = direction === dir.LEFT ? 'subtract' : 'add',
+        view = this.state.view,
+        unit = view === views.MONTH ? view : views.YEAR,
+        multi = MULTIPLIER[view] || 1;
+
+    return _utilDates2['default'][method](this.props.currentDate, 1 * multi, unit);
+  }
+}, {
+  key: '_keyDown',
+  decorators: [_utilInteraction.widgetEditable],
+  value: function _keyDown(e) {
+    var ctrl = e.ctrlKey,
+        key = e.key,
+        direction = ARROWS_TO_DIRECTION[key],
+        current = this.props.currentDate,
+        view = this.state.view,
+        unit = VIEW_UNIT[view],
+        currentDate = current;
+
+    if (key === 'Enter') {
+      e.preventDefault();
+      return this.change(current);
+    }
+
+    if (direction) {
+      if (ctrl) {
+        e.preventDefault();
+        this.navigate(direction);
+      } else {
+        if (this.isRtl() && OPPOSITE_DIRECTION[direction]) direction = OPPOSITE_DIRECTION[direction];
+
+        currentDate = _utilDates2['default'].move(currentDate, this.props.min, this.props.max, view, direction);
+
+        if (!_utilDates2['default'].eq(current, currentDate, unit)) {
+          e.preventDefault();
+
+          if (_utilDates2['default'].gt(currentDate, current, view)) this.navigate(dir.RIGHT, currentDate);else if (_utilDates2['default'].lt(currentDate, current, view)) this.navigate(dir.LEFT, currentDate);else this.changeCurrentDate(currentDate);
+        }
+      }
+    }
+
+    _utilWidgetHelpers.notify(this.props.onKeyDown, [e]);
+  }
+}, {
+  key: '_label',
+  value: function _label() {
+    var _props2 = this.props;
+    var culture = _props2.culture;
+    var props = babelHelpers.objectWithoutProperties(_props2, ['culture']);
+    var view = this.state.view;
+    var dt = this.props.currentDate;
+
+    if (view === 'month') return _utilLocalizers.date.format(dt, format(props, 'header'), culture);else if (view === 'year') return _utilLocalizers.date.format(dt, format(props, 'year'), culture);else if (view === 'decade') return _utilLocalizers.date.format(_utilDates2['default'].startOf(dt, 'decade'), format(props, 'decade'), culture);else if (view === 'century') return _utilLocalizers.date.format(_utilDates2['default'].startOf(dt, 'century'), format(props, 'century'), culture);
+  }
+}, {
+  key: 'inRangeValue',
+  value: function inRangeValue(_value) {
+    var value = dateOrNull(_value);
+
+    if (value === null) return value;
+
+    return _utilDates2['default'].max(_utilDates2['default'].min(value, this.props.max), this.props.min);
+  }
+}, {
+  key: 'isValidView',
+  value: function isValidView(next) {
+    var bottom = VIEW_OPTIONS.indexOf(this.props.initialView),
+        top = VIEW_OPTIONS.indexOf(this.props.finalView),
+        current = VIEW_OPTIONS.indexOf(next);
+
+    return current >= bottom && current <= top;
+  }
+}]));
+
+function dateOrNull(dt) {
+  if (dt && !isNaN(dt.getTime())) return dt;
+  return null;
+}
+
+function msgs(msgs) {
+  return babelHelpers._extends({
+    moveBack: 'navigate back',
+    moveForward: 'navigate forward'
+  }, msgs);
+}
+
+exports['default'] = _uncontrollable2['default'](Calendar, {
+  value: 'onChange',
+  currentDate: 'onCurrentDateChange',
+  view: 'onViewChange'
+});
+module.exports = exports['default'];
+},{"./Century":12,"./Decade":17,"./Footer":19,"./Header":20,"./Month":24,"./SlideTransition":33,"./Year":36,"./mixins/AriaDescendantMixin":41,"./mixins/FocusMixin":43,"./mixins/PureRenderMixin":46,"./mixins/RtlParentContextMixin":48,"./mixins/TimeoutMixin":49,"./util/_":50,"./util/babelHelpers.js":51,"./util/compat":53,"./util/constants":55,"./util/dates":57,"./util/interaction":60,"./util/localizers":61,"./util/propTypes":62,"./util/widgetHelpers":65,"classnames":66,"react":254,"uncontrollable":96}],12:[function(require,module,exports){
+'use strict';
+
+var babelHelpers = require('./util/babelHelpers.js');
+
+exports.__esModule = true;
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _classnames = require('classnames');
+
+var _classnames2 = babelHelpers.interopRequireDefault(_classnames);
+
+var _utilDates = require('./util/dates');
+
+var _utilDates2 = babelHelpers.interopRequireDefault(_utilDates);
+
+var _utilLocalizers = require('./util/localizers');
+
+var _util_ = require('./util/_');
+
+var _util_2 = babelHelpers.interopRequireDefault(_util_);
+
+var _utilPropTypes = require('./util/propTypes');
+
+var _utilPropTypes2 = babelHelpers.interopRequireDefault(_utilPropTypes);
+
+var _utilWidgetHelpers = require('./util/widgetHelpers');
+
+var format = function format(props) {
+  return _utilLocalizers.date.getFormat('decade', props.decadeFormat);
+};
+
+var isEqual = function isEqual(dateA, dateB) {
+  return _utilDates2['default'].eq(dateA, dateB, 'decade');
+};
+var optionId = function optionId(id, date) {
+  return id + '__century_' + _utilDates2['default'].year(date);
+};
+
+var propTypes = {
+  optionID: _react2['default'].PropTypes.func,
+  culture: _react2['default'].PropTypes.string,
+  value: _react2['default'].PropTypes.instanceOf(Date),
+  min: _react2['default'].PropTypes.instanceOf(Date),
+  max: _react2['default'].PropTypes.instanceOf(Date),
+
+  onChange: _react2['default'].PropTypes.func.isRequired,
+  decadeFormat: _utilPropTypes2['default'].dateFormat
+};
+
+exports['default'] = _react2['default'].createClass({
+
+  displayName: 'CenturyView',
+
+  mixins: [require('./mixins/PureRenderMixin'), require('./mixins/RtlChildContextMixin'), require('./mixins/AriaDescendantMixin')()],
+
+  propTypes: propTypes,
+
+  componentDidUpdate: function componentDidUpdate() {
+    var activeId = optionId(_utilWidgetHelpers.instanceId(this), this.props.focused);
+    this.ariaActiveDescendant(activeId);
+  },
+
+  render: function render() {
+    var _props = this.props;
+    var className = _props.className;
+    var focused = _props.focused;
+    var years = getCenturyDecades(focused);
+    var rows = _util_2['default'].chunk(years, 4);
+
+    var elementProps = _util_2['default'].omit(this.props, Object.keys(propTypes));
+
+    return _react2['default'].createElement(
+      'table',
+      babelHelpers._extends({}, elementProps, {
+        role: 'grid',
+        className: _classnames2['default'](className, 'rw-nav-view')
+      }),
+      _react2['default'].createElement(
+        'tbody',
+        null,
+        rows.map(this._row)
+      )
+    );
+  },
+
+  _row: function _row(row, rowIdx) {
+    var _this = this;
+
+    var _props2 = this.props;
+    var focused = _props2.focused;
+    var disabled = _props2.disabled;
+    var onChange = _props2.onChange;
+    var value = _props2.value;
+    var today = _props2.today;
+    var culture = _props2.culture;
+    var min = _props2.min;
+    var max = _props2.max;
+    var id = _utilWidgetHelpers.instanceId(this, '_century');
+
+    return _react2['default'].createElement(
+      'tr',
+      { key: 'row_' + rowIdx, role: 'row' },
+      row.map(function (date, colIdx) {
+        var isFocused = isEqual(date, focused),
+            isSelected = isEqual(date, value),
+            currentDecade = isEqual(date, today),
+            label = _utilLocalizers.date.format(_utilDates2['default'].startOf(date, 'decade'), format(_this.props), culture);
+
+        var currentID = optionId(id, date);
+
+        return !inRange(date, min, max) ? _react2['default'].createElement(
+          'td',
+          { key: colIdx, role: 'gridcell', className: 'rw-empty-cell' },
+          ' '
+        ) : _react2['default'].createElement(
+          'td',
+          {
+            key: colIdx,
+            role: 'gridcell',
+            id: currentID,
+            title: label,
+            'aria-selected': isSelected,
+            'aria-label': label,
+            'aria-readonly': disabled
+          },
+          _react2['default'].createElement(
+            'span',
+            {
+              'aria-labelledby': currentID,
+              onClick: onChange.bind(null, inRangeDate(date, min, max)),
+              className: _classnames2['default']('rw-btn', {
+                'rw-off-range': !inCentury(date, focused),
+                'rw-state-focus': isFocused,
+                'rw-state-selected': isSelected,
+                'rw-now': currentDecade
+              })
+            },
+            label
+          )
+        );
+      })
+    );
+  }
+
+});
+
+function inRangeDate(decade, min, max) {
+  return _utilDates2['default'].max(_utilDates2['default'].min(decade, max), min);
+}
+
+function inRange(decade, min, max) {
+  return _utilDates2['default'].gte(decade, _utilDates2['default'].startOf(min, 'decade'), 'year') && _utilDates2['default'].lte(decade, _utilDates2['default'].endOf(max, 'decade'), 'year');
+}
+
+function inCentury(date, start) {
+  return _utilDates2['default'].gte(date, _utilDates2['default'].startOf(start, 'century'), 'year') && _utilDates2['default'].lte(date, _utilDates2['default'].endOf(start, 'century'), 'year');
+}
+
+function getCenturyDecades(_date) {
+  var days = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+      date = _utilDates2['default'].add(_utilDates2['default'].startOf(_date, 'century'), -20, 'year');
+
+  return days.map(function () {
+    return date = _utilDates2['default'].add(date, 10, 'year');
+  });
+}
+module.exports = exports['default'];
+},{"./mixins/AriaDescendantMixin":41,"./mixins/PureRenderMixin":46,"./mixins/RtlChildContextMixin":47,"./util/_":50,"./util/babelHelpers.js":51,"./util/dates":57,"./util/localizers":61,"./util/propTypes":62,"./util/widgetHelpers":65,"classnames":66,"react":254}],13:[function(require,module,exports){
+'use strict';
+
+var babelHelpers = require('./util/babelHelpers.js');
+
+exports.__esModule = true;
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _classnames = require('classnames');
+
+var _classnames2 = babelHelpers.interopRequireDefault(_classnames);
+
+var _util_ = require('./util/_');
+
+var _util_2 = babelHelpers.interopRequireDefault(_util_);
+
+var _utilFilter = require('./util/filter');
+
+var _utilFilter2 = babelHelpers.interopRequireDefault(_utilFilter);
+
+var _Popup = require('./Popup');
+
+var _Popup2 = babelHelpers.interopRequireDefault(_Popup);
+
+var _WidgetButton = require('./WidgetButton');
+
+var _WidgetButton2 = babelHelpers.interopRequireDefault(_WidgetButton);
+
+var _ComboboxInput = require('./ComboboxInput');
+
+var _ComboboxInput2 = babelHelpers.interopRequireDefault(_ComboboxInput);
+
+var _utilCompat = require('./util/compat');
+
+var _utilCompat2 = babelHelpers.interopRequireDefault(_utilCompat);
+
+var _utilPropTypes = require('./util/propTypes');
+
+var _utilPropTypes2 = babelHelpers.interopRequireDefault(_utilPropTypes);
+
+var _List = require('./List');
+
+var _List2 = babelHelpers.interopRequireDefault(_List);
+
+var _ListGroupable = require('./ListGroupable');
+
+var _ListGroupable2 = babelHelpers.interopRequireDefault(_ListGroupable);
+
+var _utilValidateListInterface = require('./util/validateListInterface');
+
+var _utilValidateListInterface2 = babelHelpers.interopRequireDefault(_utilValidateListInterface);
+
+var _uncontrollable = require('uncontrollable');
+
+var _uncontrollable2 = babelHelpers.interopRequireDefault(_uncontrollable);
+
+var _utilDataHelpers = require('./util/dataHelpers');
+
+var _utilInteraction = require('./util/interaction');
+
+var _utilWidgetHelpers = require('./util/widgetHelpers');
+
+var defaultSuggest = function defaultSuggest(f) {
+  return f === true ? 'startsWith' : f ? f : 'eq';
+};
+
+var omit = _util_2['default'].omit;
+var pick = _util_2['default'].pick;
+
+var propTypes = {
+  //-- controlled props -----------
+  value: _react2['default'].PropTypes.any,
+  onChange: _react2['default'].PropTypes.func,
+  open: _react2['default'].PropTypes.bool,
+  onToggle: _react2['default'].PropTypes.func,
+  //------------------------------------
+
+  itemComponent: _utilPropTypes2['default'].elementType,
+  listComponent: _utilPropTypes2['default'].elementType,
+
+  groupComponent: _utilPropTypes2['default'].elementType,
+  groupBy: _utilPropTypes2['default'].accessor,
+
+  data: _react2['default'].PropTypes.array,
+  valueField: _react2['default'].PropTypes.string,
+  textField: _utilPropTypes2['default'].accessor,
+  name: _react2['default'].PropTypes.string,
+
+  onSelect: _react2['default'].PropTypes.func,
+
+  autoFocus: _react2['default'].PropTypes.bool,
+  disabled: _utilPropTypes2['default'].disabled.acceptsArray,
+  readOnly: _utilPropTypes2['default'].readOnly.acceptsArray,
+
+  suggest: _utilPropTypes2['default'].filter,
+  filter: _utilPropTypes2['default'].filter,
+
+  busy: _react2['default'].PropTypes.bool,
+
+  dropUp: _react2['default'].PropTypes.bool,
+  duration: _react2['default'].PropTypes.number, //popup
+
+  placeholder: _react2['default'].PropTypes.string,
+
+  messages: _react2['default'].PropTypes.shape({
+    open: _utilPropTypes2['default'].message,
+    emptyList: _utilPropTypes2['default'].message,
+    emptyFilter: _utilPropTypes2['default'].message
+  })
+};
+
+var ComboBox = _react2['default'].createClass(babelHelpers.createDecoratedObject([{
+  key: 'displayName',
+  initializer: function initializer() {
+    return 'ComboBox';
+  }
+}, {
+  key: 'mixins',
+  initializer: function initializer() {
+    return [require('./mixins/TimeoutMixin'), require('./mixins/DataFilterMixin'), require('./mixins/PopupScrollToMixin'), require('./mixins/RtlParentContextMixin'), require('./mixins/AriaDescendantMixin')('input'), require('./mixins/FocusMixin')({
+      willHandle: function willHandle(focused) {
+        // not suggesting anymore
+        !focused && this.refs.input.accept();
+      },
+      didHandle: function didHandle(focused) {
+        if (!focused) this.close();
+      }
+    })];
+  }
+}, {
+  key: 'propTypes',
+  initializer: function initializer() {
+    return propTypes;
+  }
+}, {
+  key: 'getInitialState',
+  value: function getInitialState() {
+    var _props = this.props;
+    var value = _props.value;
+    var data = _props.data;
+    var valueField = _props.valueField;
+    var items = this.process(data, value);
+    var idx = _utilDataHelpers.dataIndexOf(items, value, valueField);
+
+    return {
+      selectedItem: items[idx],
+      focusedItem: items[! ~idx ? 0 : idx],
+      processedData: items,
+      open: false
+    };
+  }
+}, {
+  key: 'getDefaultProps',
+  value: function getDefaultProps() {
+    return {
+      data: [],
+      value: '',
+      open: false,
+      suggest: false,
+      filter: false,
+      delay: 500,
+
+      messages: msgs(),
+      ariaActiveDescendantKey: 'combobox'
+    };
+  }
+}, {
+  key: 'componentDidUpdate',
+  value: function componentDidUpdate() {
+    this.refs.list && _utilValidateListInterface2['default'](this.refs.list);
+  }
+}, {
+  key: 'shouldComponentUpdate',
+  value: function shouldComponentUpdate(nextProps, nextState) {
+    var isSuggesting = this.refs.input && this.refs.input.isSuggesting(),
+        stateChanged = !_util_2['default'].isShallowEqual(nextState, this.state),
+        valueChanged = !_util_2['default'].isShallowEqual(nextProps, this.props);
+
+    return isSuggesting || stateChanged || valueChanged;
+  }
+}, {
+  key: 'componentWillReceiveProps',
+  value: function componentWillReceiveProps(nextProps) {
+    var value = nextProps.value;
+    var data = nextProps.data;
+    var valueField = nextProps.valueField;
+    var textField = nextProps.textField;
+
+    var rawIdx = _utilDataHelpers.dataIndexOf(data, value, valueField),
+        valueItem = rawIdx === -1 ? nextProps.value : nextProps.data[rawIdx],
+        isSuggesting = this.refs.input.isSuggesting(),
+        items = this.process(nextProps.data, nextProps.value, (rawIdx === -1 || isSuggesting) && _utilDataHelpers.dataText(valueItem, textField)),
+        idx = _utilDataHelpers.dataIndexOf(items, value, valueField),
+        focused = this.filterIndexOf(items, _utilDataHelpers.dataText(valueItem, textField));
+
+    this._searchTerm = '';
+
+    this.setState({
+      processedData: items,
+      selectedItem: items[idx],
+      focusedItem: items[idx === -1 ? focused !== -1 ? focused : 0 // focus the closest match
+      : idx]
+    });
+  }
+}, {
+  key: 'render',
+  value: function render() {
+    var _cx,
+        _this = this;
+
+    var _props2 = this.props;
+    var className = _props2.className;
+    var tabIndex = _props2.tabIndex;
+    var filter = _props2.filter;
+    var suggest = _props2.suggest;
+    var valueField = _props2.valueField;
+    var textField = _props2.textField;
+    var groupBy = _props2.groupBy;
+    var messages = _props2.messages;
+    var data = _props2.data;
+    var busy = _props2.busy;
+    var dropUp = _props2.dropUp;
+    var name = _props2.name;
+    var autoFocus = _props2.autoFocus;
+    var placeholder = _props2.placeholder;
+    var value = _props2.value;
+    var open = _props2.open;
+    var List = _props2.listComponent;
+
+    List = List || groupBy && _ListGroupable2['default'] || _List2['default'];
+
+    var elementProps = omit(this.props, Object.keys(propTypes));
+    var listProps = pick(this.props, Object.keys(List.propTypes));
+    var popupProps = pick(this.props, Object.keys(_Popup2['default'].propTypes));
+
+    var _state = this.state;
+    var focusedItem = _state.focusedItem;
+    var selectedItem = _state.selectedItem;
+    var focused = _state.focused;
+
+    var items = this._data(),
+        disabled = _utilInteraction.isDisabled(this.props),
+        readOnly = _utilInteraction.isReadOnly(this.props),
+        valueItem = _utilDataHelpers.dataItem(data, value, valueField),
+        // take value from the raw data
+    inputID = _utilWidgetHelpers.instanceId(this, '_input'),
+        listID = _utilWidgetHelpers.instanceId(this, '_listbox'),
+        completeType = suggest ? filter ? 'both' : 'inline' : filter ? 'list' : '';
+
+    var shouldRenderList = _utilWidgetHelpers.isFirstFocusedRender(this) || open;
+
+    messages = msgs(messages);
+
+    return _react2['default'].createElement(
+      'div',
+      babelHelpers._extends({}, elementProps, {
+        ref: 'element',
+        onKeyDown: this._keyDown,
+        onBlur: this.handleBlur,
+        onFocus: this.handleFocus,
+        tabIndex: '-1',
+        className: _classnames2['default'](className, 'rw-combobox', 'rw-widget', (_cx = {
+          'rw-state-focus': focused,
+          'rw-state-disabled': disabled,
+          'rw-state-readonly': readOnly,
+          'rw-rtl': this.isRtl()
+
+        }, _cx['rw-open' + (dropUp ? '-up' : '')] = open, _cx))
+      }),
+      _react2['default'].createElement(
+        _WidgetButton2['default'],
+        {
+          tabIndex: '-1',
+          className: 'rw-select',
+          onClick: this.toggle,
+          disabled: !!(disabled || readOnly)
+        },
+        _react2['default'].createElement(
+          'i',
+          { className: _classnames2['default']('rw-i rw-i-caret-down', { 'rw-loading': busy }) },
+          _react2['default'].createElement(
+            'span',
+            { className: 'rw-sr' },
+            _util_2['default'].result(messages.open, this.props)
+          )
+        )
+      ),
+      _react2['default'].createElement(_ComboboxInput2['default'], {
+        ref: 'input',
+        id: inputID,
+        autoFocus: autoFocus,
+        tabIndex: tabIndex,
+        suggest: suggest,
+        name: name,
+        role: 'combobox',
+        'aria-owns': listID,
+        'aria-busy': !!busy,
+        'aria-autocomplete': completeType,
+        'aria-expanded': open,
+        'aria-haspopup': true,
+        placeholder: placeholder,
+        disabled: disabled,
+        readOnly: readOnly,
+        className: 'rw-input',
+        value: _utilDataHelpers.dataText(valueItem, textField),
+        onChange: this._inputTyping,
+        onKeyDown: this._inputKeyDown
+      }),
+      _react2['default'].createElement(
+        _Popup2['default'],
+        babelHelpers._extends({}, popupProps, {
+          onOpening: function () {
+            return _this.refs.list.forceUpdate();
+          }
+        }),
+        _react2['default'].createElement(
+          'div',
+          null,
+          shouldRenderList && _react2['default'].createElement(List, babelHelpers._extends({ ref: 'list'
+          }, listProps, {
+            id: listID,
+            data: items,
+            selected: selectedItem,
+            focused: focusedItem,
+            'aria-hidden': !open,
+            'aria-labelledby': inputID,
+            'aria-live': open && 'polite',
+            onSelect: this._onSelect,
+            onMove: this._scrollTo,
+            messages: {
+              emptyList: data.length ? messages.emptyFilter : messages.emptyList
+            } }))
+        )
+      )
+    );
+  }
+}, {
+  key: '_onSelect',
+  decorators: [_utilInteraction.widgetEditable],
+  value: function _onSelect(data) {
+    this.close();
+    _utilWidgetHelpers.notify(this.props.onSelect, data);
+    this.change(data);
+    this.focus();
+  }
+}, {
+  key: '_inputKeyDown',
+  value: function _inputKeyDown(e) {
+    this._deleting = e.key === 'Backspace' || e.key === 'Delete';
+    this._isTyping = true;
+  }
+}, {
+  key: '_inputTyping',
+  value: function _inputTyping(e) {
+    var _props3 = this.props;
+    var data = _props3.data;
+    var textField = _props3.textField;
+
+    var shouldSuggest = !!this.props.suggest,
+        strVal = e.target.value,
+        suggestion;
+
+    suggestion = this._deleting || !shouldSuggest ? strVal : this.suggest(this._data(), strVal);
+
+    suggestion = suggestion || strVal;
+
+    data = _util_2['default'].find(data, function (item) {
+      return _utilDataHelpers.dataText(item, textField).toLowerCase() === suggestion.toLowerCase();
+    });
+
+    this.change(!this._deleting && data ? data : strVal, true);
+
+    this.open();
+  }
+}, {
+  key: 'focus',
+  value: function focus() {
+    this.refs.input.focus();
+  }
+}, {
+  key: '_keyDown',
+  decorators: [_utilInteraction.widgetEditable],
+  value: function _keyDown(e) {
+    var self = this,
+        key = e.key,
+        alt = e.altKey,
+        list = this.refs.list,
+        focusedItem = this.state.focusedItem,
+        selectedItem = this.state.selectedItem,
+        isOpen = this.props.open;
+
+    _utilWidgetHelpers.notify(this.props.onKeyDown, [e]);
+
+    if (e.defaultPrevented) return;
+
+    if (key === 'End') if (isOpen) this.setState({ focusedItem: list.last() });else select(list.last(), true);else if (key === 'Home') if (isOpen) this.setState({ focusedItem: list.first() });else select(list.first(), true);else if (key === 'Escape' && isOpen) this.close();else if (key === 'Enter' && isOpen) {
+      e.preventDefault();
+      select(this.state.focusedItem, true);
+    } else if (key === 'ArrowDown') {
+      if (alt) this.open();else {
+        if (isOpen) this.setState({ focusedItem: list.next(focusedItem) });else select(list.next(selectedItem), true);
+      }
+    } else if (key === 'ArrowUp') {
+      if (alt) this.close();else {
+        if (isOpen) this.setState({ focusedItem: list.prev(focusedItem) });else select(list.prev(selectedItem), true);
+      }
+    }
+
+    function select(item, fromList) {
+      if (!item) return self.change(_utilCompat2['default'].findDOMNode(self.refs.input).value, false);
+
+      self.refs.input.accept(true); //removes caret
+
+      if (fromList) return self._onSelect(item);
+
+      self.change(item, false);
+    }
+  }
+}, {
+  key: 'change',
+  value: function change(data, typing) {
+    this._typedChange = !!typing;
+    _utilWidgetHelpers.notify(this.props.onChange, data);
+  }
+}, {
+  key: 'open',
+  value: function open() {
+    if (!this.props.open) _utilWidgetHelpers.notify(this.props.onToggle, true);
+  }
+}, {
+  key: 'close',
+  value: function close() {
+    if (this.props.open) _utilWidgetHelpers.notify(this.props.onToggle, false);
+  }
+}, {
+  key: 'toggle',
+  decorators: [_utilInteraction.widgetEditable],
+  value: function toggle() {
+    this.focus();
+
+    this.props.open ? this.close() : this.open();
+  }
+}, {
+  key: 'suggest',
+  value: function suggest(data, value) {
+    var _props4 = this.props;
+    var textField = _props4.textField;
+    var suggest = _props4.suggest;
+    var minLength = _props4.minLength;
+
+    var word = _utilDataHelpers.dataText(value, textField),
+        suggestion;
+
+    suggest = defaultSuggest(suggest);
+
+    if (!(word || '').trim() || word.length < (minLength || 1)) return '';
+
+    suggestion = typeof value === 'string' ? _util_2['default'].find(data, getFilter(suggest, word, textField)) : value;
+
+    if (suggestion && (!this.state || !this.state.deleting)) return _utilDataHelpers.dataText(suggestion, textField);
+
+    return '';
+  }
+}, {
+  key: '_data',
+  value: function _data() {
+    return this.state.processedData;
+  }
+}, {
+  key: 'process',
+  value: function process(data, values, searchTerm) {
+    if (this.props.filter && searchTerm) data = this.filter(data, searchTerm);
+
+    return data;
+  }
+}]));
+
+exports['default'] = _uncontrollable2['default'](ComboBox, { open: 'onToggle', value: 'onChange' });
+
+function msgs(msgs) {
+  return babelHelpers._extends({
+    open: 'open combobox',
+    emptyList: 'There are no items in this list',
+    emptyFilter: 'The filter returned no results'
+  }, msgs);
+}
+
+function getFilter(suggest, word, textField) {
+  return typeof suggest === 'string' ? function (item) {
+    return _utilFilter2['default'][suggest](_utilDataHelpers.dataText(item, textField).toLowerCase(), word.toLowerCase());
+  } : function (item) {
+    return suggest(item, word);
+  };
+}
+module.exports = exports['default'];
+},{"./ComboboxInput":14,"./List":21,"./ListGroupable":22,"./Popup":30,"./WidgetButton":35,"./mixins/AriaDescendantMixin":41,"./mixins/DataFilterMixin":42,"./mixins/FocusMixin":43,"./mixins/PopupScrollToMixin":45,"./mixins/RtlParentContextMixin":48,"./mixins/TimeoutMixin":49,"./util/_":50,"./util/babelHelpers.js":51,"./util/compat":53,"./util/dataHelpers":56,"./util/filter":59,"./util/interaction":60,"./util/propTypes":62,"./util/validateListInterface":64,"./util/widgetHelpers":65,"classnames":66,"react":254,"uncontrollable":96}],14:[function(require,module,exports){
+'use strict';
+
+var babelHelpers = require('./util/babelHelpers.js');
+
+exports.__esModule = true;
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _utilCaret = require('./util/caret');
+
+var _utilCaret2 = babelHelpers.interopRequireDefault(_utilCaret);
+
+var _utilCompat = require('./util/compat');
+
+var _utilCompat2 = babelHelpers.interopRequireDefault(_utilCompat);
+
+exports['default'] = _react2['default'].createClass({
+
+  displayName: 'ComboboxInput',
+
+  propTypes: {
+    value: _react2['default'].PropTypes.string,
+    onChange: _react2['default'].PropTypes.func.isRequired
+  },
+
+  componentDidUpdate: function componentDidUpdate() {
+    var input = _utilCompat2['default'].findDOMNode(this),
+        val = this.props.value;
+
+    if (this.isSuggesting()) {
+      var start = val.toLowerCase().indexOf(this._last.toLowerCase()) + this._last.length,
+          end = val.length - start;
+
+      if (start >= 0) {
+        _utilCaret2['default'](input, start, start + end);
+      }
+    }
+  },
+
+  getDefaultProps: function getDefaultProps() {
+    return {
+      value: ''
+    };
+  },
+
+  render: function render() {
+    return _react2['default'].createElement('input', babelHelpers._extends({}, this.props, {
+      type: 'text',
+      autoComplete: 'off',
+      'aria-disabled': this.props.disabled,
+      'aria-readonly': this.props.readOnly,
+      className: this.props.className + ' rw-input',
+      onKeyDown: this.props.onKeyDown,
+      onChange: this._change,
+      value: this.props.value == null ? '' : this.props.value
+    }));
+  },
+
+  isSuggesting: function isSuggesting() {
+    var val = this.props.value,
+        isSuggestion = this._last != null && val.toLowerCase().indexOf(this._last.toLowerCase()) !== -1;
+
+    return this.props.suggest && isSuggestion;
+  },
+
+  accept: function accept(removeCaret) {
+    var val = _utilCompat2['default'].findDOMNode(this).value || '',
+        end = val.length;
+
+    this._last = null;
+    removeCaret && _utilCaret2['default'](_utilCompat2['default'].findDOMNode(this), end, end);
+  },
+
+  _change: function _change(e) {
+    var val = e.target.value,
+        pl = !!this.props.placeholder;
+
+    // IE fires input events when setting/unsetting placeholders.
+    // issue #112
+    if (pl && !val && val === (this.props.value || '')) return;
+
+    this._last = val;
+    this.props.onChange(e, val);
+  },
+
+  focus: function focus() {
+    _utilCompat2['default'].findDOMNode(this).focus();
+  }
+});
+module.exports = exports['default'];
+},{"./util/babelHelpers.js":51,"./util/caret":52,"./util/compat":53,"react":254}],15:[function(require,module,exports){
+'use strict';
+
+var babelHelpers = require('./util/babelHelpers.js');
+
+exports.__esModule = true;
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _classnames = require('classnames');
+
+var _classnames2 = babelHelpers.interopRequireDefault(_classnames);
+
+var _utilCompat = require('./util/compat');
+
+var _utilCompat2 = babelHelpers.interopRequireDefault(_utilCompat);
+
+var _utilLocalizers = require('./util/localizers');
+
+var _utilPropTypes = require('./util/propTypes');
+
+var _utilPropTypes2 = babelHelpers.interopRequireDefault(_utilPropTypes);
+
+exports['default'] = _react2['default'].createClass({
+
+  displayName: 'DatePickerInput',
+
+  propTypes: {
+    format: _utilPropTypes2['default'].dateFormat.isRequired,
+    editFormat: _utilPropTypes2['default'].dateFormat,
+    parse: _react2['default'].PropTypes.func.isRequired,
+
+    value: _react2['default'].PropTypes.instanceOf(Date),
+    onChange: _react2['default'].PropTypes.func.isRequired,
+    culture: _react2['default'].PropTypes.string
+  },
+
+  getDefaultProps: function getDefaultProps() {
+    return {
+      textValue: ''
+    };
+  },
+
+  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+    var text = formatDate(nextProps.value, nextProps.editing && nextProps.editFormat ? nextProps.editFormat : nextProps.format, nextProps.culture);
+
+    this.startValue = text;
+
+    this.setState({
+      textValue: text
+    });
+  },
+
+  getInitialState: function getInitialState() {
+    var text = formatDate(this.props.value, this.props.editing && this.props.editFormat ? this.props.editFormat : this.props.format, this.props.culture);
+
+    this.startValue = text;
+
+    return {
+      textValue: text
+    };
+  },
+
+  render: function render() {
+    var value = this.state.textValue;
+
+    return _react2['default'].createElement('input', babelHelpers._extends({}, this.props, {
+      type: 'text',
+      className: _classnames2['default']({ 'rw-input': true }),
+      value: value,
+      'aria-disabled': this.props.disabled,
+      'aria-readonly': this.props.readOnly,
+      disabled: this.props.disabled,
+      readOnly: this.props.readOnly,
+      onChange: this._change,
+      onBlur: chain(this.props.blur, this._blur, this) }));
+  },
+
+  _change: function _change(e) {
+    this.setState({ textValue: e.target.value });
+    this._needsFlush = true;
+  },
+
+  _blur: function _blur(e) {
+    var val = e.target.value,
+        date;
+
+    if (this._needsFlush) {
+      this._needsFlush = false;
+      date = this.props.parse(val);
+
+      this.props.onChange(date, formatDate(date, this.props.format, this.props.culture));
+    }
+  },
+
+  focus: function focus() {
+    _utilCompat2['default'].findDOMNode(this).focus();
+  }
+
+});
+
+function isValid(d) {
+  return !isNaN(d.getTime());
+}
+
+function formatDate(date, format, culture) {
+  var val = '';
+
+  if (date instanceof Date && isValid(date)) val = _utilLocalizers.date.format(date, format, culture);
+
+  return val;
+}
+
+function chain(a, b, thisArg) {
+  return function () {
+    a && a.apply(thisArg, arguments);
+    b && b.apply(thisArg, arguments);
+  };
+}
+module.exports = exports['default'];
+},{"./util/babelHelpers.js":51,"./util/compat":53,"./util/localizers":61,"./util/propTypes":62,"classnames":66,"react":254}],16:[function(require,module,exports){
+'use strict';
+
+var babelHelpers = require('./util/babelHelpers.js');
+
+exports.__esModule = true;
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _invariant = require('invariant');
+
+var _invariant2 = babelHelpers.interopRequireDefault(_invariant);
+
+var _domHelpersActiveElement = require('dom-helpers/activeElement');
+
+var _domHelpersActiveElement2 = babelHelpers.interopRequireDefault(_domHelpersActiveElement);
+
+var _classnames = require('classnames');
+
+var _classnames2 = babelHelpers.interopRequireDefault(_classnames);
+
+var _utilCompat = require('./util/compat');
+
+var _utilCompat2 = babelHelpers.interopRequireDefault(_utilCompat);
+
+var _util_ = require('./util/_');
+
+var _util_2 = babelHelpers.interopRequireDefault(_util_);
+
+//pick, omit, has
+
+var _utilDates = require('./util/dates');
+
+var _utilDates2 = babelHelpers.interopRequireDefault(_utilDates);
+
+var _utilLocalizers = require('./util/localizers');
+
+var _utilConstants = require('./util/constants');
+
+var _utilConstants2 = babelHelpers.interopRequireDefault(_utilConstants);
+
+var _Popup = require('./Popup');
+
+var _Popup2 = babelHelpers.interopRequireDefault(_Popup);
+
+var _Calendar2 = require('./Calendar');
+
+var _Calendar3 = babelHelpers.interopRequireDefault(_Calendar2);
+
+var _TimeList = require('./TimeList');
+
+var _TimeList2 = babelHelpers.interopRequireDefault(_TimeList);
+
+var _DateInput = require('./DateInput');
+
+var _DateInput2 = babelHelpers.interopRequireDefault(_DateInput);
+
+var _WidgetButton = require('./WidgetButton');
+
+var _WidgetButton2 = babelHelpers.interopRequireDefault(_WidgetButton);
+
+var _utilPropTypes = require('./util/propTypes');
+
+var _utilPropTypes2 = babelHelpers.interopRequireDefault(_utilPropTypes);
+
+var _uncontrollable = require('uncontrollable');
+
+var _uncontrollable2 = babelHelpers.interopRequireDefault(_uncontrollable);
+
+var _utilInteraction = require('./util/interaction');
+
+var _utilWidgetHelpers = require('./util/widgetHelpers');
+
+var views = _utilConstants2['default'].calendarViews;
+var popups = _utilConstants2['default'].datePopups;
+
+var Calendar = _Calendar3['default'].ControlledComponent;
+var viewEnum = Object.keys(views).map(function (k) {
+  return views[k];
+});
+
+var omit = _util_2['default'].omit;
+var pick = _util_2['default'].pick;
+
+var propTypes = babelHelpers._extends({}, Calendar.propTypes, {
+
+  //-- controlled props -----------
+  value: _react2['default'].PropTypes.instanceOf(Date),
+  onChange: _react2['default'].PropTypes.func,
+  open: _react2['default'].PropTypes.oneOf([false, popups.TIME, popups.CALENDAR]),
+  onToggle: _react2['default'].PropTypes.func,
+  currentDate: _react2['default'].PropTypes.instanceOf(Date),
+  onCurrentDateChange: _react2['default'].PropTypes.func,
+  //------------------------------------
+
+  onSelect: _react2['default'].PropTypes.func,
+
+  min: _react2['default'].PropTypes.instanceOf(Date),
+  max: _react2['default'].PropTypes.instanceOf(Date),
+
+  culture: _react2['default'].PropTypes.string,
+
+  format: _utilPropTypes2['default'].dateFormat,
+  timeFormat: _utilPropTypes2['default'].dateFormat,
+  editFormat: _utilPropTypes2['default'].dateFormat,
+
+  calendar: _react2['default'].PropTypes.bool,
+  time: _react2['default'].PropTypes.bool,
+
+  timeComponent: _utilPropTypes2['default'].elementType,
+
+  //popup
+  dropUp: _react2['default'].PropTypes.bool,
+  duration: _react2['default'].PropTypes.number,
+
+  placeholder: _react2['default'].PropTypes.string,
+  name: _react2['default'].PropTypes.string,
+
+  initialView: _react2['default'].PropTypes.oneOf(viewEnum),
+  finalView: _react2['default'].PropTypes.oneOf(viewEnum),
+
+  autoFocus: _react2['default'].PropTypes.bool,
+  disabled: _utilPropTypes2['default'].disabled,
+  readOnly: _utilPropTypes2['default'].readOnly,
+
+  parse: _react2['default'].PropTypes.oneOfType([_react2['default'].PropTypes.arrayOf(_react2['default'].PropTypes.string), _react2['default'].PropTypes.string, _react2['default'].PropTypes.func]),
+
+  'aria-labelledby': _react2['default'].PropTypes.string,
+
+  messages: _react2['default'].PropTypes.shape({
+    calendarButton: _react2['default'].PropTypes.string,
+    timeButton: _react2['default'].PropTypes.string
+  })
+});
+
+var DateTimePicker = _react2['default'].createClass(babelHelpers.createDecoratedObject([{
+  key: 'displayName',
+  initializer: function initializer() {
+    return 'DateTimePicker';
+  }
+}, {
+  key: 'mixins',
+  initializer: function initializer() {
+    return [require('./mixins/TimeoutMixin'), require('./mixins/PureRenderMixin'), require('./mixins/PopupScrollToMixin'), require('./mixins/RtlParentContextMixin'), require('./mixins/FocusMixin')({
+      didHandle: function didHandle(focused) {
+        if (!focused) this.close();
+      }
+    }), require('./mixins/AriaDescendantMixin')('valueInput', function (key, id) {
+      var open = this.props.open;
+      var current = this.ariaActiveDescendant();
+      var calIsActive = open === popups.CALENDAR && key === 'calendar';
+      var timeIsActive = open === popups.TIME && key === 'timelist';
+
+      if (!current || timeIsActive || calIsActive) return id;
+    })];
+  }
+}, {
+  key: 'propTypes',
+  initializer: function initializer() {
+    return propTypes;
+  }
+}, {
+  key: 'getInitialState',
+  value: function getInitialState() {
+    return {
+      focused: false
+    };
+  }
+}, {
+  key: 'getDefaultProps',
+  value: function getDefaultProps() {
+
+    return {
+      value: null,
+
+      min: new Date(1900, 0, 1),
+      max: new Date(2099, 11, 31),
+      calendar: true,
+      time: true,
+      open: false,
+
+      //calendar override
+      footer: true,
+
+      messages: {
+        calendarButton: 'Select Date',
+        timeButton: 'Select Time'
+      },
+
+      ariaActiveDescendantKey: 'dropdownlist'
+    };
+  }
+}, {
+  key: 'render',
+  value: function render() {
+    var _cx,
+        _this = this;
+
+    var _props = this.props;
+    var className = _props.className;
+    var calendar = _props.calendar;
+    var time = _props.time;
+    var open = _props.open;
+    var tabIndex = _props.tabIndex;
+    var value = _props.value;
+    var editFormat = _props.editFormat;
+    var timeFormat = _props.timeFormat;
+    var culture = _props.culture;
+    var duration = _props.duration;
+    var step = _props.step;
+    var messages = _props.messages;
+    var min = _props.min;
+    var max = _props.max;
+    var busy = _props.busy;
+    var placeholder = _props.placeholder;
+    var disabled = _props.disabled;
+    var readOnly = _props.readOnly;
+    var name = _props.name;
+    var dropUp = _props.dropUp;
+    var timeComponent = _props.timeComponent;
+    var autoFocus = _props.autoFocus;
+    var ariaLabelledby = _props['aria-labelledby'];
+    var ariaDescribedby = _props['aria-describedby'];
+    var focused = this.state.focused;
+
+    var inputID = _utilWidgetHelpers.instanceId(this, '_input'),
+        timeListID = _utilWidgetHelpers.instanceId(this, '_time_listbox'),
+        dateListID = _utilWidgetHelpers.instanceId(this, '_cal'),
+        owns = '';
+
+    var elementProps = omit(this.props, Object.keys(propTypes)),
+        calProps = pick(this.props, Object.keys(Calendar.propTypes));
+
+    var shouldRenderList = _utilWidgetHelpers.isFirstFocusedRender(this) || open,
+        disabledOrReadonly = disabled || readOnly,
+        calendarIsOpen = open === popups.CALENDAR,
+        timeIsOpen = open === popups.TIME;
+
+    if (calendar) owns += dateListID;
+    if (time) owns += ' ' + timeListID;
+
+    value = dateOrNull(value);
+
+    return _react2['default'].createElement(
+      'div',
+      babelHelpers._extends({}, elementProps, {
+        ref: 'element',
+        tabIndex: '-1',
+        onKeyDown: this._keyDown,
+        onKeyPress: this._keyPress,
+        onBlur: this.handleBlur,
+        onFocus: this.handleFocus,
+        className: _classnames2['default'](className, 'rw-datetimepicker', 'rw-widget', (_cx = {
+          'rw-state-focus': focused,
+          'rw-state-disabled': disabled,
+          'rw-state-readonly': readOnly,
+          'rw-has-both': calendar && time,
+          'rw-has-neither': !calendar && !time,
+          'rw-rtl': this.isRtl()
+
+        }, _cx['rw-open' + (dropUp ? '-up' : '')] = open, _cx))
+      }),
+      _react2['default'].createElement(_DateInput2['default'], {
+        ref: 'valueInput',
+        id: inputID,
+        autoFocus: autoFocus,
+        tabIndex: tabIndex || 0,
+        role: 'combobox',
+        'aria-labelledby': ariaLabelledby,
+        'aria-describedby': ariaDescribedby,
+        'aria-expanded': !!open,
+        'aria-busy': !!busy,
+        'aria-owns': owns.trim(),
+        'aria-haspopup': true,
+        placeholder: placeholder,
+        name: name,
+        disabled: disabled,
+        readOnly: readOnly,
+        value: value,
+        format: getFormat(this.props),
+        editFormat: editFormat,
+        editing: focused,
+        culture: culture,
+        parse: this._parse,
+        onChange: this._change
+      }),
+      (calendar || time) && _react2['default'].createElement(
+        'span',
+        { className: 'rw-select' },
+        calendar && _react2['default'].createElement(
+          _WidgetButton2['default'],
+          {
+            tabIndex: '-1',
+            className: 'rw-btn-calendar',
+            disabled: disabledOrReadonly,
+            'aria-disabled': disabledOrReadonly,
+            'aria-label': messages.calendarButton,
+            onClick: this._click.bind(null, popups.CALENDAR)
+          },
+          _react2['default'].createElement('i', { className: 'rw-i rw-i-calendar',
+            'aria-hidden': 'true'
+          })
+        ),
+        time && _react2['default'].createElement(
+          _WidgetButton2['default'],
+          {
+            tabIndex: '-1',
+            className: 'rw-btn-time',
+            disabled: disabledOrReadonly,
+            'aria-disabled': disabledOrReadonly,
+            'aria-label': messages.timeButton,
+            onClick: this._click.bind(null, popups.TIME)
+          },
+          _react2['default'].createElement('i', { className: 'rw-i rw-i-clock-o',
+            'aria-hidden': 'true'
+          })
+        )
+      ),
+      _react2['default'].createElement(
+        _Popup2['default'],
+        {
+          dropUp: dropUp,
+          open: timeIsOpen,
+          duration: duration,
+          onOpening: function () {
+            return _this.refs.timePopup.forceUpdate();
+          }
+        },
+        _react2['default'].createElement(
+          'div',
+          null,
+          shouldRenderList && _react2['default'].createElement(_TimeList2['default'], { ref: 'timePopup',
+            id: timeListID,
+            ariaActiveDescendantKey: 'timelist',
+            'aria-labelledby': inputID,
+            'aria-live': open && 'polite',
+            'aria-hidden': !open,
+            value: value,
+            format: timeFormat,
+            step: step,
+            min: min,
+            max: max,
+            currentDate: this.props.currentDate,
+            culture: culture,
+            onMove: this._scrollTo,
+            preserveDate: !!calendar,
+            itemComponent: timeComponent,
+            onSelect: this._selectTime
+          })
+        )
+      ),
+      _react2['default'].createElement(
+        _Popup2['default'],
+        {
+          className: 'rw-calendar-popup',
+          dropUp: dropUp,
+          open: calendarIsOpen,
+          duration: duration
+        },
+        shouldRenderList && _react2['default'].createElement(Calendar, babelHelpers._extends({}, calProps, {
+          ref: 'calPopup',
+          tabIndex: '-1',
+          id: dateListID,
+          value: value,
+          'aria-hidden': !open,
+          'aria-live': 'polite',
+          ariaActiveDescendantKey: 'calendar',
+          onChange: this._selectDate,
+          // #75: need to aggressively reclaim focus from the calendar otherwise
+          // disabled header/footer buttons will drop focus completely from the widget
+          onNavigate: function () {
+            return _this.focus();
+          },
+          currentDate: this.props.currentDate,
+          onCurrentDateChange: this.props.onCurrentDateChange
+        }))
+      )
+    );
+  }
+}, {
+  key: '_change',
+  decorators: [_utilInteraction.widgetEditable],
+  value: function _change(date, str, constrain) {
+    var _props2 = this.props;
+    var onChange = _props2.onChange;
+    var value = _props2.value;
+
+    if (constrain) date = this.inRangeValue(date);
+
+    if (onChange) {
+      if (date == null || value == null) {
+        if (date != value) //eslint-disable-line eqeqeq
+          onChange(date, str);
+      } else if (!_utilDates2['default'].eq(date, value)) onChange(date, str);
+    }
+  }
+}, {
+  key: '_keyDown',
+  decorators: [_utilInteraction.widgetEditable],
+  value: function _keyDown(e) {
+    var _props3 = this.props;
+    var open = _props3.open;
+    var calendar = _props3.calendar;
+    var time = _props3.time;
+
+    _utilWidgetHelpers.notify(this.props.onKeyDown, [e]);
+
+    if (e.defaultPrevented) return;
+
+    if (e.key === 'Escape' && open) this.close();else if (e.altKey) {
+      e.preventDefault();
+
+      if (e.key === 'ArrowDown') {
+        if (calendar && time) this.open(open === popups.CALENDAR ? popups.TIME : popups.CALENDAR);else if (time) this.open(popups.TIME);else if (calendar) this.open(popups.CALENDAR);
+      } else if (e.key === 'ArrowUp') this.close();
+    } else if (open) {
+      if (open === popups.CALENDAR) this.refs.calPopup._keyDown(e);
+      if (open === popups.TIME) this.refs.timePopup._keyDown(e);
+    }
+  }
+}, {
+  key: '_keyPress',
+  decorators: [_utilInteraction.widgetEditable],
+  value: function _keyPress(e) {
+    _utilWidgetHelpers.notify(this.props.onKeyPress, [e]);
+
+    if (e.defaultPrevented) return;
+
+    if (this.props.open === popups.TIME) this.refs.timePopup._keyPress(e);
+  }
+}, {
+  key: 'focus',
+  value: function focus() {
+    if (_domHelpersActiveElement2['default']() !== _utilCompat2['default'].findDOMNode(this.refs.valueInput)) this.refs.valueInput.focus();
+  }
+}, {
+  key: '_selectDate',
+  decorators: [_utilInteraction.widgetEditable],
+  value: function _selectDate(date) {
+    var format = getFormat(this.props),
+        dateTime = _utilDates2['default'].merge(date, this.props.value, this.props.currentDate),
+        dateStr = formatDate(date, format, this.props.culture);
+
+    this.close();
+    _utilWidgetHelpers.notify(this.props.onSelect, [dateTime, dateStr]);
+    this._change(dateTime, dateStr, true);
+    this.focus();
+  }
+}, {
+  key: '_selectTime',
+  decorators: [_utilInteraction.widgetEditable],
+  value: function _selectTime(datum) {
+    var format = getFormat(this.props),
+        dateTime = _utilDates2['default'].merge(this.props.value, datum.date, this.props.currentDate),
+        dateStr = formatDate(datum.date, format, this.props.culture);
+
+    this.close();
+    _utilWidgetHelpers.notify(this.props.onSelect, [dateTime, dateStr]);
+    this._change(dateTime, dateStr, true);
+    this.focus();
+  }
+}, {
+  key: '_click',
+  decorators: [_utilInteraction.widgetEditable],
+  value: function _click(view, e) {
+    this.focus();
+    this.toggle(view, e);
+  }
+}, {
+  key: '_parse',
+  value: function _parse(string) {
+    var format = getFormat(this.props, true),
+        editFormat = this.props.editFormat,
+        parse = this.props.parse,
+        formats = [];
+
+    if (typeof parse === 'function') return parse(string, this.props.culture);
+
+    if (typeof format === 'string') formats.push(format);
+
+    if (typeof editFormat === 'string') formats.push(editFormat);
+
+    if (parse) formats = formats.concat(this.props.parse);
+
+    _invariant2['default'](formats.length, 'React Widgets: there are no specified `parse` formats provided and the `format` prop is a function. ' + 'the DateTimePicker is unable to parse `%s` into a dateTime, ' + 'please provide either a parse function or Globalize.js compatible string for `format`', string);
+
+    return formatsParser(formats, this.props.culture, string);
+  }
+}, {
+  key: 'toggle',
+  value: function toggle(view) {
+    this.props.open ? this.props.open !== view ? this.open(view) : this.close(view) : this.open(view);
+  }
+}, {
+  key: 'open',
+  value: function open(view) {
+    if (this.props.open !== view && this.props[view] === true) _utilWidgetHelpers.notify(this.props.onToggle, view);
+  }
+}, {
+  key: 'close',
+  value: function close() {
+    if (this.props.open) _utilWidgetHelpers.notify(this.props.onToggle, false);
+  }
+}, {
+  key: 'inRangeValue',
+  value: function inRangeValue(value) {
+    if (value == null) return value;
+
+    return _utilDates2['default'].max(_utilDates2['default'].min(value, this.props.max), this.props.min);
+  }
+}]));
+
+exports['default'] = _uncontrollable2['default'](DateTimePicker, { open: 'onToggle', value: 'onChange', currentDate: 'onCurrentDateChange' });
+
+function getFormat(props) {
+  var cal = props[popups.CALENDAR] != null ? props.calendar : true,
+      time = props[popups.TIME] != null ? props.time : true;
+
+  return props.format ? props.format : cal && time || !cal && !time ? _utilLocalizers.date.getFormat('default') : _utilLocalizers.date.getFormat(cal ? 'date' : 'time');
+}
+
+function formatDate(date, format, culture) {
+  var val = '';
+
+  if (date instanceof Date && !isNaN(date.getTime())) val = _utilLocalizers.date.format(date, format, culture);
+
+  return val;
+}
+
+function formatsParser(formats, culture, str) {
+  var date;
+
+  for (var i = 0; i < formats.length; i++) {
+    date = _utilLocalizers.date.parse(str, formats[i], culture);
+    if (date) return date;
+  }
+  return null;
+}
+
+function dateOrNull(dt) {
+  if (dt && !isNaN(dt.getTime())) return dt;
+  return null;
+}
+module.exports = exports['default'];
+},{"./Calendar":11,"./DateInput":15,"./Popup":30,"./TimeList":34,"./WidgetButton":35,"./mixins/AriaDescendantMixin":41,"./mixins/FocusMixin":43,"./mixins/PopupScrollToMixin":45,"./mixins/PureRenderMixin":46,"./mixins/RtlParentContextMixin":48,"./mixins/TimeoutMixin":49,"./util/_":50,"./util/babelHelpers.js":51,"./util/compat":53,"./util/constants":55,"./util/dates":57,"./util/interaction":60,"./util/localizers":61,"./util/propTypes":62,"./util/widgetHelpers":65,"classnames":66,"dom-helpers/activeElement":69,"invariant":94,"react":254,"uncontrollable":96}],17:[function(require,module,exports){
+'use strict';
+
+var babelHelpers = require('./util/babelHelpers.js');
+
+exports.__esModule = true;
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _classnames = require('classnames');
+
+var _classnames2 = babelHelpers.interopRequireDefault(_classnames);
+
+var _utilDates = require('./util/dates');
+
+var _utilDates2 = babelHelpers.interopRequireDefault(_utilDates);
+
+var _utilLocalizers = require('./util/localizers');
+
+var _util_ = require('./util/_');
+
+var _util_2 = babelHelpers.interopRequireDefault(_util_);
+
+var _utilPropTypes = require('./util/propTypes');
+
+var _utilPropTypes2 = babelHelpers.interopRequireDefault(_utilPropTypes);
+
+var _utilWidgetHelpers = require('./util/widgetHelpers');
+
+var propTypes = {
+  optionID: _react2['default'].PropTypes.func,
+  culture: _react2['default'].PropTypes.string,
+
+  value: _react2['default'].PropTypes.instanceOf(Date),
+  focused: _react2['default'].PropTypes.instanceOf(Date),
+  min: _react2['default'].PropTypes.instanceOf(Date),
+  max: _react2['default'].PropTypes.instanceOf(Date),
+  onChange: _react2['default'].PropTypes.func.isRequired,
+
+  yearFormat: _utilPropTypes2['default'].dateFormat
+};
+
+var isEqual = function isEqual(dataA, dateB) {
+  return _utilDates2['default'].eq(dataA, dateB, 'year');
+};
+var optionId = function optionId(id, date) {
+  return id + '__decade_' + _utilDates2['default'].year(date);
+};
+
+exports['default'] = _react2['default'].createClass({
+
+  displayName: 'DecadeView',
+
+  mixins: [require('./mixins/PureRenderMixin'), require('./mixins/RtlChildContextMixin'), require('./mixins/AriaDescendantMixin')()],
+
+  propTypes: propTypes,
+
+  componentDidUpdate: function componentDidUpdate() {
+    var activeId = optionId(_utilWidgetHelpers.instanceId(this), this.props.focused);
+    this.ariaActiveDescendant(activeId);
+  },
+
+  render: function render() {
+    var _props = this.props;
+    var className = _props.className;
+    var focused = _props.focused;
+    var years = getDecadeYears(focused);
+    var rows = _util_2['default'].chunk(years, 4);
+
+    var elementProps = _util_2['default'].omit(this.props, Object.keys(propTypes));
+
+    return _react2['default'].createElement(
+      'table',
+      babelHelpers._extends({}, elementProps, {
+        role: 'grid',
+        className: _classnames2['default'](className, 'rw-nav-view')
+      }),
+      _react2['default'].createElement(
+        'tbody',
+        null,
+        rows.map(this._row)
+      )
+    );
+  },
+
+  _row: function _row(row, rowIdx) {
+    var _this = this;
+
+    var _props2 = this.props;
+    var focused = _props2.focused;
+    var disabled = _props2.disabled;
+    var onChange = _props2.onChange;
+    var value = _props2.value;
+    var today = _props2.today;
+    var culture = _props2.culture;
+    var min = _props2.min;
+    var max = _props2.max;
+    var id = _utilWidgetHelpers.instanceId(this);
+
+    return _react2['default'].createElement(
+      'tr',
+      { key: 'row_' + rowIdx, role: 'row' },
+      row.map(function (date, colIdx) {
+        var isFocused = isEqual(date, focused),
+            isSelected = isEqual(date, value),
+            currentYear = isEqual(date, today),
+            label = _utilLocalizers.date.format(date, _utilLocalizers.date.getFormat('year', _this.props.yearFormat), culture);
+
+        var currentID = optionId(id, date);
+
+        return !_utilDates2['default'].inRange(date, min, max, 'year') ? _react2['default'].createElement(
+          'td',
+          { key: colIdx, role: 'presentation', className: 'rw-empty-cell' },
+          ' '
+        ) : _react2['default'].createElement(
+          'td',
+          {
+            key: colIdx,
+            role: 'gridcell',
+            id: currentID,
+            title: label,
+            'aria-selected': isSelected,
+            'aria-label': label,
+            'aria-readonly': disabled
+          },
+          _react2['default'].createElement(
+            'span',
+            {
+              'aria-labelledby': currentID,
+              onClick: onChange.bind(null, date),
+              className: _classnames2['default']('rw-btn', {
+                'rw-off-range': !inDecade(date, focused),
+                'rw-state-focus': isFocused,
+                'rw-state-selected': isSelected,
+                'rw-now': currentYear
+              })
+            },
+            label
+          )
+        );
+      })
+    );
+  }
+});
+
+function inDecade(date, start) {
+  return _utilDates2['default'].gte(date, _utilDates2['default'].startOf(start, 'decade'), 'year') && _utilDates2['default'].lte(date, _utilDates2['default'].endOf(start, 'decade'), 'year');
+}
+
+function getDecadeYears(_date) {
+  var days = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+      date = _utilDates2['default'].add(_utilDates2['default'].startOf(_date, 'decade'), -2, 'year');
+
+  return days.map(function () {
+    return date = _utilDates2['default'].add(date, 1, 'year');
+  });
+}
+module.exports = exports['default'];
+},{"./mixins/AriaDescendantMixin":41,"./mixins/PureRenderMixin":46,"./mixins/RtlChildContextMixin":47,"./util/_":50,"./util/babelHelpers.js":51,"./util/dates":57,"./util/localizers":61,"./util/propTypes":62,"./util/widgetHelpers":65,"classnames":66,"react":254}],18:[function(require,module,exports){
+'use strict';
+
+var babelHelpers = require('./util/babelHelpers.js');
+
+exports.__esModule = true;
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _domHelpersActiveElement = require('dom-helpers/activeElement');
+
+var _domHelpersActiveElement2 = babelHelpers.interopRequireDefault(_domHelpersActiveElement);
+
+var _domHelpersQueryContains = require('dom-helpers/query/contains');
+
+var _domHelpersQueryContains2 = babelHelpers.interopRequireDefault(_domHelpersQueryContains);
+
+var _classnames = require('classnames');
+
+var _classnames2 = babelHelpers.interopRequireDefault(_classnames);
+
+var _util_ = require('./util/_');
+
+var _util_2 = babelHelpers.interopRequireDefault(_util_);
+
+var _Popup = require('./Popup');
+
+var _Popup2 = babelHelpers.interopRequireDefault(_Popup);
+
+var _utilCompat = require('./util/compat');
+
+var _utilCompat2 = babelHelpers.interopRequireDefault(_utilCompat);
+
+var _utilPropTypes = require('./util/propTypes');
+
+var _utilPropTypes2 = babelHelpers.interopRequireDefault(_utilPropTypes);
+
+var _List = require('./List');
+
+var _List2 = babelHelpers.interopRequireDefault(_List);
+
+var _ListGroupable = require('./ListGroupable');
+
+var _ListGroupable2 = babelHelpers.interopRequireDefault(_ListGroupable);
+
+var _utilValidateListInterface = require('./util/validateListInterface');
+
+var _utilValidateListInterface2 = babelHelpers.interopRequireDefault(_utilValidateListInterface);
+
+var _uncontrollable = require('uncontrollable');
+
+var _uncontrollable2 = babelHelpers.interopRequireDefault(_uncontrollable);
+
+var _utilDataHelpers = require('./util/dataHelpers');
+
+var _utilInteraction = require('./util/interaction');
+
+var _utilWidgetHelpers = require('./util/widgetHelpers');
+
+var omit = _util_2['default'].omit;
+var pick = _util_2['default'].pick;
+var result = _util_2['default'].result;
+
+var propTypes = {
+  //-- controlled props -----------
+  value: _react2['default'].PropTypes.any,
+  onChange: _react2['default'].PropTypes.func,
+  open: _react2['default'].PropTypes.bool,
+  onToggle: _react2['default'].PropTypes.func,
+  //------------------------------------
+
+  data: _react2['default'].PropTypes.array,
+  valueField: _react2['default'].PropTypes.string,
+  textField: _utilPropTypes2['default'].accessor,
+
+  valueComponent: _utilPropTypes2['default'].elementType,
+  itemComponent: _utilPropTypes2['default'].elementType,
+  listComponent: _utilPropTypes2['default'].elementType,
+
+  groupComponent: _utilPropTypes2['default'].elementType,
+  groupBy: _utilPropTypes2['default'].accessor,
+
+  onSelect: _react2['default'].PropTypes.func,
+
+  searchTerm: _react2['default'].PropTypes.string,
+  onSearch: _react2['default'].PropTypes.func,
+
+  busy: _react2['default'].PropTypes.bool,
+
+  delay: _react2['default'].PropTypes.number,
+
+  dropUp: _react2['default'].PropTypes.bool,
+  duration: _react2['default'].PropTypes.number, //popup
+
+  disabled: _utilPropTypes2['default'].disabled.acceptsArray,
+  readOnly: _utilPropTypes2['default'].readOnly.acceptsArray,
+
+  messages: _react2['default'].PropTypes.shape({
+    open: _utilPropTypes2['default'].message,
+    emptyList: _utilPropTypes2['default'].message,
+    emptyFilter: _utilPropTypes2['default'].message,
+    filterPlaceholder: _utilPropTypes2['default'].message
+  })
+};
+
+var DropdownList = _react2['default'].createClass(babelHelpers.createDecoratedObject([{
+  key: 'displayName',
+  initializer: function initializer() {
+    return 'DropdownList';
+  }
+}, {
+  key: 'mixins',
+  initializer: function initializer() {
+    return [require('./mixins/TimeoutMixin'), require('./mixins/PureRenderMixin'), require('./mixins/DataFilterMixin'), require('./mixins/PopupScrollToMixin'), require('./mixins/RtlParentContextMixin'), require('./mixins/AriaDescendantMixin')(), require('./mixins/FocusMixin')({
+      didHandle: function didHandle(focused) {
+        if (!focused) this.close();
+      }
+    })];
+  }
+}, {
+  key: 'propTypes',
+  initializer: function initializer() {
+    return propTypes;
+  }
+}, {
+  key: 'getDefaultProps',
+  value: function getDefaultProps() {
+    return {
+      delay: 500,
+      value: '',
+      open: false,
+      data: [],
+      searchTerm: '',
+      messages: msgs(),
+      ariaActiveDescendantKey: 'dropdownlist'
+    };
+  }
+}, {
+  key: 'getInitialState',
+  value: function getInitialState() {
+    var _props = this.props;
+    var open = _props.open;
+    var filter = _props.filter;
+    var value = _props.value;
+    var data = _props.data;
+    var searchTerm = _props.searchTerm;
+    var valueField = _props.valueField;
+
+    var processed = filter ? this.filter(data, searchTerm) : data,
+        initialIdx = _utilDataHelpers.dataIndexOf(data, value, valueField);
+
+    return {
+      filteredData: open && filter ? processed : null,
+      selectedItem: processed[initialIdx],
+      focusedItem: processed[initialIdx] || data[0]
+    };
+  }
+}, {
+  key: 'componentDidUpdate',
+  value: function componentDidUpdate() {
+    this.refs.list && _utilValidateListInterface2['default'](this.refs.list);
+  }
+}, {
+  key: 'componentWillReceiveProps',
+  value: function componentWillReceiveProps(props) {
+    var open = props.open;
+    var filter = props.filter;
+    var value = props.value;
+    var data = props.data;
+    var searchTerm = props.searchTerm;
+    var valueField = props.valueField;
+
+    var processed = filter ? this.filter(data, searchTerm) : data,
+        idx = _utilDataHelpers.dataIndexOf(data, value, valueField);
+
+    this.setState({
+      filteredData: open && filter ? processed : null,
+      selectedItem: processed[idx],
+      focusedItem: processed[! ~idx ? 0 : idx]
+    });
+  }
+}, {
+  key: 'render',
+  value: function render() {
+    var _cx,
+        _this = this;
+
+    var _props2 = this.props;
+    var className = _props2.className;
+    var tabIndex = _props2.tabIndex;
+    var filter = _props2.filter;
+    var valueField = _props2.valueField;
+    var textField = _props2.textField;
+    var groupBy = _props2.groupBy;
+    var messages = _props2.messages;
+    var data = _props2.data;
+    var busy = _props2.busy;
+    var dropUp = _props2.dropUp;
+    var placeholder = _props2.placeholder;
+    var value = _props2.value;
+    var open = _props2.open;
+    var ValueComponent = _props2.valueComponent;
+    var List = _props2.listComponent;
+
+    List = List || groupBy && _ListGroupable2['default'] || _List2['default'];
+
+    var elementProps = omit(this.props, Object.keys(propTypes));
+    var listProps = pick(this.props, Object.keys(List.propTypes));
+    var popupProps = pick(this.props, Object.keys(_Popup2['default'].propTypes));
+
+    var _state = this.state;
+    var focusedItem = _state.focusedItem;
+    var selectedItem = _state.selectedItem;
+    var focused = _state.focused;
+
+    var items = this._data(),
+        disabled = _utilInteraction.isDisabled(this.props),
+        readOnly = _utilInteraction.isReadOnly(this.props),
+        valueItem = _utilDataHelpers.dataItem(data, value, valueField),
+        // take value from the raw data
+    listID = _utilWidgetHelpers.instanceId(this, '__listbox');
+
+    var shouldRenderList = _utilWidgetHelpers.isFirstFocusedRender(this) || open;
+
+    messages = msgs(messages);
+
+    return _react2['default'].createElement(
+      'div',
+      babelHelpers._extends({}, elementProps, {
+        ref: 'input',
+        role: 'combobox',
+        tabIndex: tabIndex || '0',
+        'aria-expanded': open,
+        'aria-haspopup': true,
+        'aria-owns': listID,
+        'aria-busy': !!busy,
+        'aria-live': !open && 'polite',
+        'aria-autocomplete': 'list',
+        'aria-disabled': disabled,
+        'aria-readonly': readOnly,
+        onKeyDown: this._keyDown,
+        onKeyPress: this._keyPress,
+        onClick: this._click,
+        onBlur: this.handleBlur,
+        onFocus: this.handleFocus,
+        className: _classnames2['default'](className, 'rw-dropdownlist', 'rw-widget', (_cx = {
+          'rw-state-disabled': disabled,
+          'rw-state-readonly': readOnly,
+          'rw-state-focus': focused,
+          'rw-rtl': this.isRtl()
+
+        }, _cx['rw-open' + (dropUp ? '-up' : '')] = open, _cx)) }),
+      _react2['default'].createElement(
+        'span',
+        { className: 'rw-dropdownlist-picker rw-select rw-btn' },
+        _react2['default'].createElement(
+          'i',
+          { className: 'rw-i rw-i-caret-down' + (busy ? ' rw-loading' : '') },
+          _react2['default'].createElement(
+            'span',
+            { className: 'rw-sr' },
+            result(messages.open, this.props)
+          )
+        )
+      ),
+      _react2['default'].createElement(
+        'div',
+        {
+          className: 'rw-input'
+        },
+        !valueItem && placeholder ? _react2['default'].createElement(
+          'span',
+          { className: 'rw-placeholder' },
+          placeholder
+        ) : this.props.valueComponent ? _react2['default'].createElement(ValueComponent, { item: valueItem }) : _utilDataHelpers.dataText(valueItem, textField)
+      ),
+      _react2['default'].createElement(
+        _Popup2['default'],
+        babelHelpers._extends({}, popupProps, {
+          onOpen: function () {
+            return _this.focus();
+          },
+          onOpening: function () {
+            return _this.refs.list.forceUpdate();
+          }
+        }),
+        _react2['default'].createElement(
+          'div',
+          null,
+          filter && this._renderFilter(messages),
+          shouldRenderList && _react2['default'].createElement(List, babelHelpers._extends({ ref: 'list'
+          }, listProps, {
+            data: items,
+            id: listID,
+            'aria-live': open && 'polite',
+            'aria-labelledby': _utilWidgetHelpers.instanceId(this),
+            'aria-hidden': !this.props.open,
+            selected: selectedItem,
+            focused: open ? focusedItem : null,
+            onSelect: this._onSelect,
+            onMove: this._scrollTo,
+            messages: {
+              emptyList: data.length ? messages.emptyFilter : messages.emptyList
+            } }))
+        )
+      )
+    );
+  }
+}, {
+  key: '_renderFilter',
+  value: function _renderFilter(messages) {
+    var _this2 = this;
+
+    return _react2['default'].createElement(
+      'div',
+      { ref: 'filterWrapper', className: 'rw-filter-input' },
+      _react2['default'].createElement(
+        'span',
+        { className: 'rw-select rw-btn' },
+        _react2['default'].createElement('i', { className: 'rw-i rw-i-search' })
+      ),
+      _react2['default'].createElement('input', { ref: 'filter', className: 'rw-input',
+        autoComplete: 'off',
+        placeholder: _util_2['default'].result(messages.filterPlaceholder, this.props),
+        value: this.props.searchTerm,
+        onChange: function (e) {
+          return _utilWidgetHelpers.notify(_this2.props.onSearch, e.target.value);
+        } })
+    );
+  }
+}, {
+  key: '_onSelect',
+  decorators: [_utilInteraction.widgetEditable],
+  value: function _onSelect(data) {
+    this.close();
+    _utilWidgetHelpers.notify(this.props.onSelect, data);
+    this.change(data);
+    this.focus(this);
+  }
+}, {
+  key: '_click',
+  decorators: [_utilInteraction.widgetEditable],
+  value: function _click(e) {
+    var wrapper = this.refs.filterWrapper;
+
+    if (!this.props.filter || !this.props.open) this.toggle();else if (!_domHelpersQueryContains2['default'](_utilCompat2['default'].findDOMNode(wrapper), e.target)) this.close();
+
+    _utilWidgetHelpers.notify(this.props.onClick, e);
+  }
+}, {
+  key: '_keyDown',
+  decorators: [_utilInteraction.widgetEditable],
+  value: function _keyDown(e) {
+    var _this3 = this;
+
+    var self = this,
+        key = e.key,
+        alt = e.altKey,
+        list = this.refs.list,
+        filtering = this.props.filter,
+        focusedItem = this.state.focusedItem,
+        selectedItem = this.state.selectedItem,
+        isOpen = this.props.open,
+        closeWithFocus = function closeWithFocus() {
+      _this3.close(), _utilCompat2['default'].findDOMNode(_this3).focus();
+    };
+
+    _utilWidgetHelpers.notify(this.props.onKeyDown, [e]);
+
+    if (e.defaultPrevented) return;
+
+    if (key === 'End') {
+      if (isOpen) this.setState({ focusedItem: list.last() });else change(list.last());
+      e.preventDefault();
+    } else if (key === 'Home') {
+      if (isOpen) this.setState({ focusedItem: list.first() });else change(list.first());
+      e.preventDefault();
+    } else if (key === 'Escape' && isOpen) {
+      e.preventDefault();
+      closeWithFocus();
+    } else if ((key === 'Enter' || key === ' ' && !filtering) && isOpen) {
+      e.preventDefault();
+      change(this.state.focusedItem, true);
+    } else if (key === ' ' && !filtering && !isOpen) {
+      e.preventDefault();
+      this.open();
+    } else if (key === 'ArrowDown') {
+      if (alt) this.open();else if (isOpen) this.setState({ focusedItem: list.next(focusedItem) });else change(list.next(selectedItem));
+      e.preventDefault();
+    } else if (key === 'ArrowUp') {
+      if (alt) closeWithFocus();else if (isOpen) this.setState({ focusedItem: list.prev(focusedItem) });else change(list.prev(selectedItem));
+      e.preventDefault();
+    }
+
+    function change(item, fromList) {
+      if (!item) return;
+      fromList ? self._onSelect(item) : self.change(item);
+    }
+  }
+}, {
+  key: '_keyPress',
+  decorators: [_utilInteraction.widgetEditable],
+  value: function _keyPress(e) {
+    var _this4 = this;
+
+    _utilWidgetHelpers.notify(this.props.onKeyPress, [e]);
+
+    if (e.defaultPrevented) return;
+
+    if (!(this.props.filter && this.props.open)) this.search(String.fromCharCode(e.which), function (item) {
+      _this4.isMounted() && _this4.props.open ? _this4.setState({ focusedItem: item }) : item && _this4.change(item);
+    });
+  }
+}, {
+  key: 'change',
+  value: function change(data) {
+    if (!_utilDataHelpers.valueMatcher(data, this.props.value, this.props.valueField)) {
+      _utilWidgetHelpers.notify(this.props.onChange, data);
+      _utilWidgetHelpers.notify(this.props.onSearch, '');
+      this.close();
+    }
+  }
+}, {
+  key: 'focus',
+  value: function focus(target) {
+    var inst = target || (this.props.filter && this.props.open ? this.refs.filter : this.refs.input);
+
+    if (_domHelpersActiveElement2['default']() !== _utilCompat2['default'].findDOMNode(inst)) _utilCompat2['default'].findDOMNode(inst).focus();
+  }
+}, {
+  key: '_data',
+  value: function _data() {
+    return this.state.filteredData || this.props.data.concat();
+  }
+}, {
+  key: 'search',
+  value: function search(character, cb) {
+    var _this5 = this;
+
+    var word = ((this._searchTerm || '') + character).toLowerCase();
+
+    if (!character) return;
+
+    this._searchTerm = word;
+
+    this.setTimeout('search', function () {
+      var list = _this5.refs.list,
+          key = _this5.props.open ? 'focusedItem' : 'selectedItem',
+          item = list.next(_this5.state[key], word);
+
+      _this5._searchTerm = '';
+      if (item) cb(item);
+    }, this.props.delay);
+  }
+}, {
+  key: 'open',
+  value: function open() {
+    _utilWidgetHelpers.notify(this.props.onToggle, true);
+  }
+}, {
+  key: 'close',
+  value: function close() {
+    _utilWidgetHelpers.notify(this.props.onToggle, false);
+  }
+}, {
+  key: 'toggle',
+  value: function toggle() {
+    this.props.open ? this.close() : this.open();
+  }
+}]));
+
+function msgs(msgs) {
+  return babelHelpers._extends({
+    open: 'open dropdown',
+    filterPlaceholder: '',
+    emptyList: 'There are no items in this list',
+    emptyFilter: 'The filter returned no results'
+  }, msgs);
+}
+
+exports['default'] = _uncontrollable2['default'](DropdownList, { open: 'onToggle', value: 'onChange', searchTerm: 'onSearch' });
+module.exports = exports['default'];
+},{"./List":21,"./ListGroupable":22,"./Popup":30,"./mixins/AriaDescendantMixin":41,"./mixins/DataFilterMixin":42,"./mixins/FocusMixin":43,"./mixins/PopupScrollToMixin":45,"./mixins/PureRenderMixin":46,"./mixins/RtlParentContextMixin":48,"./mixins/TimeoutMixin":49,"./util/_":50,"./util/babelHelpers.js":51,"./util/compat":53,"./util/dataHelpers":56,"./util/interaction":60,"./util/propTypes":62,"./util/validateListInterface":64,"./util/widgetHelpers":65,"classnames":66,"dom-helpers/activeElement":69,"dom-helpers/query/contains":73,"react":254,"uncontrollable":96}],19:[function(require,module,exports){
+'use strict';
+
+var babelHelpers = require('./util/babelHelpers.js');
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _WidgetButton = require('./WidgetButton');
+
+var _WidgetButton2 = babelHelpers.interopRequireDefault(_WidgetButton);
+
+var _utilLocalizers = require('./util/localizers');
+
+var format = function format(props) {
+  return _utilLocalizers.date.getFormat('footer', props.format);
+};
+
+module.exports = _react2['default'].createClass({
+
+  displayName: 'Footer',
+
+  render: function render() {
+    var now = this.props.value,
+        formatted = _utilLocalizers.date.format(now, format(this.props), this.props.culture);
+
+    return _react2['default'].createElement(
+      'div',
+      { className: 'rw-footer' },
+      _react2['default'].createElement(
+        _WidgetButton2['default'],
+        { tabIndex: '-1',
+          'aria-disabled': !!this.props.disabled,
+          'aria-readonly': !!this.props.readOnly,
+          disabled: this.props.disabled,
+          readOnly: this.props.readOnly,
+          onClick: this.props.onClick.bind(null, now)
+        },
+        formatted
+      )
+    );
+  }
+
+});
+},{"./WidgetButton":35,"./util/babelHelpers.js":51,"./util/localizers":61,"react":254}],20:[function(require,module,exports){
+'use strict';
+
+var babelHelpers = require('./util/babelHelpers.js');
+
+exports.__esModule = true;
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _WidgetButton = require('./WidgetButton');
+
+var _WidgetButton2 = babelHelpers.interopRequireDefault(_WidgetButton);
+
+exports['default'] = _react2['default'].createClass({
+  displayName: 'Header',
+  propTypes: {
+    label: _react2['default'].PropTypes.string.isRequired,
+    labelId: _react2['default'].PropTypes.string,
+
+    upDisabled: _react2['default'].PropTypes.bool.isRequired,
+    prevDisabled: _react2['default'].PropTypes.bool.isRequired,
+    nextDisabled: _react2['default'].PropTypes.bool.isRequired,
+    onViewChange: _react2['default'].PropTypes.func.isRequired,
+    onMoveLeft: _react2['default'].PropTypes.func.isRequired,
+    onMoveRight: _react2['default'].PropTypes.func.isRequired,
+
+    messages: _react2['default'].PropTypes.shape({
+      moveBack: _react2['default'].PropTypes.string,
+      moveForward: _react2['default'].PropTypes.string
+    })
+  },
+
+  mixins: [require('./mixins/PureRenderMixin'), require('./mixins/RtlChildContextMixin')],
+
+  getDefaultProps: function getDefaultProps() {
+    return {
+      messages: {
+        moveBack: 'navigate back',
+        moveForward: 'navigate forward'
+      }
+    };
+  },
+
+  render: function render() {
+    var _props = this.props;
+    var messages = _props.messages;
+    var label = _props.label;
+    var labelId = _props.labelId;
+    var onMoveRight = _props.onMoveRight;
+    var onMoveLeft = _props.onMoveLeft;
+    var onViewChange = _props.onViewChange;
+    var prevDisabled = _props.prevDisabled;
+    var upDisabled = _props.upDisabled;
+    var nextDisabled = _props.nextDisabled;
+
+    var rtl = this.isRtl();
+
+    return _react2['default'].createElement(
+      'div',
+      { className: 'rw-header' },
+      _react2['default'].createElement(
+        _WidgetButton2['default'],
+        { className: 'rw-btn-left',
+          tabIndex: '-1',
+          onClick: onMoveLeft,
+          disabled: prevDisabled,
+          'aria-disabled': prevDisabled,
+          'aria-label': messages.moveBack,
+          title: messages.moveBack
+        },
+        _react2['default'].createElement('i', { 'aria-hidden': 'false',
+          className: 'rw-i rw-i-caret-' + (rtl ? 'right' : 'left')
+        })
+      ),
+      _react2['default'].createElement(
+        _WidgetButton2['default'],
+        {
+          id: labelId,
+          tabIndex: '-1',
+          className: 'rw-btn-view',
+          disabled: upDisabled,
+          'aria-disabled': upDisabled,
+          'aria-live': 'polite',
+          'aria-atomic': 'true',
+          onClick: onViewChange
+        },
+        label
+      ),
+      _react2['default'].createElement(
+        _WidgetButton2['default'],
+        { className: 'rw-btn-right',
+          tabIndex: '-1',
+          onClick: onMoveRight,
+          disabled: nextDisabled,
+          title: messages.moveForward,
+          'aria-label': messages.moveForward,
+          'aria-disabled': nextDisabled
+        },
+        _react2['default'].createElement('i', { 'aria-hidden': 'false',
+          className: 'rw-i rw-i-caret-' + (rtl ? 'left' : 'right')
+        })
+      )
+    );
+  }
+});
+module.exports = exports['default'];
+},{"./WidgetButton":35,"./mixins/PureRenderMixin":46,"./mixins/RtlChildContextMixin":47,"./util/babelHelpers.js":51,"react":254}],21:[function(require,module,exports){
+'use strict';
+
+var babelHelpers = require('./util/babelHelpers.js');
+
+exports.__esModule = true;
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _ListOption = require('./ListOption');
+
+var _ListOption2 = babelHelpers.interopRequireDefault(_ListOption);
+
+var _utilPropTypes = require('./util/propTypes');
+
+var _utilPropTypes2 = babelHelpers.interopRequireDefault(_utilPropTypes);
+
+var _utilCompat = require('./util/compat');
+
+var _utilCompat2 = babelHelpers.interopRequireDefault(_utilCompat);
+
+var _classnames = require('classnames');
+
+var _classnames2 = babelHelpers.interopRequireDefault(_classnames);
+
+var _util_ = require('./util/_');
+
+var _util_2 = babelHelpers.interopRequireDefault(_util_);
+
+var _utilDataHelpers = require('./util/dataHelpers');
+
+var _utilWidgetHelpers = require('./util/widgetHelpers');
+
+var _utilInteraction = require('./util/interaction');
+
+var optionId = function optionId(id, idx) {
+  return id + '__option__' + idx;
+};
+
+exports['default'] = _react2['default'].createClass({
+
+  displayName: 'List',
+
+  mixins: [require('./mixins/ListMovementMixin'), require('./mixins/AriaDescendantMixin')()],
+
+  propTypes: {
+    data: _react2['default'].PropTypes.array,
+    onSelect: _react2['default'].PropTypes.func,
+    onMove: _react2['default'].PropTypes.func,
+
+    optionComponent: _utilPropTypes2['default'].elementType,
+    itemComponent: _utilPropTypes2['default'].elementType,
+
+    selected: _react2['default'].PropTypes.any,
+    focused: _react2['default'].PropTypes.any,
+    valueField: _utilPropTypes2['default'].accessor,
+    textField: _utilPropTypes2['default'].accessor,
+
+    disabled: _utilPropTypes2['default'].disabled.acceptsArray,
+    readOnly: _utilPropTypes2['default'].readOnly.acceptsArray,
+
+    messages: _react2['default'].PropTypes.shape({
+      emptyList: _utilPropTypes2['default'].message
+    })
+  },
+
+  getDefaultProps: function getDefaultProps() {
+    return {
+      onSelect: function onSelect() {},
+      optionComponent: _ListOption2['default'],
+      ariaActiveDescendantKey: 'list',
+      data: [],
+      messages: {
+        emptyList: 'There are no items in this list'
+      }
+    };
+  },
+
+  componentDidMount: function componentDidMount() {
+    this.move();
+  },
+
+  componentDidUpdate: function componentDidUpdate() {
+    var _props = this.props;
+    var data = _props.data;
+    var focused = _props.focused;
+    var idx = data.indexOf(focused);
+    var activeId = optionId(_utilWidgetHelpers.instanceId(this), idx);
+
+    this.ariaActiveDescendant(idx !== -1 ? activeId : null);
+
+    this.move();
+  },
+
+  render: function render() {
+    var _props2 = this.props;
+    var className = _props2.className;
+    var role = _props2.role;
+    var data = _props2.data;
+    var textField = _props2.textField;
+    var valueField = _props2.valueField;
+    var focused = _props2.focused;
+    var selected = _props2.selected;
+    var messages = _props2.messages;
+    var onSelect = _props2.onSelect;
+    var ItemComponent = _props2.itemComponent;
+    var Option = _props2.optionComponent;
+    var props = babelHelpers.objectWithoutProperties(_props2, ['className', 'role', 'data', 'textField', 'valueField', 'focused', 'selected', 'messages', 'onSelect', 'itemComponent', 'optionComponent']);
+    var id = _utilWidgetHelpers.instanceId(this);
+    var items;
+
+    items = !data.length ? _react2['default'].createElement(
+      'li',
+      { className: 'rw-list-empty' },
+      _util_2['default'].result(messages.emptyList, this.props)
+    ) : data.map(function (item, idx) {
+      var currentId = optionId(id, idx),
+          isDisabled = _utilInteraction.isDisabledItem(item, props),
+          isReadOnly = _utilInteraction.isReadOnlyItem(item, props);
+
+      return _react2['default'].createElement(
+        Option,
+        {
+          key: 'item_' + idx,
+          id: currentId,
+          dataItem: item,
+          disabled: isDisabled,
+          readOnly: isReadOnly,
+          focused: focused === item,
+          selected: selected === item,
+          onClick: isDisabled || isReadOnly ? undefined : onSelect.bind(null, item)
+        },
+        ItemComponent ? _react2['default'].createElement(ItemComponent, {
+          item: item,
+          value: _utilDataHelpers.dataValue(item, valueField),
+          text: _utilDataHelpers.dataText(item, textField),
+          disabled: isDisabled,
+          readOnly: isReadOnly
+        }) : _utilDataHelpers.dataText(item, textField)
+      );
+    });
+
+    return _react2['default'].createElement(
+      'ul',
+      babelHelpers._extends({
+        id: id,
+        tabIndex: '-1',
+        className: _classnames2['default'](className, 'rw-list'),
+        role: role === undefined ? 'listbox' : role
+      }, props),
+      items
+    );
+  },
+
+  _data: function _data() {
+    return this.props.data;
+  },
+
+  move: function move() {
+    var list = _utilCompat2['default'].findDOMNode(this),
+        idx = this._data().indexOf(this.props.focused),
+        selected = list.children[idx];
+
+    if (!selected) return;
+
+    _utilWidgetHelpers.notify(this.props.onMove, [selected, list, this.props.focused]);
+  }
+
+});
+module.exports = exports['default'];
+},{"./ListOption":23,"./mixins/AriaDescendantMixin":41,"./mixins/ListMovementMixin":44,"./util/_":50,"./util/babelHelpers.js":51,"./util/compat":53,"./util/dataHelpers":56,"./util/interaction":60,"./util/propTypes":62,"./util/widgetHelpers":65,"classnames":66,"react":254}],22:[function(require,module,exports){
+'use strict';
+
+var babelHelpers = require('./util/babelHelpers.js');
+
+exports.__esModule = true;
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _ListOption = require('./ListOption');
+
+var _ListOption2 = babelHelpers.interopRequireDefault(_ListOption);
+
+var _utilPropTypes = require('./util/propTypes');
+
+var _utilPropTypes2 = babelHelpers.interopRequireDefault(_utilPropTypes);
+
+var _utilCompat = require('./util/compat');
+
+var _utilCompat2 = babelHelpers.interopRequireDefault(_utilCompat);
+
+var _classnames = require('classnames');
+
+var _classnames2 = babelHelpers.interopRequireDefault(_classnames);
+
+var _util_ = require('./util/_');
+
+var _util_2 = babelHelpers.interopRequireDefault(_util_);
+
+var _warning = require('warning');
+
+var _warning2 = babelHelpers.interopRequireDefault(_warning);
+
+var _utilDataHelpers = require('./util/dataHelpers');
+
+var _utilWidgetHelpers = require('./util/widgetHelpers');
+
+var _utilInteraction = require('./util/interaction');
+
+var optionId = function optionId(id, idx) {
+  return id + '__option__' + idx;
+};
+
+exports['default'] = _react2['default'].createClass({
+
+  displayName: 'List',
+
+  mixins: [require('./mixins/ListMovementMixin'), require('./mixins/AriaDescendantMixin')()],
+
+  propTypes: {
+    data: _react2['default'].PropTypes.array,
+    onSelect: _react2['default'].PropTypes.func,
+    onMove: _react2['default'].PropTypes.func,
+
+    optionComponent: _utilPropTypes2['default'].elementType,
+    itemComponent: _utilPropTypes2['default'].elementType,
+    groupComponent: _utilPropTypes2['default'].elementType,
+
+    selected: _react2['default'].PropTypes.any,
+    focused: _react2['default'].PropTypes.any,
+
+    valueField: _utilPropTypes2['default'].accessor,
+    textField: _utilPropTypes2['default'].accessor,
+
+    disabled: _utilPropTypes2['default'].disabled.acceptsArray,
+    readOnly: _utilPropTypes2['default'].readOnly.acceptsArray,
+
+    groupBy: _utilPropTypes2['default'].accessor,
+
+    messages: _react2['default'].PropTypes.shape({
+      emptyList: _utilPropTypes2['default'].message
+    })
+  },
+
+  getDefaultProps: function getDefaultProps() {
+    return {
+      onSelect: function onSelect() {},
+      data: [],
+      optionComponent: _ListOption2['default'],
+      ariaActiveDescendantKey: 'groupedList',
+      messages: {
+        emptyList: 'There are no items in this list'
+      }
+    };
+  },
+
+  getInitialState: function getInitialState() {
+    var keys = [];
+
+    return {
+      groups: this._group(this.props.groupBy, this.props.data, keys),
+
+      sortedKeys: keys
+    };
+  },
+
+  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+    var keys = [];
+
+    if (nextProps.data !== this.props.data || nextProps.groupBy !== this.props.groupBy) this.setState({
+      groups: this._group(nextProps.groupBy, nextProps.data, keys),
+      sortedKeys: keys
+    });
+  },
+
+  componentDidMount: function componentDidMount() {
+    this.move();
+  },
+
+  componentDidUpdate: function componentDidUpdate() {
+    this.ariaActiveDescendant(this._currentActiveID);
+    this.move();
+  },
+
+  render: function render() {
+    var _this = this;
+
+    var _props = this.props;
+    var className = _props.className;
+    var role = _props.role;
+    var data = _props.data;
+    var messages = _props.messages;
+    var onSelect = _props.onSelect;
+    var selectedIndex = _props.selectedIndex;
+    var props = babelHelpers.objectWithoutProperties(_props, ['className', 'role', 'data', 'messages', 'onSelect', 'selectedIndex']);
+    var id = _utilWidgetHelpers.instanceId(this);var _state = this.state;
+    var sortedKeys = _state.sortedKeys;
+    var groups = _state.groups;
+
+    var items = [],
+        idx = -1,
+        group = undefined;
+
+    this._currentActiveID = null;
+
+    if (data.length) {
+      items = sortedKeys.reduce(function (items, key) {
+        group = groups[key];
+        items.push(_this._renderGroupHeader(key));
+
+        for (var itemIdx = 0; itemIdx < group.length; itemIdx++) items.push(_this._renderItem(key, group[itemIdx], ++idx));
+
+        return items;
+      }, []);
+    } else items = _react2['default'].createElement(
+      'li',
+      { className: 'rw-list-empty' },
+      _util_2['default'].result(messages.emptyList, this.props)
+    );
+
+    return _react2['default'].createElement(
+      'ul',
+      babelHelpers._extends({
+        ref: 'scrollable',
+        id: id,
+        tabIndex: '-1',
+        className: _classnames2['default'](className, 'rw-list', 'rw-list-grouped'),
+        role: role === undefined ? 'listbox' : role
+      }, props),
+      items
+    );
+  },
+
+  _renderGroupHeader: function _renderGroupHeader(group) {
+    var GroupComponent = this.props.groupComponent,
+        id = _utilWidgetHelpers.instanceId(this);
+
+    return _react2['default'].createElement(
+      'li',
+      {
+        key: 'item_' + group,
+        tabIndex: '-1',
+        role: 'separator',
+        id: id + '_group_' + group,
+        className: 'rw-list-optgroup'
+      },
+      GroupComponent ? _react2['default'].createElement(GroupComponent, { item: group }) : group
+    );
+  },
+
+  _renderItem: function _renderItem(group, item, idx) {
+    var _props2 = this.props;
+    var focused = _props2.focused;
+    var selected = _props2.selected;
+    var onSelect = _props2.onSelect;
+    var textField = _props2.textField;
+    var valueField = _props2.valueField;
+    var ItemComponent = _props2.itemComponent;
+    var Option = _props2.optionComponent;
+
+    var currentID = optionId(_utilWidgetHelpers.instanceId(this), idx),
+        isDisabled = _utilInteraction.isDisabledItem(item, this.props),
+        isReadOnly = _utilInteraction.isReadOnlyItem(item, this.props);
+
+    if (focused === item) this._currentActiveID = currentID;
+
+    return _react2['default'].createElement(
+      Option,
+      {
+        key: 'item_' + group + '_' + idx,
+        id: currentID,
+        dataItem: item,
+        focused: focused === item,
+        selected: selected === item,
+        disabled: isDisabled,
+        readOnly: isReadOnly,
+        onClick: isDisabled || isReadOnly ? undefined : onSelect.bind(null, item)
+      },
+      ItemComponent ? _react2['default'].createElement(ItemComponent, {
+        item: item,
+        value: _utilDataHelpers.dataValue(item, valueField),
+        text: _utilDataHelpers.dataText(item, textField),
+        disabled: isDisabled,
+        readOnly: isReadOnly
+      }) : _utilDataHelpers.dataText(item, textField)
+    );
+  },
+
+  _isIndexOf: function _isIndexOf(idx, item) {
+    return this.props.data[idx] === item;
+  },
+
+  _group: function _group(groupBy, data, keys) {
+    var iter = typeof groupBy === 'function' ? groupBy : function (item) {
+      return item[groupBy];
+    };
+
+    // the keys array ensures that groups are rendered in the order they came in
+    // which means that if you sort the data array it will render sorted,
+    // so long as you also sorted by group
+    keys = keys || [];
+
+    _warning2['default'](typeof groupBy !== 'string' || !data.length || _util_2['default'].has(data[0], groupBy), '[React Widgets] You are seem to be trying to group this list by a ' + ('property `' + groupBy + '` that doesn\'t exist in the dataset items, this may be a typo'));
+
+    return data.reduce(function (grps, item) {
+      var group = iter(item);
+
+      _util_2['default'].has(grps, group) ? grps[group].push(item) : (keys.push(group), grps[group] = [item]);
+
+      return grps;
+    }, {});
+  },
+
+  _data: function _data() {
+    var groups = this.state.groups;
+
+    return this.state.sortedKeys.reduce(function (flat, grp) {
+      return flat.concat(groups[grp]);
+    }, []);
+  },
+
+  move: function move() {
+    var selected = this.getItemDOMNode(this.props.focused);
+
+    if (!selected) return;
+
+    _utilWidgetHelpers.notify(this.props.onMove, [selected, _utilCompat2['default'].findDOMNode(this), this.props.focused]);
+  },
+
+  getItemDOMNode: function getItemDOMNode(item) {
+    var list = _utilCompat2['default'].findDOMNode(this),
+        groups = this.state.groups,
+        idx = -1,
+        itemIdx,
+        child;
+
+    this.state.sortedKeys.some(function (group) {
+      itemIdx = groups[group].indexOf(item);
+      idx++;
+
+      if (itemIdx !== -1) return !!(child = list.children[idx + itemIdx + 1]);
+
+      idx += groups[group].length;
+    });
+
+    return child;
+  }
+
+});
+module.exports = exports['default'];
+},{"./ListOption":23,"./mixins/AriaDescendantMixin":41,"./mixins/ListMovementMixin":44,"./util/_":50,"./util/babelHelpers.js":51,"./util/compat":53,"./util/dataHelpers":56,"./util/interaction":60,"./util/propTypes":62,"./util/widgetHelpers":65,"classnames":66,"react":254,"warning":98}],23:[function(require,module,exports){
+'use strict';
+
+var babelHelpers = require('./util/babelHelpers.js');
+
+exports.__esModule = true;
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _classnames = require('classnames');
+
+var _classnames2 = babelHelpers.interopRequireDefault(_classnames);
+
+var ListOption = _react2['default'].createClass({
+  displayName: 'ListOption',
+
+  propTypes: {
+    dataItem: _react2['default'].PropTypes.any,
+    focused: _react2['default'].PropTypes.bool,
+    selected: _react2['default'].PropTypes.bool,
+    disabled: _react2['default'].PropTypes.bool,
+    readOnly: _react2['default'].PropTypes.bool
+  },
+
+  render: function render() {
+    var _props = this.props;
+    var className = _props.className;
+    var children = _props.children;
+    var focused = _props.focused;
+    var selected = _props.selected;
+    var disabled = _props.disabled;
+    var readOnly = _props.readOnly;
+    var props = babelHelpers.objectWithoutProperties(_props, ['className', 'children', 'focused', 'selected', 'disabled', 'readOnly']);
+
+    var classes = {
+      'rw-state-focus': focused,
+      'rw-state-selected': selected,
+      'rw-state-disabled': disabled,
+      'rw-state-readonly': readOnly
+    };
+
+    return _react2['default'].createElement(
+      'li',
+      babelHelpers._extends({
+        role: 'option',
+        tabIndex: !(disabled || readOnly) ? '-1' : undefined,
+        'aria-selected': !!selected,
+        className: _classnames2['default']('rw-list-option', className, classes)
+      }, props),
+      children
+    );
+  }
+});
+
+exports['default'] = ListOption;
+module.exports = exports['default'];
+},{"./util/babelHelpers.js":51,"classnames":66,"react":254}],24:[function(require,module,exports){
+'use strict';
+
+var babelHelpers = require('./util/babelHelpers.js');
+
+exports.__esModule = true;
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _classnames = require('classnames');
+
+var _classnames2 = babelHelpers.interopRequireDefault(_classnames);
+
+var _utilDates = require('./util/dates');
+
+var _utilDates2 = babelHelpers.interopRequireDefault(_utilDates);
+
+var _utilLocalizers = require('./util/localizers');
+
+var _utilPropTypes = require('./util/propTypes');
+
+var _utilPropTypes2 = babelHelpers.interopRequireDefault(_utilPropTypes);
+
+var _util_ = require('./util/_');
+
+var _util_2 = babelHelpers.interopRequireDefault(_util_);
+
+var _utilWidgetHelpers = require('./util/widgetHelpers');
+
+var dayFormat = function dayFormat(props) {
+  return _utilLocalizers.date.getFormat('weekday', props.dayFormat);
+},
+    dateFormat = function dateFormat(props) {
+  return _utilLocalizers.date.getFormat('dayOfMonth', props.dateFormat);
+};
+
+var optionId = function optionId(id, date) {
+  return id + '__month_' + _utilDates2['default'].month(date) + '-' + _utilDates2['default'].date(date);
+};
+
+var propTypes = {
+  optionID: _react2['default'].PropTypes.func,
+
+  culture: _react2['default'].PropTypes.string,
+  value: _react2['default'].PropTypes.instanceOf(Date),
+  focused: _react2['default'].PropTypes.instanceOf(Date),
+  min: _react2['default'].PropTypes.instanceOf(Date),
+  max: _react2['default'].PropTypes.instanceOf(Date),
+
+  dayComponent: _utilPropTypes2['default'].elementType,
+
+  dayFormat: _utilPropTypes2['default'].dateFormat,
+  dateFormat: _utilPropTypes2['default'].dateFormat,
+  footerFormat: _utilPropTypes2['default'].dateFormat,
+
+  onChange: _react2['default'].PropTypes.func.isRequired
+};
+
+var isEqual = function isEqual(dateA, dateB) {
+  return _utilDates2['default'].eq(dateA, dateB, 'day');
+};
+
+var MonthView = _react2['default'].createClass({
+
+  displayName: 'MonthView',
+
+  statics: {
+    isEqual: isEqual
+  },
+
+  mixins: [require('./mixins/RtlChildContextMixin'), require('./mixins/AriaDescendantMixin')()],
+
+  propTypes: propTypes,
+
+  componentDidUpdate: function componentDidUpdate() {
+    var activeId = optionId(_utilWidgetHelpers.instanceId(this), this.props.focused);
+    this.ariaActiveDescendant(activeId, null);
+  },
+
+  render: function render() {
+    var _props = this.props;
+    var focused = _props.focused;
+    var culture = _props.culture;
+    var month = _utilDates2['default'].visibleDays(focused, culture);
+    var rows = _util_2['default'].chunk(month, 7);
+
+    var elementProps = _util_2['default'].omit(this.props, Object.keys(propTypes));
+
+    return _react2['default'].createElement(
+      'table',
+      babelHelpers._extends({}, elementProps, {
+        role: 'grid'
+      }),
+      _react2['default'].createElement(
+        'thead',
+        null,
+        _react2['default'].createElement(
+          'tr',
+          null,
+          this._headers(rows[0], dayFormat(this.props), culture)
+        )
+      ),
+      _react2['default'].createElement(
+        'tbody',
+        null,
+        rows.map(this._row)
+      )
+    );
+  },
+
+  _row: function _row(row, rowIdx) {
+    var _this = this;
+
+    var _props2 = this.props;
+    var focused = _props2.focused;
+    var today = _props2.today;
+    var disabled = _props2.disabled;
+    var onChange = _props2.onChange;
+    var value = _props2.value;
+    var culture = _props2.culture;
+    var min = _props2.min;
+    var max = _props2.max;
+    var Day = _props2.dayComponent;
+    var id = _utilWidgetHelpers.instanceId(this);
+    var labelFormat = _utilLocalizers.date.getFormat('footer');
+
+    return _react2['default'].createElement(
+      'tr',
+      { key: 'week_' + rowIdx, role: 'row' },
+      row.map(function (day, colIdx) {
+
+        var isFocused = isEqual(day, focused),
+            isSelected = isEqual(day, value),
+            isToday = isEqual(day, today),
+            date = _utilLocalizers.date.format(day, dateFormat(_this.props), culture),
+            label = _utilLocalizers.date.format(day, labelFormat, culture);
+
+        var currentID = optionId(id, day);
+
+        return !_utilDates2['default'].inRange(day, min, max) ? _react2['default'].createElement(
+          'td',
+          { key: 'day_' + colIdx, role: 'presentation', className: 'rw-empty-cell' },
+          ' '
+        ) : _react2['default'].createElement(
+          'td',
+          {
+            key: 'day_' + colIdx,
+            role: 'gridcell',
+            id: currentID,
+            title: label,
+            'aria-selected': isSelected,
+            'aria-label': label,
+            'aria-readonly': disabled
+          },
+          _react2['default'].createElement(
+            'span',
+            {
+              'aria-labelledby': currentID,
+              onClick: onChange.bind(null, day),
+              className: _classnames2['default']('rw-btn', {
+                'rw-off-range': _utilDates2['default'].month(day) !== _utilDates2['default'].month(focused),
+                'rw-state-focus': isFocused,
+                'rw-state-selected': isSelected,
+                'rw-now': isToday
+              })
+            },
+            Day ? _react2['default'].createElement(Day, { date: day, label: date }) : date
+          )
+        );
+      })
+    );
+  },
+
+  _headers: function _headers(week, format, culture) {
+    return week.map(function (date) {
+      return _react2['default'].createElement(
+        'th',
+        { key: 'header_' + _utilDates2['default'].weekday(date, undefined, _utilLocalizers.date.startOfWeek(culture)) },
+        _utilLocalizers.date.format(date, format, culture)
+      );
+    });
+  }
+
+});
+
+exports['default'] = MonthView;
+module.exports = exports['default'];
+},{"./mixins/AriaDescendantMixin":41,"./mixins/RtlChildContextMixin":47,"./util/_":50,"./util/babelHelpers.js":51,"./util/dates":57,"./util/localizers":61,"./util/propTypes":62,"./util/widgetHelpers":65,"classnames":66,"react":254}],25:[function(require,module,exports){
+'use strict';
+
+var babelHelpers = require('./util/babelHelpers.js');
+
+exports.__esModule = true;
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _classnames = require('classnames');
+
+var _classnames2 = babelHelpers.interopRequireDefault(_classnames);
+
+var _util_ = require('./util/_');
+
+var _util_2 = babelHelpers.interopRequireDefault(_util_);
+
+var _Popup = require('./Popup');
+
+var _Popup2 = babelHelpers.interopRequireDefault(_Popup);
+
+var _MultiselectInput = require('./MultiselectInput');
+
+var _MultiselectInput2 = babelHelpers.interopRequireDefault(_MultiselectInput);
+
+var _MultiselectTagList = require('./MultiselectTagList');
+
+var _MultiselectTagList2 = babelHelpers.interopRequireDefault(_MultiselectTagList);
+
+var _utilPropTypes = require('./util/propTypes');
+
+var _utilPropTypes2 = babelHelpers.interopRequireDefault(_utilPropTypes);
+
+var _List = require('./List');
+
+var _List2 = babelHelpers.interopRequireDefault(_List);
+
+var _ListGroupable = require('./ListGroupable');
+
+var _ListGroupable2 = babelHelpers.interopRequireDefault(_ListGroupable);
+
+var _utilValidateListInterface = require('./util/validateListInterface');
+
+var _utilValidateListInterface2 = babelHelpers.interopRequireDefault(_utilValidateListInterface);
+
+var _uncontrollable = require('uncontrollable');
+
+var _uncontrollable2 = babelHelpers.interopRequireDefault(_uncontrollable);
+
+var _utilDataHelpers = require('./util/dataHelpers');
+
+var _utilInteraction = require('./util/interaction');
+
+var _utilWidgetHelpers = require('./util/widgetHelpers');
+
+var compatCreate = function compatCreate(props, msgs) {
+  return typeof msgs.createNew === 'function' ? msgs.createNew(props) : [_react2['default'].createElement(
+    'strong',
+    { key: 'dumb' },
+    '"' + props.searchTerm + '"'
+  ), ' ' + msgs.createNew];
+};
+
+var omit = _util_2['default'].omit;
+var pick = _util_2['default'].pick;
+var splat = _util_2['default'].splat;
+
+var propTypes = {
+  data: _react2['default'].PropTypes.array,
+  //-- controlled props --
+  value: _react2['default'].PropTypes.array,
+  onChange: _react2['default'].PropTypes.func,
+
+  searchTerm: _react2['default'].PropTypes.string,
+  onSearch: _react2['default'].PropTypes.func,
+
+  open: _react2['default'].PropTypes.bool,
+  onToggle: _react2['default'].PropTypes.func,
+  //-------------------------------------------
+
+  valueField: _react2['default'].PropTypes.string,
+  textField: _utilPropTypes2['default'].accessor,
+
+  tagComponent: _utilPropTypes2['default'].elementType,
+  itemComponent: _utilPropTypes2['default'].elementType,
+  listComponent: _utilPropTypes2['default'].elementType,
+
+  groupComponent: _utilPropTypes2['default'].elementType,
+  groupBy: _utilPropTypes2['default'].accessor,
+
+  createComponent: _utilPropTypes2['default'].elementType,
+
+  onSelect: _react2['default'].PropTypes.func,
+  onCreate: _react2['default'].PropTypes.oneOfType([_react2['default'].PropTypes.oneOf([false]), _react2['default'].PropTypes.func]),
+
+  dropUp: _react2['default'].PropTypes.bool,
+  duration: _react2['default'].PropTypes.number, //popup
+
+  placeholder: _react2['default'].PropTypes.string,
+
+  autoFocus: _react2['default'].PropTypes.bool,
+  disabled: _utilPropTypes2['default'].disabled.acceptsArray,
+  readOnly: _utilPropTypes2['default'].readOnly.acceptsArray,
+
+  messages: _react2['default'].PropTypes.shape({
+    open: _utilPropTypes2['default'].message,
+    emptyList: _utilPropTypes2['default'].message,
+    emptyFilter: _utilPropTypes2['default'].message,
+    createNew: _utilPropTypes2['default'].message
+  })
+};
+
+var Multiselect = _react2['default'].createClass(babelHelpers.createDecoratedObject([{
+  key: 'displayName',
+  initializer: function initializer() {
+    return 'Multiselect';
+  }
+}, {
+  key: 'mixins',
+  initializer: function initializer() {
+    return [require('./mixins/TimeoutMixin'), require('./mixins/DataFilterMixin'), require('./mixins/PopupScrollToMixin'), require('./mixins/RtlParentContextMixin'), require('./mixins/FocusMixin')({
+      willHandle: function willHandle(focused) {
+        focused && this.focus();
+      },
+      didHandle: function didHandle(focused) {
+        if (!focused) this.close();
+
+        if (!focused && this.refs.tagList) this.setState({ focusedTag: null });
+
+        if (focused && !this.props.open) this.open();
+      }
+    }), require('./mixins/AriaDescendantMixin')('input', function (key, id) {
+      var myKey = this.props.ariaActiveDescendantKey;
+
+      var createIsActive = (!this._data().length || this.state.focusedItem === null) && key === myKey;
+
+      var tagIsActive = this.state.focusedTag != null && key === 'taglist';
+      var listIsActive = this.state.focusedTag == null && key === 'list';
+
+      if (createIsActive || tagIsActive || listIsActive) return id;
+    })];
+  }
+}, {
+  key: 'propTypes',
+  initializer: function initializer() {
+    return propTypes;
+  }
+}, {
+  key: 'getDefaultProps',
+  value: function getDefaultProps() {
+    return {
+      data: [],
+      filter: 'startsWith',
+      value: [],
+      open: false,
+      searchTerm: '',
+      ariaActiveDescendantKey: 'multiselect',
+      messages: {
+        createNew: '(create new tag)',
+        emptyList: 'There are no items in this list',
+        emptyFilter: 'The filter returned no results',
+        tagsLabel: 'selected items',
+        selectedItems: 'selected items',
+        noneSelected: 'no selected items',
+        removeLabel: 'remove selected item'
+      }
+    };
+  }
+}, {
+  key: 'getInitialState',
+  value: function getInitialState() {
+    var _props = this.props;
+    var data = _props.data;
+    var value = _props.value;
+    var valueField = _props.valueField;
+    var searchTerm = _props.searchTerm;
+    var dataItems = splat(value).map(function (item) {
+      return _utilDataHelpers.dataItem(data, item, valueField);
+    });
+    var processedData = this.process(data, dataItems, searchTerm);
+
+    return {
+      focusedTag: null,
+      focusedItem: processedData[0],
+      processedData: processedData,
+      dataItems: dataItems
+    };
+  }
+}, {
+  key: 'componentDidUpdate',
+  value: function componentDidUpdate() {
+    this.ariaActiveDescendant(_utilWidgetHelpers.instanceId(this, '__createlist_option'));
+
+    this.refs.list && _utilValidateListInterface2['default'](this.refs.list);
+  }
+}, {
+  key: 'componentWillReceiveProps',
+  value: function componentWillReceiveProps(nextProps) {
+    var data = nextProps.data;
+    var value = nextProps.value;
+    var valueField = nextProps.valueField;
+    var searchTerm = nextProps.searchTerm;
+    var values = _util_2['default'].splat(value);
+    var current = this.state.focusedItem;
+    var items = this.process(data, values, searchTerm);
+
+    this.setState({
+      processedData: items,
+      focusedItem: items.indexOf(current) === -1 ? items[0] : current,
+      dataItems: values.map(function (item) {
+        return _utilDataHelpers.dataItem(data, item, valueField);
+      })
+    });
+  }
+}, {
+  key: 'render',
+  value: function render() {
+    var _cx,
+        _this = this;
+
+    var _props2 = this.props;
+    var searchTerm = _props2.searchTerm;
+    var maxLength = _props2.maxLength;
+    var className = _props2.className;
+    var tabIndex = _props2.tabIndex;
+    var textField = _props2.textField;
+    var groupBy = _props2.groupBy;
+    var messages = _props2.messages;
+    var busy = _props2.busy;
+    var dropUp = _props2.dropUp;
+    var open = _props2.open;
+    var disabled = _props2.disabled;
+    var readOnly = _props2.readOnly;
+    var TagComponent = _props2.tagComponent;
+    var List = _props2.listComponent;
+
+    List = List || groupBy && _ListGroupable2['default'] || _List2['default'];
+
+    messages = msgs(messages);
+
+    var elementProps = omit(this.props, Object.keys(propTypes));
+    var tagsProps = pick(this.props, ['valueField', 'textField']);
+    var inputProps = pick(this.props, ['maxLength', 'searchTerm', 'autoFocus']);
+    var listProps = pick(this.props, Object.keys(List.propTypes));
+    var popupProps = pick(this.props, Object.keys(_Popup2['default'].propTypes));
+
+    var _state = this.state;
+    var focusedTag = _state.focusedTag;
+    var focusedItem = _state.focusedItem;
+    var focused = _state.focused;
+    var dataItems = _state.dataItems;
+
+    var items = this._data(),
+        tagsID = _utilWidgetHelpers.instanceId(this, '_taglist'),
+        listID = _utilWidgetHelpers.instanceId(this, '__listbox'),
+        createID = _utilWidgetHelpers.instanceId(this, '__createlist'),
+        createOptionID = _utilWidgetHelpers.instanceId(this, '__createlist_option');
+
+    var shouldRenderTags = !!dataItems.length,
+        shouldRenderPopup = _utilWidgetHelpers.isFirstFocusedRender(this) || open,
+        shouldShowCreate = this._shouldShowCreate(),
+        createIsFocused = !items.length || focusedItem === null;
+
+    if (focused) {
+      var notify = dataItems.length ? messages.selectedItems + ': ' + dataItems.map(function (item) {
+        return _utilDataHelpers.dataText(item, textField);
+      }).join(', ') : messages.noneSelected;
+    }
+
+    return _react2['default'].createElement(
+      'div',
+      babelHelpers._extends({}, elementProps, {
+        ref: 'element',
+        id: _utilWidgetHelpers.instanceId(this),
+        onKeyDown: this._keyDown,
+        onBlur: this.handleBlur,
+        onFocus: this.handleFocus,
+        onTouchEnd: this.handleFocus,
+        tabIndex: '-1',
+        className: _classnames2['default'](className, 'rw-widget', 'rw-multiselect', (_cx = {
+          'rw-state-focus': focused,
+          'rw-state-disabled': disabled === true,
+          'rw-state-readonly': readOnly === true,
+          'rw-rtl': this.isRtl()
+        }, _cx['rw-open' + (dropUp ? '-up' : '')] = open, _cx)) }),
+      _react2['default'].createElement(
+        'span',
+        {
+          ref: 'status',
+          id: _utilWidgetHelpers.instanceId(this, '__notify'),
+          role: 'status',
+          className: 'rw-sr',
+          'aria-live': 'assertive',
+          'aria-atomic': 'true',
+          'aria-relevant': 'additions removals text'
+        },
+        notify
+      ),
+      _react2['default'].createElement(
+        'div',
+        { className: 'rw-multiselect-wrapper', ref: 'wrapper' },
+        busy && _react2['default'].createElement('i', { className: 'rw-i rw-loading' }),
+        shouldRenderTags && _react2['default'].createElement(_MultiselectTagList2['default'], babelHelpers._extends({}, tagsProps, {
+          ref: 'tagList',
+          id: tagsID,
+          'aria-label': messages.tagsLabel,
+          value: dataItems,
+          focused: focusedTag,
+          disabled: disabled,
+          readOnly: readOnly,
+          onDelete: this._delete,
+          valueComponent: TagComponent,
+          ariaActiveDescendantKey: 'taglist'
+        })),
+        _react2['default'].createElement(_MultiselectInput2['default'], babelHelpers._extends({}, inputProps, {
+          ref: 'input',
+          tabIndex: tabIndex || 0,
+          role: 'listbox',
+          'aria-expanded': open,
+          'aria-busy': !!busy,
+          autoFocus: this.props.autoFocus,
+          'aria-owns': listID + ' ' + _utilWidgetHelpers.instanceId(this, '__notify') + (shouldRenderTags ? ' ' + tagsID : '') + (shouldShowCreate ? ' ' + createID : ''),
+          'aria-haspopup': true,
+          value: searchTerm,
+          maxLength: maxLength,
+          disabled: disabled === true,
+          readOnly: readOnly === true,
+          placeholder: this._placeholder(),
+          onKeyDown: this._searchKeyDown,
+          onKeyUp: this._searchgKeyUp,
+          onChange: this._typing,
+          onClick: this.handleInputInteraction,
+          onTouchEnd: this.handleInputInteraction
+        }))
+      ),
+      _react2['default'].createElement(
+        _Popup2['default'],
+        babelHelpers._extends({}, popupProps, {
+          onOpening: function () {
+            return _this.refs.list.forceUpdate();
+          }
+        }),
+        _react2['default'].createElement(
+          'div',
+          null,
+          shouldRenderPopup && [_react2['default'].createElement(List, babelHelpers._extends({ ref: 'list',
+            key: 0
+          }, listProps, {
+            readOnly: readOnly,
+            disabled: disabled,
+            id: listID,
+            'aria-live': 'polite',
+            'aria-labelledby': _utilWidgetHelpers.instanceId(this),
+            'aria-hidden': !open,
+            ariaActiveDescendantKey: 'list',
+            data: items,
+            focused: focusedItem,
+            onSelect: this._onSelect,
+            onMove: this._scrollTo,
+            messages: {
+              emptyList: this._lengthWithoutValues ? messages.emptyFilter : messages.emptyList
+            }
+          })), shouldShowCreate && _react2['default'].createElement(
+            'ul',
+            { key: 1, role: 'listbox', id: createID, className: 'rw-list rw-multiselect-create-tag' },
+            _react2['default'].createElement(
+              'li',
+              { onClick: this._onCreate.bind(null, searchTerm),
+                role: 'option',
+                id: createOptionID,
+                className: _classnames2['default']({
+                  'rw-list-option': true,
+                  'rw-state-focus': createIsFocused
+                }) },
+              compatCreate(this.props, messages)
+            )
+          )]
+        )
+      )
+    );
+  }
+}, {
+  key: '_data',
+  value: function _data() {
+    return this.state.processedData;
+  }
+}, {
+  key: '_delete',
+  value: function _delete(value) {
+    this.focus();
+    this.change(this.state.dataItems.filter(function (d) {
+      return d !== value;
+    }));
+  }
+}, {
+  key: '_searchKeyDown',
+  value: function _searchKeyDown(e) {
+    if (e.key === 'Backspace' && e.target.value && !this._deletingText) this._deletingText = true;
+  }
+}, {
+  key: '_searchgKeyUp',
+  value: function _searchgKeyUp(e) {
+    if (e.key === 'Backspace' && this._deletingText) this._deletingText = false;
+  }
+}, {
+  key: '_typing',
+  value: function _typing(e) {
+    _utilWidgetHelpers.notify(this.props.onSearch, [e.target.value]);
+    this.open();
+  }
+}, {
+  key: 'handleInputInteraction',
+  decorators: [_utilInteraction.widgetEditable],
+  value: function handleInputInteraction() {
+    this.open();
+  }
+}, {
+  key: '_onSelect',
+  decorators: [_utilInteraction.widgetEditable],
+  value: function _onSelect(data) {
+
+    if (data === undefined) {
+      if (this.props.onCreate) this._onCreate(this.props.searchTerm);
+
+      return;
+    }
+
+    _utilWidgetHelpers.notify(this.props.onSelect, data);
+    this.change(this.state.dataItems.concat(data));
+
+    this.close();
+    this.focus();
+  }
+}, {
+  key: '_onCreate',
+  decorators: [_utilInteraction.widgetEditable],
+  value: function _onCreate(tag) {
+    if (tag.trim() === '') return;
+
+    _utilWidgetHelpers.notify(this.props.onCreate, tag);
+    this.props.searchTerm && _utilWidgetHelpers.notify(this.props.onSearch, ['']);
+
+    this.close();
+    this.focus();
+  }
+}, {
+  key: '_keyDown',
+  decorators: [_utilInteraction.widgetEditable],
+  value: function _keyDown(e) {
+    var key = e.key;
+    var altKey = e.altKey;
+    var ctrlKey = e.ctrlKey;
+    var noSearch = !this.props.searchTerm && !this._deletingText;
+    var isOpen = this.props.open;var _state2 = this.state;
+    var focusedTag = _state2.focusedTag;
+    var focusedItem = _state2.focusedItem;
+    var _refs = this.refs;
+    var list = _refs.list;
+    var tagList = _refs.tagList;
+
+    var nullTag = { focusedTag: null };
+
+    _utilWidgetHelpers.notify(this.props.onKeyDown, [e]);
+
+    if (e.defaultPrevented) return;
+
+    if (key === 'ArrowDown') {
+      var next = list.next(focusedItem),
+          creating = this._shouldShowCreate() && focusedItem === next || focusedItem === null;
+
+      next = creating ? null : next;
+
+      e.preventDefault();
+      if (isOpen) this.setState(babelHelpers._extends({ focusedItem: next }, nullTag));else this.open();
+    } else if (key === 'ArrowUp') {
+      var prev = focusedItem === null ? list.last() : list.prev(focusedItem);
+
+      e.preventDefault();
+
+      if (altKey) this.close();else if (isOpen) this.setState(babelHelpers._extends({ focusedItem: prev }, nullTag));
+    } else if (key === 'End') {
+      e.preventDefault();
+      if (isOpen) this.setState(babelHelpers._extends({ focusedItem: list.last() }, nullTag));else tagList && this.setState({ focusedTag: tagList.last() });
+    } else if (key === 'Home') {
+      e.preventDefault();
+      if (isOpen) this.setState(babelHelpers._extends({ focusedItem: list.first() }, nullTag));else tagList && this.setState({ focusedTag: tagList.first() });
+    } else if (isOpen && key === 'Enter') {
+      e.preventDefault();
+      ctrlKey && this.props.onCreate || focusedItem === null ? this._onCreate(this.props.searchTerm) : this._onSelect(this.state.focusedItem);
+    } else if (key === 'Escape') isOpen ? this.close() : tagList && this.setState(nullTag);else if (noSearch && key === 'ArrowLeft') tagList && this.setState({ focusedTag: tagList.prev(focusedTag) });else if (noSearch && key === 'ArrowRight') tagList && this.setState({ focusedTag: tagList.next(focusedTag) });else if (noSearch && key === 'Delete') tagList && tagList.remove(focusedTag);else if (noSearch && key === 'Backspace') tagList && tagList.removeNext();
+  }
+}, {
+  key: 'change',
+  decorators: [_utilInteraction.widgetEditable],
+  value: function change(data) {
+    _utilWidgetHelpers.notify(this.props.onChange, [data]);
+    _utilWidgetHelpers.notify(this.props.onSearch, ['']);
+  }
+}, {
+  key: 'focus',
+  value: function focus() {
+    this.refs.input.focus();
+  }
+}, {
+  key: 'open',
+  value: function open() {
+    if (!this.props.open) _utilWidgetHelpers.notify(this.props.onToggle, true);
+  }
+}, {
+  key: 'close',
+  value: function close() {
+    _utilWidgetHelpers.notify(this.props.onToggle, false);
+  }
+}, {
+  key: 'toggle',
+  value: function toggle() {
+    this.props.open ? this.close() : this.open();
+  }
+}, {
+  key: 'process',
+  value: function process(data, values, searchTerm) {
+    var valueField = this.props.valueField;
+
+    var items = data.filter(function (i) {
+      return !values.some(function (v) {
+        return _utilDataHelpers.valueMatcher(i, v, valueField);
+      });
+    });
+
+    this._lengthWithoutValues = items.length;
+
+    if (searchTerm) items = this.filter(items, searchTerm);
+
+    return items;
+  }
+}, {
+  key: '_shouldShowCreate',
+  value: function _shouldShowCreate() {
+    var _props3 = this.props;
+    var textField = _props3.textField;
+    var searchTerm = _props3.searchTerm;
+    var onCreate = _props3.onCreate;
+
+    if (!onCreate || !searchTerm) return false;
+
+    // if there is an exact match on textFields: "john" => { name: "john" }, don't show
+    return !this._data().some(function (v) {
+      return _utilDataHelpers.dataText(v, textField) === searchTerm;
+    }) && !this.state.dataItems.some(function (v) {
+      return _utilDataHelpers.dataText(v, textField) === searchTerm;
+    });
+  }
+}, {
+  key: '_placeholder',
+  value: function _placeholder() {
+    return (this.props.value || []).length ? '' : this.props.placeholder || '';
+  }
+}]));
+
+function msgs(msgs) {
+  return babelHelpers._extends({
+    createNew: '(create new tag)',
+    emptyList: 'There are no items in this list',
+    emptyFilter: 'The filter returned no results',
+    tagsLabel: 'selected items',
+    selectedItems: 'selected items',
+    removeLabel: 'remove selected item'
+  }, msgs);
+}
+
+exports['default'] = _uncontrollable2['default'](Multiselect, { open: 'onToggle', value: 'onChange', searchTerm: 'onSearch' }, ['focus']);
+module.exports = exports['default'];
+},{"./List":21,"./ListGroupable":22,"./MultiselectInput":26,"./MultiselectTagList":27,"./Popup":30,"./mixins/AriaDescendantMixin":41,"./mixins/DataFilterMixin":42,"./mixins/FocusMixin":43,"./mixins/PopupScrollToMixin":45,"./mixins/RtlParentContextMixin":48,"./mixins/TimeoutMixin":49,"./util/_":50,"./util/babelHelpers.js":51,"./util/dataHelpers":56,"./util/interaction":60,"./util/propTypes":62,"./util/validateListInterface":64,"./util/widgetHelpers":65,"classnames":66,"react":254,"uncontrollable":96}],26:[function(require,module,exports){
+'use strict';
+
+var babelHelpers = require('./util/babelHelpers.js');
+
+exports.__esModule = true;
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _utilCompat = require('./util/compat');
+
+var _utilCompat2 = babelHelpers.interopRequireDefault(_utilCompat);
+
+var _utilPropTypes = require('./util/propTypes');
+
+var _utilPropTypes2 = babelHelpers.interopRequireDefault(_utilPropTypes);
+
+exports['default'] = _react2['default'].createClass({
+
+  displayName: 'MultiselectInput',
+
+  propTypes: {
+    value: _react2['default'].PropTypes.string,
+    maxLength: _react2['default'].PropTypes.number,
+    onChange: _react2['default'].PropTypes.func.isRequired,
+    onFocus: _react2['default'].PropTypes.func,
+
+    disabled: _utilPropTypes2['default'].disabled,
+    readOnly: _utilPropTypes2['default'].readOnly
+  },
+
+  componentDidUpdate: function componentDidUpdate() {
+    this.props.focused && this.focus();
+  },
+
+  render: function render() {
+    var value = this.props.value,
+        placeholder = this.props.placeholder,
+        size = Math.max((value || placeholder).length, 1) + 1;
+
+    return _react2['default'].createElement('input', babelHelpers._extends({}, this.props, {
+      className: 'rw-input',
+      autoComplete: 'off',
+      'aria-disabled': this.props.disabled,
+      'aria-readonly': this.props.readOnly,
+      disabled: this.props.disabled,
+      readOnly: this.props.readOnly,
+      size: size
+    }));
+  },
+
+  focus: function focus() {
+    _utilCompat2['default'].findDOMNode(this).focus();
+  }
+
+});
+module.exports = exports['default'];
+},{"./util/babelHelpers.js":51,"./util/compat":53,"./util/propTypes":62,"react":254}],27:[function(require,module,exports){
+'use strict';
+
+var babelHelpers = require('./util/babelHelpers.js');
+
+exports.__esModule = true;
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _util_ = require('./util/_');
+
+var _util_2 = babelHelpers.interopRequireDefault(_util_);
+
+var _classnames = require('classnames');
+
+var _classnames2 = babelHelpers.interopRequireDefault(_classnames);
+
+var _utilPropTypes = require('./util/propTypes');
+
+var _utilPropTypes2 = babelHelpers.interopRequireDefault(_utilPropTypes);
+
+var _utilWidgetHelpers = require('./util/widgetHelpers');
+
+var _utilDataHelpers = require('./util/dataHelpers');
+
+var _utilInteraction = require('./util/interaction');
+
+var optionId = function optionId(id, idx) {
+  return id + '__option__' + idx;
+};
+
+exports['default'] = _react2['default'].createClass({
+
+  displayName: 'MultiselectTagList',
+
+  mixins: [require('./mixins/PureRenderMixin'), require('./mixins/AriaDescendantMixin')()],
+
+  propTypes: {
+    value: _react2['default'].PropTypes.array,
+    focused: _react2['default'].PropTypes.number,
+
+    valueField: _react2['default'].PropTypes.string,
+    textField: _utilPropTypes2['default'].accessor,
+
+    valueComponent: _react2['default'].PropTypes.func,
+
+    disabled: _utilPropTypes2['default'].disabled.acceptsArray,
+    readOnly: _utilPropTypes2['default'].readOnly.acceptsArray
+  },
+
+  getDefaultProps: function getDefaultProps() {
+    return {
+      ariaActiveDescendantKey: 'taglist'
+    };
+  },
+
+  componentDidUpdate: function componentDidUpdate() {
+    var focused = this.props.focused;
+    var activeId = optionId(_utilWidgetHelpers.instanceId(this), focused);
+
+    this.ariaActiveDescendant(focused == null || _utilInteraction.isDisabledItem(focused, this.props) ? null : activeId);
+  },
+
+  render: function render() {
+    var _this = this;
+
+    var props = _util_2['default'].omit(this.props, ['value', 'disabled', 'readOnly']);
+    var _props = this.props;
+    var focused = _props.focused;
+    var value = _props.value;
+    var textField = _props.textField;
+    var ValueComponent = _props.valueComponent;
+
+    var id = _utilWidgetHelpers.instanceId(this);
+
+    return _react2['default'].createElement(
+      'ul',
+      babelHelpers._extends({}, props, {
+        role: 'listbox',
+        tabIndex: '-1',
+        className: 'rw-multiselect-taglist'
+      }),
+      value.map(function (item, i) {
+        var isDisabled = _utilInteraction.isDisabledItem(item, _this.props),
+            isReadonly = _utilInteraction.isReadOnlyItem(item, _this.props),
+            isFocused = !isDisabled && focused === i,
+            currentID = optionId(id, i);
+
+        return _react2['default'].createElement(
+          'li',
+          {
+            key: i,
+            id: currentID,
+            tabIndex: '-1',
+            role: 'option',
+            className: _classnames2['default']({
+              'rw-state-focus': isFocused,
+              'rw-state-disabled': isDisabled,
+              'rw-state-readonly': isReadonly
+            })
+          },
+          ValueComponent ? _react2['default'].createElement(ValueComponent, { item: item }) : _utilDataHelpers.dataText(item, textField),
+          _react2['default'].createElement(
+            'span',
+            {
+              tabIndex: '-1',
+              onClick: !(isDisabled || isReadonly) ? _this._delete.bind(null, item) : undefined,
+              'aria-disabled': isDisabled,
+              'aria-label': 'Unselect',
+              disabled: isDisabled
+            },
+            _react2['default'].createElement(
+              'span',
+              { className: 'rw-tag-btn', 'aria-hidden': 'true' },
+              '×'
+            )
+          )
+        );
+      })
+    );
+  },
+
+  _delete: function _delete(val) {
+    this.props.onDelete(val);
+  },
+
+  remove: function remove(idx) {
+    var val = this.props.value[idx];
+
+    if (val && !(_utilInteraction.isDisabledItem(val, this.props) || _utilInteraction.isReadOnlyItem(val, this.props))) this.props.onDelete(val);
+  },
+
+  removeNext: function removeNext() {
+    var val = this.props.value[this.props.value.length - 1];
+
+    if (val && !(_utilInteraction.isDisabledItem(val, this.props) || _utilInteraction.isReadOnlyItem(val, this.props))) this.props.onDelete(val);
+  },
+
+  clear: function clear() {
+    this.setState({ focused: null });
+  },
+
+  first: function first() {
+    var idx = 0,
+        value = this.props.value,
+        l = value.length;
+
+    while (idx < l && _utilInteraction.isDisabledItem(value[idx], this.props)) idx++;
+
+    return idx !== l ? idx : null;
+  },
+
+  last: function last() {
+    var value = this.props.value,
+        idx = value.length - 1;
+
+    while (idx > -1 && _utilInteraction.isDisabledItem(value[idx], this.props)) idx--;
+
+    return idx >= 0 ? idx : null;
+  },
+
+  next: function next(current) {
+    var nextIdx = current + 1,
+        value = this.props.value,
+        l = value.length;
+
+    while (nextIdx < l && _utilInteraction.isDisabledItem(nextIdx, this.props)) nextIdx++;
+
+    if (current === null || nextIdx >= l) return null;
+
+    return nextIdx;
+  },
+
+  prev: function prev(current) {
+    var nextIdx = current,
+        value = this.props.value;
+
+    if (nextIdx === null || nextIdx === 0) nextIdx = value.length;
+
+    nextIdx--;
+
+    while (nextIdx > -1 && _utilInteraction.isDisabledItem(value[nextIdx], this.props)) nextIdx--;
+
+    return nextIdx >= 0 ? nextIdx : null;
+  }
+});
+module.exports = exports['default'];
+},{"./mixins/AriaDescendantMixin":41,"./mixins/PureRenderMixin":46,"./util/_":50,"./util/babelHelpers.js":51,"./util/dataHelpers":56,"./util/interaction":60,"./util/propTypes":62,"./util/widgetHelpers":65,"classnames":66,"react":254}],28:[function(require,module,exports){
+'use strict';
+
+var babelHelpers = require('./util/babelHelpers.js');
+
+exports.__esModule = true;
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _utilPropTypes = require('./util/propTypes');
+
+var _utilPropTypes2 = babelHelpers.interopRequireDefault(_utilPropTypes);
+
+var _utilLocalizers = require('./util/localizers');
+
+var getFormat = function getFormat(props) {
+  return _utilLocalizers.number.getFormat('default', props.format);
+};
+
+exports['default'] = _react2['default'].createClass({
+
+  displayName: 'NumberPickerInput',
+
+  propTypes: {
+    value: _react2['default'].PropTypes.number,
+    placeholder: _react2['default'].PropTypes.string,
+
+    format: _utilPropTypes2['default'].numberFormat,
+
+    parse: _react2['default'].PropTypes.func,
+    culture: _react2['default'].PropTypes.string,
+
+    min: _react2['default'].PropTypes.number,
+
+    onChange: _react2['default'].PropTypes.func.isRequired,
+    onKeyDown: _react2['default'].PropTypes.func
+  },
+
+  getDefaultProps: function getDefaultProps() {
+    return {
+      value: null,
+      editing: false
+    };
+  },
+
+  getDefaultState: function getDefaultState() {
+    var props = arguments.length <= 0 || arguments[0] === undefined ? this.props : arguments[0];
+
+    var value = props.value,
+        decimal = _utilLocalizers.number.decimalChar(null, props.culture),
+        format = getFormat(props);
+
+    this._beginningWithSign = false;
+
+    if (value == null || isNaN(props.value)) value = '';else value = props.editing ? ('' + value).replace('.', decimal) : _utilLocalizers.number.format(value, format, props.culture);
+
+    return {
+      stringValue: '' + value
+    };
+  },
+
+  getInitialState: function getInitialState() {
+    return this.getDefaultState();
+  },
+
+  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+    this.setState(this.getDefaultState(nextProps));
+  },
+
+  render: function render() {
+    var value = this.state.stringValue;
+
+    return _react2['default'].createElement('input', babelHelpers._extends({}, this.props, {
+      type: 'text',
+      className: 'rw-input',
+      onChange: this._change,
+      onBlur: this._finish,
+      onKeyPress: this._typing,
+      'aria-disabled': this.props.disabled,
+      'aria-readonly': this.props.readOnly,
+      disabled: this.props.disabled,
+      readOnly: this.props.readOnly,
+      placeholder: this.props.placeholder,
+      value: value }));
+  },
+
+  _typing: function _typing(e) {
+    var current = e.target.value,
+        newVal = e.key;
+
+    this._beginningWithSign = current.trim() === '' && this.isSign(newVal);
+
+    this.props.onKeyPress && this.props.onKeyPress(e);
+  },
+
+  _change: function _change(e) {
+    var val = e.target.value,
+        number = this._parse(e.target.value),
+        atSign = this.isSign(val.trim()),
+        startingWithSign = this._beginningWithSign;
+
+    this._beginningWithSign = false;
+
+    if (val == null || val.trim() === '' || atSign && !startingWithSign) {
+      this.current('');
+      return this.props.onChange(null);
+    }
+
+    if (this.isFlushable(number, val)) {
+      if (number !== this.props.value) return this.props.onChange(number);else this.setState(this.getDefaultState()); // 5. -> 5
+    }
+
+    if (number < this.props.min || atSign && startingWithSign || this.isAtDelimiter(number, val)) this.current(e.target.value);
+  },
+
+  _finish: function _finish() {
+    var str = this.state.stringValue,
+        number = this._parse(str);
+
+    // if number is below the min
+    // we need to flush low values and decimal stops, onBlur means i'm done inputing
+    if (!isNaN(number) && (number < this.props.min || this.isAtDelimiter(number, str))) {
+      this.props.onChange(number);
+    }
+  },
+
+  _parse: function _parse(strVal) {
+    var culture = this.props.culture,
+        delimChar = _utilLocalizers.number.decimalChar(null, culture),
+        userParse = this.props.parse;
+
+    if (userParse) return userParse(strVal, culture);
+
+    strVal = strVal.replace(delimChar, '.');
+    strVal = parseFloat(strVal);
+
+    return strVal;
+  },
+
+  isFlushable: function isFlushable(num, str) {
+    return this.isValid(num) && !this.isAtDelimiter(num, str) && !this.isSign(str);
+  },
+
+  isSign: function isSign(val) {
+    return (val || '').trim() === '-';
+  },
+
+  isAtDelimiter: function isAtDelimiter(num, str) {
+    var props = arguments.length <= 2 || arguments[2] === undefined ? this.props : arguments[2];
+
+    var localeChar = _utilLocalizers.number.decimalChar(null, props.culture),
+        lastIndex = str.length - 1,
+        char;
+
+    if (str.length <= 1) return false;
+
+    char = str[lastIndex];
+
+    return char === localeChar && str.indexOf(char) === lastIndex;
+  },
+
+  isValid: function isValid(num) {
+    if (typeof num !== 'number' || isNaN(num)) return false;
+    return num >= this.props.min;
+  },
+
+  //this intermediate state is for when one runs into the decimal or are typing the number
+  current: function current(val) {
+    this.setState({ stringValue: val });
+  }
+
+});
+module.exports = exports['default'];
+},{"./util/babelHelpers.js":51,"./util/localizers":61,"./util/propTypes":62,"react":254}],29:[function(require,module,exports){
+'use strict';
+
+var babelHelpers = require('./util/babelHelpers.js');
+
+exports.__esModule = true;
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _classnames = require('classnames');
+
+var _classnames2 = babelHelpers.interopRequireDefault(_classnames);
+
+var _util_ = require('./util/_');
+
+var _util_2 = babelHelpers.interopRequireDefault(_util_);
+
+var _utilCompat = require('./util/compat');
+
+var _utilCompat2 = babelHelpers.interopRequireDefault(_utilCompat);
+
+var _utilPropTypes = require('./util/propTypes');
+
+var _utilPropTypes2 = babelHelpers.interopRequireDefault(_utilPropTypes);
+
+var _uncontrollable = require('uncontrollable');
+
+var _uncontrollable2 = babelHelpers.interopRequireDefault(_uncontrollable);
+
+var _utilConstants = require('./util/constants');
+
+var _utilConstants2 = babelHelpers.interopRequireDefault(_utilConstants);
+
+var _utilRepeater = require('./util/repeater');
+
+var _utilRepeater2 = babelHelpers.interopRequireDefault(_utilRepeater);
+
+var _utilLocalizers = require('./util/localizers');
+
+var _NumberInput = require('./NumberInput');
+
+var _NumberInput2 = babelHelpers.interopRequireDefault(_NumberInput);
+
+var _WidgetButton = require('./WidgetButton');
+
+var _WidgetButton2 = babelHelpers.interopRequireDefault(_WidgetButton);
+
+var _utilInteraction = require('./util/interaction');
+
+var _utilWidgetHelpers = require('./util/widgetHelpers');
+
+var directions = _utilConstants2['default'].directions;
+
+var format = function format(props) {
+  return _utilLocalizers.number.getFormat('default', props.format);
+};
+
+var propTypes = {
+
+  // -- controlled props -----------
+  value: _react2['default'].PropTypes.number,
+  onChange: _react2['default'].PropTypes.func,
+  //------------------------------------
+
+  min: _react2['default'].PropTypes.number,
+  max: _react2['default'].PropTypes.number,
+  step: _react2['default'].PropTypes.number,
+
+  precision: _react2['default'].PropTypes.number,
+
+  culture: _react2['default'].PropTypes.string,
+
+  format: _utilPropTypes2['default'].numberFormat,
+
+  name: _react2['default'].PropTypes.string,
+
+  parse: _react2['default'].PropTypes.func,
+
+  autoFocus: _react2['default'].PropTypes.bool,
+  disabled: _utilPropTypes2['default'].disabled,
+  readOnly: _utilPropTypes2['default'].readOnly,
+
+  messages: _react2['default'].PropTypes.shape({
+    increment: _react2['default'].PropTypes.string,
+    decrement: _react2['default'].PropTypes.string
+  }),
+
+  placeholder: _react2['default'].PropTypes.string
+};
+
+var NumberPicker = _react2['default'].createClass(babelHelpers.createDecoratedObject([{
+  key: 'displayName',
+  initializer: function initializer() {
+    return 'NumberPicker';
+  }
+}, {
+  key: 'mixins',
+  initializer: function initializer() {
+    return [require('./mixins/TimeoutMixin'), require('./mixins/PureRenderMixin'), require('./mixins/RtlParentContextMixin'), require('./mixins/FocusMixin')({
+      willHandle: function willHandle(focused) {
+        if (focused) this.focus();
+      }
+    })];
+  }
+}, {
+  key: 'propTypes',
+  initializer: function initializer() {
+    return propTypes;
+  }
+}, {
+  key: 'getDefaultProps',
+  value: function getDefaultProps() {
+    return {
+      value: null,
+      open: false,
+
+      min: -Infinity,
+      max: Infinity,
+      step: 1,
+
+      messages: {
+        increment: 'increment value',
+        decrement: 'decrement value'
+      }
+    };
+  }
+}, {
+  key: 'getInitialState',
+  value: function getInitialState() {
+    return {
+      focused: false,
+      active: false
+    };
+  }
+}, {
+  key: 'render',
+  value: function render() {
+    var _$omit = _util_2['default'].omit(this.props, Object.keys(propTypes));
+
+    var className = _$omit.className;
+    var onKeyPress = _$omit.onKeyPress;
+    var onKeyUp = _$omit.onKeyUp;
+    var props = babelHelpers.objectWithoutProperties(_$omit, ['className', 'onKeyPress', 'onKeyUp']);
+    var val = this.constrainValue(this.props.value);
+
+    return _react2['default'].createElement(
+      'div',
+      babelHelpers._extends({}, props, {
+        ref: 'element',
+        onKeyDown: this._keyDown,
+        onFocus: this.handleFocus,
+        onBlur: this.handleBlur,
+        tabIndex: '-1',
+        className: _classnames2['default'](className, 'rw-numberpicker', 'rw-widget', {
+          'rw-state-focus': this.state.focused,
+          'rw-state-disabled': this.props.disabled,
+          'rw-state-readonly': this.props.readOnly,
+          'rw-rtl': this.isRtl()
+        }) }),
+      _react2['default'].createElement(
+        'span',
+        { className: 'rw-select' },
+        _react2['default'].createElement(
+          _WidgetButton2['default'],
+          {
+            tabIndex: '-1',
+            className: _classnames2['default']({ 'rw-state-active': this.state.active === directions.UP }),
+            onMouseDown: this._mouseDown.bind(null, directions.UP),
+            onMouseUp: this._mouseUp.bind(null, directions.UP),
+            onMouseLeave: this._mouseUp.bind(null, directions.UP),
+            onClick: this.handleFocus,
+            disabled: val === this.props.max || this.props.disabled,
+            'aria-disabled': val === this.props.max || this.props.disabled },
+          _react2['default'].createElement(
+            'i',
+            { className: 'rw-i rw-i-caret-up' },
+            _react2['default'].createElement(
+              'span',
+              { className: 'rw-sr' },
+              this.props.messages.increment
+            )
+          )
+        ),
+        _react2['default'].createElement(
+          _WidgetButton2['default'],
+          {
+            tabIndex: '-1',
+            className: _classnames2['default']({ 'rw-state-active': this.state.active === directions.DOWN }),
+            onMouseDown: this._mouseDown.bind(null, directions.DOWN),
+            onMouseUp: this._mouseUp.bind(null, directions.DOWN),
+            onMouseLeave: this._mouseUp.bind(null, directions.DOWN),
+            onClick: this.handleFocus,
+            disabled: val === this.props.min || this.props.disabled,
+            'aria-disabled': val === this.props.min || this.props.disabled },
+          _react2['default'].createElement(
+            'i',
+            { className: 'rw-i rw-i-caret-down' },
+            _react2['default'].createElement(
+              'span',
+              { className: 'rw-sr' },
+              this.props.messages.decrement
+            )
+          )
+        )
+      ),
+      _react2['default'].createElement(_NumberInput2['default'], {
+        ref: 'input',
+        tabIndex: props.tabIndex,
+        placeholder: this.props.placeholder,
+        value: val,
+        autoFocus: this.props.autoFocus,
+        editing: this.state.focused,
+        format: this.props.format,
+        parse: this.props.parse,
+        name: this.props.name,
+        role: 'spinbutton',
+        min: this.props.min,
+        'aria-valuenow': val,
+        'aria-valuemin': isFinite(this.props.min) ? this.props.min : null,
+        'aria-valuemax': isFinite(this.props.max) ? this.props.max : null,
+        'aria-disabled': this.props.disabled,
+        'aria-readonly': this.props.readonly,
+        disabled: this.props.disabled,
+        readOnly: this.props.readOnly,
+        onChange: this.change,
+        onKeyPress: onKeyPress,
+        onKeyUp: onKeyUp })
+    );
+  }
+}, {
+  key: '_mouseDown',
+  decorators: [_utilInteraction.widgetEditable],
+  value: function _mouseDown(dir) {
+    var method = dir === directions.UP ? this.increment : this.decrement;
+
+    this.setState({ active: dir });
+
+    var val = method.call(this);
+
+    if (!(dir === directions.UP && val === this.props.max || dir === directions.DOWN && val === this.props.min)) {
+      if (!this._cancelRepeater) this._cancelRepeater = _utilRepeater2['default'](this._mouseDown.bind(null, dir));
+    } else this._mouseUp();
+  }
+}, {
+  key: '_mouseUp',
+  decorators: [_utilInteraction.widgetEditable],
+  value: function _mouseUp() {
+    this.setState({ active: false });
+    this._cancelRepeater && this._cancelRepeater();
+    this._cancelRepeater = null;
+  }
+}, {
+  key: '_keyDown',
+  decorators: [_utilInteraction.widgetEditable],
+  value: function _keyDown(e) {
+    var key = e.key;
+
+    _utilWidgetHelpers.notify(this.props.onKeyDown, [e]);
+
+    if (e.defaultPrevented) return;
+
+    if (key === 'End' && isFinite(this.props.max)) this.change(this.props.max);else if (key === 'Home' && isFinite(this.props.min)) this.change(this.props.min);else if (key === 'ArrowDown') {
+      e.preventDefault();
+      this.decrement();
+    } else if (key === 'ArrowUp') {
+      e.preventDefault();
+      this.increment();
+    }
+  }
+}, {
+  key: 'focus',
+  value: function focus() {
+    _utilCompat2['default'].findDOMNode(this.refs.input).focus();
+  }
+}, {
+  key: 'increment',
+  value: function increment() {
+    return this.step(this.props.step);
+  }
+}, {
+  key: 'decrement',
+  value: function decrement() {
+    return this.step(-this.props.step);
+  }
+}, {
+  key: 'step',
+  value: function step(amount) {
+    var value = (this.props.value || 0) + amount;
+
+    var decimals = this.props.precision != null ? this.props.precision : _utilLocalizers.number.precision(format(this.props));
+
+    this.change(decimals != null ? round(value, decimals) : value);
+
+    return value;
+  }
+}, {
+  key: 'change',
+  value: function change(val) {
+    val = this.constrainValue(val);
+
+    if (this.props.value !== val) _utilWidgetHelpers.notify(this.props.onChange, val);
+  }
+}, {
+  key: 'constrainValue',
+  value: function constrainValue(value) {
+    var max = this.props.max == null ? Infinity : this.props.max,
+        min = this.props.min == null ? -Infinity : this.props.min;
+
+    if (value == null || value === '') return null;
+
+    return Math.max(Math.min(value, max), min);
+  }
+}]));
+
+exports['default'] = _uncontrollable2['default'](NumberPicker, { value: 'onChange' });
+
+// thank you kendo ui core
+// https://github.com/telerik/kendo-ui-core/blob/master/src/kendo.core.js#L1036
+function round(value, precision) {
+  precision = precision || 0;
+
+  value = ('' + value).split('e');
+  value = Math.round(+(value[0] + 'e' + (value[1] ? +value[1] + precision : precision)));
+
+  value = ('' + value).split('e');
+  value = +(value[0] + 'e' + (value[1] ? +value[1] - precision : -precision));
+
+  return value.toFixed(precision);
+}
+module.exports = exports['default'];
+
+//allow for styling, focus stealing keeping me from the normal what have you
+},{"./NumberInput":28,"./WidgetButton":35,"./mixins/FocusMixin":43,"./mixins/PureRenderMixin":46,"./mixins/RtlParentContextMixin":48,"./mixins/TimeoutMixin":49,"./util/_":50,"./util/babelHelpers.js":51,"./util/compat":53,"./util/constants":55,"./util/interaction":60,"./util/localizers":61,"./util/propTypes":62,"./util/repeater":63,"./util/widgetHelpers":65,"classnames":66,"react":254,"uncontrollable":96}],30:[function(require,module,exports){
+'use strict';
+
+var babelHelpers = require('./util/babelHelpers.js');
+
+var _OVERFLOW;
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _domHelpersStyle = require('dom-helpers/style');
+
+var _domHelpersStyle2 = babelHelpers.interopRequireDefault(_domHelpersStyle);
+
+var _domHelpersQueryHeight = require('dom-helpers/query/height');
+
+var _domHelpersQueryHeight2 = babelHelpers.interopRequireDefault(_domHelpersQueryHeight);
+
+var _domHelpersUtilCamelizeStyle = require('dom-helpers/util/camelizeStyle');
+
+var _domHelpersUtilCamelizeStyle2 = babelHelpers.interopRequireDefault(_domHelpersUtilCamelizeStyle);
+
+var _utilConfiguration = require('./util/configuration');
+
+var _utilConfiguration2 = babelHelpers.interopRequireDefault(_utilConfiguration);
+
+var _classnames = require('classnames');
+
+var _classnames2 = babelHelpers.interopRequireDefault(_classnames);
+
+var _utilCompat = require('./util/compat');
+
+var _utilCompat2 = babelHelpers.interopRequireDefault(_utilCompat);
+
+var transform = _domHelpersUtilCamelizeStyle2['default'](_utilConfiguration2['default'].animate.transform);
+
+var CLOSING = 0,
+    CLOSED = 1,
+    OPENING = 2,
+    OPEN = 3;
+
+function properties(prop, value) {
+  var _ref, _ref2;
+
+  var TRANSLATION_MAP = _utilConfiguration2['default'].animate.TRANSLATION_MAP;
+
+  if (TRANSLATION_MAP && TRANSLATION_MAP[prop]) return _ref = {}, _ref[transform] = TRANSLATION_MAP[prop] + '(' + value + ')', _ref;
+
+  return _ref2 = {}, _ref2[prop] = value, _ref2;
+}
+
+var OVERFLOW = (_OVERFLOW = {}, _OVERFLOW[CLOSED] = 'hidden', _OVERFLOW[CLOSING] = 'hidden', _OVERFLOW[OPENING] = 'hidden', _OVERFLOW);
+
+module.exports = _react2['default'].createClass({
+
+  displayName: 'Popup',
+
+  propTypes: {
+    open: _react2['default'].PropTypes.bool,
+    dropUp: _react2['default'].PropTypes.bool,
+    duration: _react2['default'].PropTypes.number,
+
+    onClosing: _react2['default'].PropTypes.func,
+    onOpening: _react2['default'].PropTypes.func,
+    onClose: _react2['default'].PropTypes.func,
+    onOpen: _react2['default'].PropTypes.func
+  },
+
+  getInitialState: function getInitialState() {
+    return {
+      initialRender: true,
+      status: this.props.open ? OPENING : CLOSED
+    };
+  },
+
+  getDefaultProps: function getDefaultProps() {
+    return {
+      duration: 200,
+      open: false,
+      onClosing: function onClosing() {},
+      onOpening: function onOpening() {},
+      onClose: function onClose() {},
+      onOpen: function onOpen() {}
+    };
+  },
+
+  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+    this.setState({
+      contentChanged: childKey(nextProps.children) !== childKey(this.props.children)
+    });
+  },
+
+  componentDidMount: function componentDidMount() {
+    var _this = this;
+
+    var isOpen = this.state.status === OPENING;
+
+    _utilCompat2['default'].batchedUpdates(function () {
+      _this.setState({ initialRender: false });
+      if (isOpen) {
+        _this.open();
+      }
+    });
+  },
+
+  componentDidUpdate: function componentDidUpdate(pvProps) {
+    var closing = pvProps.open && !this.props.open,
+        opening = !pvProps.open && this.props.open,
+        open = this.props.open,
+        status = this.state.status;
+
+    if (!!pvProps.dropUp !== !!this.props.dropUp) {
+      this.cancelNextCallback();
+      if (status === OPENING) this.open();
+      if (status === CLOSING) this.close();
+      return;
+    }
+
+    if (opening) this.open();else if (closing) this.close();else if (open) {
+      var height = this.height();
+      if (height !== this.state.height) this.setState({ height: height });
+    }
+  },
+
+  render: function render() {
+    var _props = this.props;
+    var className = _props.className;
+    var open = _props.open;
+    var dropUp = _props.dropUp;
+    var props = babelHelpers.objectWithoutProperties(_props, ['className', 'open', 'dropUp']);
+    var _state = this.state;
+    var status = _state.status;
+    var height = _state.height;
+
+    var overflow = OVERFLOW[status] || 'visible',
+        display = status === CLOSED ? 'none' : 'block';
+
+    return _react2['default'].createElement(
+      'div',
+      babelHelpers._extends({}, props, {
+        style: babelHelpers._extends({ display: display, overflow: overflow, height: height }, props.style),
+        className: _classnames2['default'](className, 'rw-popup-container', {
+          'rw-dropup': dropUp,
+          'rw-popup-animating': this.isTransitioning()
+        })
+      }),
+      this.renderChildren()
+    );
+  },
+
+  renderChildren: function renderChildren() {
+    if (!this.props.children) return _react2['default'].createElement('span', { className: 'rw-popup rw-widget' });
+
+    var offset = this.getOffsetForStatus(this.state.status),
+        child = _react2['default'].Children.only(this.props.children);
+
+    return _react.cloneElement(child, {
+      style: babelHelpers._extends({}, child.props.style, offset, {
+        position: this.isTransitioning() ? 'absolute' : undefined
+      }),
+      className: _classnames2['default'](child.props.className, 'rw-popup rw-widget')
+    });
+  },
+
+  open: function open() {
+    var _this2 = this;
+
+    this.cancelNextCallback();
+    var el = _utilCompat2['default'].findDOMNode(this).firstChild,
+        height = this.height();
+
+    this.props.onOpening();
+
+    this.safeSetState({ status: OPENING, height: height }, function () {
+      var offset = _this2.getOffsetForStatus(OPEN),
+          duration = _this2.props.duration;
+
+      _this2.animate(el, offset, duration, 'ease', function () {
+        _this2.safeSetState({ status: OPEN }, function () {
+          _this2.props.onOpen();
+        });
+      });
+    });
+  },
+
+  close: function close() {
+    var _this3 = this;
+
+    this.cancelNextCallback();
+    var el = _utilCompat2['default'].findDOMNode(this).firstChild,
+        height = this.height();
+
+    this.props.onClosing();
+
+    this.safeSetState({ status: CLOSING, height: height }, function () {
+      var offset = _this3.getOffsetForStatus(CLOSED),
+          duration = _this3.props.duration;
+
+      _this3.animate(el, offset, duration, 'ease', function () {
+        return _this3.safeSetState({ status: CLOSED }, function () {
+          _this3.props.onClose();
+        });
+      });
+    });
+  },
+
+  getOffsetForStatus: function getOffsetForStatus(status) {
+    var _CLOSED$CLOSING$OPENING$OPEN$status;
+
+    if (this.state.initialRender) return {};
+
+    var _in = properties('top', this.props.dropUp ? '100%' : '-100%'),
+        out = properties('top', 0);
+    return (_CLOSED$CLOSING$OPENING$OPEN$status = {}, _CLOSED$CLOSING$OPENING$OPEN$status[CLOSED] = _in, _CLOSED$CLOSING$OPENING$OPEN$status[CLOSING] = out, _CLOSED$CLOSING$OPENING$OPEN$status[OPENING] = _in, _CLOSED$CLOSING$OPENING$OPEN$status[OPEN] = out, _CLOSED$CLOSING$OPENING$OPEN$status)[status] || {};
+  },
+
+  height: function height() {
+    var container = _utilCompat2['default'].findDOMNode(this),
+        content = container.firstChild,
+        margin = parseInt(_domHelpersStyle2['default'](content, 'margin-top'), 10) + parseInt(_domHelpersStyle2['default'](content, 'margin-bottom'), 10);
+
+    var old = container.style.display,
+        height = undefined;
+
+    container.style.display = 'block';
+    height = (_domHelpersQueryHeight2['default'](content) || 0) + (isNaN(margin) ? 0 : margin);
+    container.style.display = old;
+    return height;
+  },
+
+  isTransitioning: function isTransitioning() {
+    return this.state.status === OPENING || this.state.status === CLOSED;
+  },
+
+  animate: function animate(el, props, dur, easing, cb) {
+    this._transition = _utilConfiguration2['default'].animate(el, props, dur, easing, this.setNextCallback(cb));
+  },
+
+  cancelNextCallback: function cancelNextCallback() {
+    if (this._transition && this._transition.cancel) {
+      this._transition.cancel();
+      this._transition = null;
+    }
+    if (this.nextCallback) {
+      this.nextCallback.cancel();
+      this.nextCallback = null;
+    }
+  },
+
+  safeSetState: function safeSetState(nextState, callback) {
+    this.setState(nextState, this.setNextCallback(callback));
+  },
+
+  setNextCallback: function setNextCallback(callback) {
+    var _this4 = this;
+
+    var active = true;
+
+    this.nextCallback = function (event) {
+      if (active) {
+        active = false;
+        _this4.nextCallback = null;
+        callback(event);
+      }
+    };
+
+    this.nextCallback.cancel = function () {
+      return active = false;
+    };
+    return this.nextCallback;
+  }
+
+});
+
+function childKey(children) {
+  var nextChildMapping = _react2['default'].Children.map(children, function (c) {
+    return c;
+  });
+  for (var key in nextChildMapping) return key;
+}
+},{"./util/babelHelpers.js":51,"./util/compat":53,"./util/configuration":54,"classnames":66,"dom-helpers/query/height":74,"dom-helpers/style":81,"dom-helpers/util/camelizeStyle":86,"react":254}],31:[function(require,module,exports){
+/**
+ * A streamlined version of TransitionGroup built for managing at most two active children
+ * also provides additional hooks for animation start/end
+ * https://github.com/facebook/react/blob/master/src/addons/transitions/ReactTransitionGroup.js
+ * relevent code is licensed accordingly
+ */
+'use strict';
+
+var React = require('react'),
+    css = require('dom-helpers/style'),
+    height = require('dom-helpers/query/height'),
+    width = require('dom-helpers/query/width'),
+    compat = require('./util/compat'),
+    _ = require('./util/_');
+
+module.exports = React.createClass({
+
+  displayName: 'ReplaceTransitionGroup',
+
+  propTypes: {
+    component: React.PropTypes.oneOfType([React.PropTypes.element, React.PropTypes.string]),
+    childFactory: React.PropTypes.func,
+
+    onAnimating: React.PropTypes.func,
+    onAnimate: React.PropTypes.func
+  },
+
+  getDefaultProps: function getDefaultProps() {
+    return {
+      component: 'span',
+      childFactory: function childFactory(a) {
+        return a;
+      },
+
+      onAnimating: _.noop,
+      onAnimate: _.noop
+    };
+  },
+
+  getInitialState: function getInitialState() {
+    return {
+      children: _.splat(this.props.children)
+    };
+  },
+
+  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+    var nextChild = getChild(nextProps.children),
+        stack = this.state.children.slice(),
+        next = stack[1],
+        last = stack[0];
+
+    var isLastChild = last && key(last) === key(nextChild),
+        isNextChild = next && key(next) === key(nextChild);
+
+    //no children
+    if (!last) {
+      stack.push(nextChild);
+      this.entering = nextChild;
+    } else if (last && !next && !isLastChild) {
+      //new child
+      stack.push(nextChild);
+      this.leaving = last;
+      this.entering = nextChild;
+    } else if (last && next && !isLastChild && !isNextChild) {
+      // the child is not the current one, exit the current one, add the new one
+      //  - shift the stack down
+      stack.shift();
+      stack.push(nextChild);
+      this.leaving = next;
+      this.entering = nextChild;
+    }
+    //new child that just needs to be re-rendered
+    else if (isLastChild) stack.splice(0, 1, nextChild);else if (isNextChild) stack.splice(1, 1, nextChild);
+
+    if (this.state.children[0] !== stack[0] || this.state.children[1] !== stack[1]) this.setState({ children: stack });
+  },
+
+  componentWillMount: function componentWillMount() {
+    this.animatingKeys = {};
+    this.leaving = null;
+    this.entering = null;
+  },
+
+  componentDidUpdate: function componentDidUpdate() {
+    var entering = this.entering,
+        leaving = this.leaving,
+        first = this.refs[key(entering) || key(leaving)],
+        node = compat.findDOMNode(this),
+        el = first && compat.findDOMNode(first);
+
+    if (el) css(node, {
+      overflow: 'hidden',
+      height: height(el) + 'px',
+      width: width(el) + 'px'
+    });
+
+    this.props.onAnimating();
+
+    this.entering = null;
+    this.leaving = null;
+
+    if (entering) this.performEnter(key(entering));
+    if (leaving) this.performLeave(key(leaving));
+  },
+
+  performEnter: function performEnter(key) {
+    var component = this.refs[key];
+
+    if (!component) return;
+
+    this.animatingKeys[key] = true;
+
+    if (component.componentWillEnter) component.componentWillEnter(this._handleDoneEntering.bind(this, key));else this._handleDoneEntering(key);
+  },
+
+  _tryFinish: function _tryFinish() {
+
+    if (this.isTransitioning()) return;
+
+    if (this.isMounted()) css(compat.findDOMNode(this), { overflow: 'visible', height: '', width: '' });
+
+    this.props.onAnimate();
+  },
+
+  _handleDoneEntering: function _handleDoneEntering(enterkey) {
+    var component = this.refs[enterkey];
+
+    if (component && component.componentDidEnter) component.componentDidEnter();
+
+    delete this.animatingKeys[enterkey];
+
+    if (key(this.props.children) !== enterkey) this.performLeave(enterkey); // This was removed before it had fully entered. Remove it.
+
+    this._tryFinish();
+  },
+
+  isTransitioning: function isTransitioning() {
+    return Object.keys(this.animatingKeys).length !== 0;
+  },
+
+  performLeave: function performLeave(key) {
+    var component = this.refs[key];
+
+    if (!component) return;
+
+    this.animatingKeys[key] = true;
+
+    if (component.componentWillLeave) component.componentWillLeave(this._handleDoneLeaving.bind(this, key));else this._handleDoneLeaving(key);
+  },
+
+  _handleDoneLeaving: function _handleDoneLeaving(leavekey) {
+    var component = this.refs[leavekey];
+
+    if (component && component.componentDidLeave) component.componentDidLeave();
+
+    delete this.animatingKeys[leavekey];
+
+    if (key(this.props.children) === leavekey) this.performEnter(leavekey); // This entered again before it fully left. Add it again.
+
+    else if (this.isMounted()) this.setState({
+        children: this.state.children.filter(function (c) {
+          return key(c) !== leavekey;
+        })
+      });
+
+    this._tryFinish();
+  },
+
+  render: function render() {
+    var _this = this;
+
+    var Component = this.props.component;
+    return React.createElement(
+      Component,
+      this.props,
+      this.state.children.map(function (c) {
+        return _this.props.childFactory(c, key(c));
+      })
+    );
+  }
+});
+
+function getChild(children) {
+  return React.Children.only(children);
+}
+
+function key(child) {
+  return child && child.key;
+}
+},{"./util/_":50,"./util/compat":53,"dom-helpers/query/height":74,"dom-helpers/query/width":79,"dom-helpers/style":81,"react":254}],32:[function(require,module,exports){
+'use strict';
+
+var babelHelpers = require('./util/babelHelpers.js');
+
+exports.__esModule = true;
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _util_ = require('./util/_');
+
+var _util_2 = babelHelpers.interopRequireDefault(_util_);
+
+var _classnames = require('classnames');
+
+var _classnames2 = babelHelpers.interopRequireDefault(_classnames);
+
+var _uncontrollable = require('uncontrollable');
+
+var _uncontrollable2 = babelHelpers.interopRequireDefault(_uncontrollable);
+
+var _utilCompat = require('./util/compat');
+
+var _utilCompat2 = babelHelpers.interopRequireDefault(_utilCompat);
+
+var _utilPropTypes = require('./util/propTypes');
+
+var _utilPropTypes2 = babelHelpers.interopRequireDefault(_utilPropTypes);
+
+var _List = require('./List');
+
+var _List2 = babelHelpers.interopRequireDefault(_List);
+
+var _ListGroupable = require('./ListGroupable');
+
+var _ListGroupable2 = babelHelpers.interopRequireDefault(_ListGroupable);
+
+var _ListOption = require('./ListOption');
+
+var _ListOption2 = babelHelpers.interopRequireDefault(_ListOption);
+
+var _utilValidateListInterface = require('./util/validateListInterface');
+
+var _utilValidateListInterface2 = babelHelpers.interopRequireDefault(_utilValidateListInterface);
+
+var _domHelpersUtilScrollTo = require('dom-helpers/util/scrollTo');
+
+var _domHelpersUtilScrollTo2 = babelHelpers.interopRequireDefault(_domHelpersUtilScrollTo);
+
+var _utilDataHelpers = require('./util/dataHelpers');
+
+var _utilInteraction = require('./util/interaction');
+
+var _utilWidgetHelpers = require('./util/widgetHelpers');
+
+var omit = _util_2['default'].omit;
+var pick = _util_2['default'].pick;
+
+var propTypes = {
+
+  data: _react2['default'].PropTypes.array,
+  value: _react2['default'].PropTypes.oneOfType([_react2['default'].PropTypes.any, _react2['default'].PropTypes.array]),
+  onChange: _react2['default'].PropTypes.func,
+  onMove: _react2['default'].PropTypes.func,
+
+  multiple: _react2['default'].PropTypes.bool,
+
+  itemComponent: _utilPropTypes2['default'].elementType,
+  listComponent: _utilPropTypes2['default'].elementType,
+
+  valueField: _react2['default'].PropTypes.string,
+  textField: _utilPropTypes2['default'].accessor,
+
+  busy: _react2['default'].PropTypes.bool,
+
+  filter: _react2['default'].PropTypes.string,
+  delay: _react2['default'].PropTypes.number,
+
+  disabled: _utilPropTypes2['default'].disabled.acceptsArray,
+  readOnly: _utilPropTypes2['default'].readOnly.acceptsArray,
+
+  messages: _react2['default'].PropTypes.shape({
+    emptyList: _react2['default'].PropTypes.string
+  })
+};
+
+var SelectList = _react2['default'].createClass(babelHelpers.createDecoratedObject([{
+  key: 'displayName',
+  initializer: function initializer() {
+    return 'SelectList';
+  }
+}, {
+  key: 'propTypes',
+  initializer: function initializer() {
+    return propTypes;
+  }
+}, {
+  key: 'mixins',
+  initializer: function initializer() {
+    return [require('./mixins/TimeoutMixin'), require('./mixins/RtlParentContextMixin'), require('./mixins/AriaDescendantMixin')(), require('./mixins/FocusMixin')({
+      willHandle: function willHandle(focused) {
+        if (focused) this.focus();
+      }
+    })];
+  }
+}, {
+  key: 'getDefaultProps',
+  value: function getDefaultProps() {
+    return {
+      delay: 250,
+      value: [],
+      data: [],
+      ariaActiveDescendantKey: 'selectlist',
+      messages: {
+        emptyList: 'There are no items in this list'
+      }
+    };
+  }
+}, {
+  key: 'getDefaultState',
+  value: function getDefaultState(props) {
+    var data = props.data;
+    var value = props.value;
+    var valueField = props.valueField;
+    var multiple = props.multiple;
+    var isRadio = !multiple;
+    var values = _util_2['default'].splat(value);
+    var first = isRadio && _utilDataHelpers.dataItem(data, values[0], valueField);
+
+    first = isRadio && first ? first : (this.state || {}).focusedItem || null;
+
+    return {
+      focusedItem: first,
+      dataItems: !isRadio && values.map(function (item) {
+        return _utilDataHelpers.dataItem(data, item, valueField);
+      })
+    };
+  }
+}, {
+  key: 'getInitialState',
+  value: function getInitialState() {
+    var state = this.getDefaultState(this.props);
+
+    state.ListItem = getListItem(this);
+
+    return state;
+  }
+}, {
+  key: 'componentWillReceiveProps',
+  value: function componentWillReceiveProps(nextProps) {
+    return this.setState(this.getDefaultState(nextProps));
+  }
+}, {
+  key: 'componentDidMount',
+  value: function componentDidMount() {
+    _utilValidateListInterface2['default'](this.refs.list);
+  }
+}, {
+  key: 'render',
+  value: function render() {
+    var _props = this.props;
+    var className = _props.className;
+    var tabIndex = _props.tabIndex;
+    var busy = _props.busy;
+    var groupBy = _props.groupBy;
+    var List = _props.listComponent;
+
+    List = List || groupBy && _ListGroupable2['default'] || _List2['default'];
+
+    var elementProps = omit(this.props, Object.keys(propTypes));
+    var listProps = pick(this.props, Object.keys(List.propTypes));
+
+    var _state = this.state;
+    var ListItem = _state.ListItem;
+    var focusedItem = _state.focusedItem;
+    var focused = _state.focused;
+
+    var items = this._data(),
+        listID = _utilWidgetHelpers.instanceId(this, '_listbox');
+
+    focusedItem = focused && !_utilInteraction.isDisabled(this.props) && !_utilInteraction.isReadOnly(this.props) && focusedItem;
+
+    return _react2['default'].createElement(
+      'div',
+      babelHelpers._extends({}, elementProps, {
+        onKeyDown: this._keyDown,
+        onKeyPress: this._keyPress,
+        onBlur: this.handleBlur,
+        onFocus: this.handleFocus,
+        role: 'radiogroup',
+        'aria-busy': !!busy,
+        'aria-disabled': _utilInteraction.isDisabled(this.props),
+        'aria-readonly': _utilInteraction.isReadOnly(this.props),
+        tabIndex: '-1',
+        className: _classnames2['default'](className, 'rw-widget', 'rw-selectlist', {
+          'rw-state-focus': focused,
+          'rw-state-disabled': _utilInteraction.isDisabled(this.props),
+          'rw-state-readonly': _utilInteraction.isReadOnly(this.props),
+          'rw-rtl': this.isRtl(),
+          'rw-loading-mask': busy
+        })
+      }),
+      _react2['default'].createElement(List, babelHelpers._extends({}, listProps, {
+        ref: 'list',
+        id: listID,
+        role: 'radiogroup',
+        tabIndex: tabIndex || '0',
+        data: items,
+        focused: focusedItem,
+        optionComponent: ListItem,
+        itemComponent: this.props.itemComponent,
+        onMove: this._scrollTo
+      }))
+    );
+  }
+}, {
+  key: '_scrollTo',
+  value: function _scrollTo(selected, list) {
+    var handler = this.props.onMove;
+
+    if (handler) handler(selected, list);else {
+      this._scrollCancel && this._scrollCancel();
+      // default behavior is to scroll the whole page not just the widget
+      this._scrollCancel = _domHelpersUtilScrollTo2['default'](selected);
+    }
+  }
+}, {
+  key: '_keyDown',
+  decorators: [_utilInteraction.widgetEditable],
+  value: function _keyDown(e) {
+    var _this = this;
+
+    var key = e.key;
+    var _props2 = this.props;
+    var valueField = _props2.valueField;
+    var multiple = _props2.multiple;
+    var list = this.refs.list;
+    var focusedItem = this.state.focusedItem;
+
+    var change = function change(item) {
+      if (item) _this._change(item, multiple ? !_utilInteraction.contains(item, _this._values(), valueField) // toggle value
+      : true);
+    };
+
+    _utilWidgetHelpers.notify(this.props.onKeyDown, [e]);
+
+    if (e.defaultPrevented) return;
+
+    if (key === 'End') {
+      e.preventDefault();
+
+      if (multiple) this.setState({ focusedItem: list.last() });else change(list.last());
+    } else if (key === 'Home') {
+      e.preventDefault();
+
+      if (multiple) this.setState({ focusedItem: list.first() });else change(list.first());
+    } else if (key === 'Enter' || key === ' ') {
+      e.preventDefault();
+      change(focusedItem);
+    } else if (key === 'ArrowDown' || key === 'ArrowRight') {
+      e.preventDefault();
+
+      if (multiple) this.setState({ focusedItem: list.next(focusedItem) });else change(list.next(focusedItem));
+    } else if (key === 'ArrowUp' || key === 'ArrowLeft') {
+      e.preventDefault();
+
+      if (multiple) this.setState({ focusedItem: list.prev(focusedItem) });else change(list.prev(focusedItem));
+    } else if (multiple && e.keyCode === 65 && e.ctrlKey) {
+      e.preventDefault();
+      this.selectAll();
+    }
+  }
+}, {
+  key: '_keyPress',
+  decorators: [_utilInteraction.widgetEditable],
+  value: function _keyPress(e) {
+    _utilWidgetHelpers.notify(this.props.onKeyPress, [e]);
+
+    if (e.defaultPrevented) return;
+
+    this.search(String.fromCharCode(e.which));
+  }
+}, {
+  key: 'focus',
+  value: function focus() {
+    _utilCompat2['default'].findDOMNode(this.refs.list).focus();
+  }
+}, {
+  key: 'selectAll',
+  value: function selectAll() {
+    var _this2 = this;
+
+    var _props3 = this.props;
+    var disabled = _props3.disabled;
+    var readOnly = _props3.readOnly;
+    var valueField = _props3.valueField;
+    var values = this.state.dataItems;
+    var data = this._data();
+    var blacklist;
+
+    disabled = disabled || readOnly;
+    disabled = Array.isArray(disabled) ? disabled : [];
+    //disabled values that are not selected
+    blacklist = disabled.filter(function (v) {
+      return !_utilInteraction.contains(v, values, valueField);
+    });
+    data = data.filter(function (v) {
+      return !_utilInteraction.contains(v, blacklist, valueField);
+    });
+
+    if (data.length === values.length) {
+      data = disabled.filter(function (item) {
+        return _utilInteraction.contains(item, values, valueField);
+      });
+      data = data.map(function (item) {
+        return _utilDataHelpers.dataItem(_this2._data(), item, valueField);
+      });
+    }
+
+    _utilWidgetHelpers.notify(this.props.onChange, [data]);
+  }
+}, {
+  key: '_change',
+  value: function _change(item, checked) {
+    var multiple = this.props.multiple;
+    var values = this.state.dataItems;
+
+    multiple = !!multiple;
+
+    if (!multiple) return _utilWidgetHelpers.notify(this.props.onChange, checked ? item : null);
+
+    values = checked ? values.concat(item) : values.filter(function (v) {
+      return v !== item;
+    });
+
+    _utilWidgetHelpers.notify(this.props.onChange, [values || []]);
+  }
+}, {
+  key: 'search',
+  value: function search(character) {
+    var _this3 = this;
+
+    var word = ((this._searchTerm || '') + character).toLowerCase(),
+        list = this.refs.list,
+        multiple = this.props.multiple;
+
+    if (!character) return;
+
+    this._searchTerm = word;
+
+    this.setTimeout('search', function () {
+      var focusedItem = list.next(_this3.state.focusedItem, word);
+
+      _this3._searchTerm = '';
+
+      if (focusedItem) {
+        !multiple ? _this3._change(focusedItem, true) : _this3.setState({ focusedItem: focusedItem });
+      }
+    }, this.props.delay);
+  }
+}, {
+  key: '_data',
+  value: function _data() {
+    return this.props.data;
+  }
+}, {
+  key: '_values',
+  value: function _values() {
+    return this.props.multiple ? this.state.dataItems : this.props.value;
+  }
+}]));
+
+function getListItem(parent) {
+
+  return _react2['default'].createClass({
+
+    displayName: 'SelectItem',
+
+    render: function render() {
+      var _props4 = this.props;
+      var children = _props4.children;
+      var disabled = _props4.disabled;
+      var readonly = _props4.readonly;
+      var item = _props4.dataItem;
+      var _parent$props = parent.props;
+      var multiple = _parent$props.multiple;
+      var _parent$props$name = _parent$props.name;
+      var name = _parent$props$name === undefined ? _utilWidgetHelpers.instanceId(parent, '_name') : _parent$props$name;
+
+      var checked = _utilInteraction.contains(item, parent._values(), parent.props.valueField),
+          change = parent._change.bind(null, item),
+          type = multiple ? 'checkbox' : 'radio';
+
+      return _react2['default'].createElement(
+        _ListOption2['default'],
+        babelHelpers._extends({}, this.props, {
+          role: type,
+          'aria-checked': !!checked
+        }),
+        _react2['default'].createElement(
+          'label',
+          null,
+          _react2['default'].createElement('input', {
+            name: name,
+            tabIndex: '-1',
+            role: 'presentation',
+            type: type,
+            onChange: onChange,
+            checked: checked,
+            disabled: disabled || readonly
+          }),
+          children
+        )
+      );
+
+      function onChange(e) {
+        if (!disabled && !readonly) change(e.target.checked);
+      }
+    }
+  });
+}
+
+exports['default'] = _uncontrollable2['default'](SelectList, { value: 'onChange' }, ['selectAll']);
+module.exports = exports['default'];
+},{"./List":21,"./ListGroupable":22,"./ListOption":23,"./mixins/AriaDescendantMixin":41,"./mixins/FocusMixin":43,"./mixins/RtlParentContextMixin":48,"./mixins/TimeoutMixin":49,"./util/_":50,"./util/babelHelpers.js":51,"./util/compat":53,"./util/dataHelpers":56,"./util/interaction":60,"./util/propTypes":62,"./util/validateListInterface":64,"./util/widgetHelpers":65,"classnames":66,"dom-helpers/util/scrollTo":91,"react":254,"uncontrollable":96}],33:[function(require,module,exports){
+'use strict';
+
+var babelHelpers = require('./util/babelHelpers.js');
+
+var React = require('react'),
+    ReplaceTransitionGroup = require('./ReplaceTransitionGroup'),
+    compat = require('./util/compat'),
+    css = require('dom-helpers/style'),
+    getWidth = require('dom-helpers/query/width'),
+    config = require('./util/configuration');
+
+var SlideChildGroup = React.createClass({
+  displayName: 'SlideChildGroup',
+
+  propTypes: {
+    direction: React.PropTypes.oneOf(['left', 'right']),
+    duration: React.PropTypes.number
+  },
+
+  componentWillEnter: function componentWillEnter(done) {
+    var _this = this;
+
+    var node = compat.findDOMNode(this),
+        width = getWidth(node),
+        direction = this.props.direction;
+
+    width = direction === 'left' ? width : -width;
+
+    this.ORGINAL_POSITION = node.style.position;
+
+    css(node, { position: 'absolute', left: width + 'px', top: 0 });
+
+    config.animate(node, { left: 0 }, this.props.duration, function () {
+
+      css(node, {
+        position: _this.ORGINAL_POSITION,
+        overflow: 'hidden'
+      });
+
+      _this.ORGINAL_POSITION = null;
+      done && done();
+    });
+  },
+
+  componentWillLeave: function componentWillLeave(done) {
+    var _this2 = this;
+
+    var node = compat.findDOMNode(this),
+        width = getWidth(node),
+        direction = this.props.direction;
+
+    width = direction === 'left' ? -width : width;
+
+    this.ORGINAL_POSITION = node.style.position;
+
+    css(node, { position: 'absolute', top: 0, left: 0 });
+
+    config.animate(node, { left: width + 'px' }, this.props.duration, function () {
+      css(node, {
+        position: _this2.ORGINAL_POSITION,
+        overflow: 'hidden'
+      });
+
+      _this2.ORGINAL_POSITION = null;
+      done && done();
+    });
+  },
+
+  render: function render() {
+    return React.Children.only(this.props.children);
+  }
+
+});
+
+module.exports = React.createClass({
+  displayName: 'exports',
+
+  propTypes: {
+    direction: React.PropTypes.oneOf(['left', 'right']),
+    duration: React.PropTypes.number
+  },
+
+  getDefaultProps: function getDefaultProps() {
+    return {
+      direction: 'left',
+      duration: 250
+    };
+  },
+
+  _wrapChild: function _wrapChild(child, ref) {
+    return React.createElement(
+      SlideChildGroup,
+      { key: child.key, ref: ref,
+        direction: this.props.direction,
+        duration: this.props.duration },
+      child
+    );
+  },
+
+  render: function render() {
+    var _props = this.props;
+    var style = _props.style;
+    var children = _props.children;
+    var props = babelHelpers.objectWithoutProperties(_props, ['style', 'children']);
+
+    style = babelHelpers._extends({}, style, { position: 'relative', overflow: 'hidden' });
+
+    return React.createElement(
+      ReplaceTransitionGroup,
+      babelHelpers._extends({}, props, {
+        ref: 'container',
+        childFactory: this._wrapChild,
+        style: style,
+        component: 'div' }),
+      children
+    );
+  },
+
+  isTransitioning: function isTransitioning() {
+    return this.isMounted() && this.refs.container.isTransitioning();
+  }
+});
+},{"./ReplaceTransitionGroup":31,"./util/babelHelpers.js":51,"./util/compat":53,"./util/configuration":54,"dom-helpers/query/width":79,"dom-helpers/style":81,"react":254}],34:[function(require,module,exports){
+'use strict';
+
+var babelHelpers = require('./util/babelHelpers.js');
+
+exports.__esModule = true;
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _utilDates = require('./util/dates');
+
+var _utilDates2 = babelHelpers.interopRequireDefault(_utilDates);
+
+var _List = require('./List');
+
+var _List2 = babelHelpers.interopRequireDefault(_List);
+
+var _utilLocalizers = require('./util/localizers');
+
+var _utilPropTypes = require('./util/propTypes');
+
+var _utilPropTypes2 = babelHelpers.interopRequireDefault(_utilPropTypes);
+
+var format = function format(props) {
+  return _utilLocalizers.date.getFormat('time', props.format);
+};
+
+exports['default'] = _react2['default'].createClass({
+
+  displayName: 'TimeList',
+
+  propTypes: {
+    value: _react2['default'].PropTypes.instanceOf(Date),
+    min: _react2['default'].PropTypes.instanceOf(Date),
+    max: _react2['default'].PropTypes.instanceOf(Date),
+    currentDate: _react2['default'].PropTypes.instanceOf(Date),
+    step: _react2['default'].PropTypes.number,
+    itemComponent: _utilPropTypes2['default'].elementType,
+    format: _utilPropTypes2['default'].dateFormat,
+    onSelect: _react2['default'].PropTypes.func,
+    preserveDate: _react2['default'].PropTypes.bool,
+    culture: _react2['default'].PropTypes.string
+  },
+
+  mixins: [require('./mixins/TimeoutMixin')],
+
+  getDefaultProps: function getDefaultProps() {
+    return {
+      step: 30,
+      onSelect: function onSelect() {},
+      min: new Date(1900, 0, 1),
+      max: new Date(2099, 11, 31),
+      preserveDate: true,
+      delay: 300
+    };
+  },
+
+  getInitialState: function getInitialState() {
+    var data = this._dates(this.props),
+        focusedItem = this._closestDate(data, this.props.value);
+
+    return {
+      focusedItem: focusedItem || data[0],
+      dates: data
+    };
+  },
+
+  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+    var data = this._dates(nextProps),
+        focusedItem = this._closestDate(data, nextProps.value),
+        valChanged = !_utilDates2['default'].eq(nextProps.value, this.props.value, 'minutes'),
+        minChanged = !_utilDates2['default'].eq(nextProps.min, this.props.min, 'minutes'),
+        maxChanged = !_utilDates2['default'].eq(nextProps.max, this.props.max, 'minutes'),
+        localeChanged = this.props.format !== nextProps.format || this.props.culture !== nextProps.culture;
+
+    if (valChanged || minChanged || maxChanged || localeChanged) {
+      this.setState({
+        focusedItem: focusedItem || data[0],
+        dates: data
+      });
+    }
+  },
+
+  render: function render() {
+    var _props = this.props;
+    var min = _props.min;
+    var max = _props.max;
+    var value = _props.value;
+    var step = _props.step;
+    var props = babelHelpers.objectWithoutProperties(_props, ['min', 'max', 'value', 'step']);
+
+    var times = this.state.dates,
+        date = this._closestDate(times, value);
+
+    return _react2['default'].createElement(_List2['default'], babelHelpers._extends({}, props, {
+      ref: 'list',
+      data: times,
+      textField: 'label',
+      valueField: 'date',
+      selected: date,
+      focused: this.state.focusedItem
+    }));
+  },
+
+  _closestDate: function _closestDate(times, date) {
+    var roundTo = 1000 * 60 * this.props.step,
+        inst = null,
+        label;
+
+    if (!date) return null;
+
+    date = new Date(Math.floor(date.getTime() / roundTo) * roundTo);
+    label = _utilLocalizers.date.format(date, format(this.props), this.props.culture);
+
+    times.some(function (time) {
+      if (time.label === label) return inst = time;
+    });
+
+    return inst;
+  },
+
+  _data: function _data() {
+    return this.state.dates;
+  },
+
+  _dates: function _dates(props) {
+    var times = [],
+        i = 0,
+        values = this._dateValues(props),
+        start = values.min,
+        startDay = _utilDates2['default'].date(start);
+
+    while (_utilDates2['default'].date(start) === startDay && _utilDates2['default'].lte(start, values.max)) {
+      i++;
+      times.push({ date: start, label: _utilLocalizers.date.format(start, format(props), props.culture) });
+      start = _utilDates2['default'].add(start, props.step || 30, 'minutes');
+    }
+    return times;
+  },
+
+  _dateValues: function _dateValues(props) {
+    var value = props.value || props.currentDate || _utilDates2['default'].today(),
+        useDate = props.preserveDate,
+        min = props.min,
+        max = props.max,
+        start,
+        end;
+
+    //compare just the time regradless of whether they fall on the same day
+    if (!useDate) {
+      start = _utilDates2['default'].startOf(_utilDates2['default'].merge(new Date(), min, props.currentDate), 'minutes');
+      end = _utilDates2['default'].startOf(_utilDates2['default'].merge(new Date(), max, props.currentDate), 'minutes');
+
+      if (_utilDates2['default'].lte(end, start) && _utilDates2['default'].gt(max, min, 'day')) end = _utilDates2['default'].tomorrow();
+
+      return {
+        min: start,
+        max: end
+      };
+    }
+
+    start = _utilDates2['default'].today();
+    end = _utilDates2['default'].tomorrow();
+    //date parts are equal
+    return {
+      min: _utilDates2['default'].eq(value, min, 'day') ? _utilDates2['default'].merge(start, min, props.currentDate) : start,
+      max: _utilDates2['default'].eq(value, max, 'day') ? _utilDates2['default'].merge(start, max, props.currentDate) : end
+    };
+  },
+
+  _keyDown: function _keyDown(e) {
+    var key = e.key,
+        focusedItem = this.state.focusedItem,
+        list = this.refs.list;
+
+    if (key === 'End') this.setState({ focusedItem: list.last() });else if (key === 'Home') this.setState({ focusedItem: list.first() });else if (key === 'Enter') this.props.onSelect(focusedItem);else if (key === 'ArrowDown') {
+      e.preventDefault();
+      this.setState({ focusedItem: list.next(focusedItem) });
+    } else if (key === 'ArrowUp') {
+      e.preventDefault();
+      this.setState({ focusedItem: list.prev(focusedItem) });
+    }
+  },
+
+  _keyPress: function _keyPress(e) {
+    var _this = this;
+
+    e.preventDefault();
+
+    this.search(String.fromCharCode(e.which), function (item) {
+      _this.isMounted() && _this.setState({ focusedItem: item });
+    });
+  },
+
+  scrollTo: function scrollTo() {
+    this.refs.list.move && this.refs.list.move();
+  },
+
+  search: function search(character, cb) {
+    var _this2 = this;
+
+    var word = ((this._searchTerm || '') + character).toLowerCase();
+
+    this._searchTerm = word;
+
+    this.setTimeout('search', function () {
+      var list = _this2.refs.list,
+          item = list.next(_this2.state.focusedItem, word);
+
+      _this2._searchTerm = '';
+      if (item) cb(item);
+    }, this.props.delay);
+  }
+
+});
+module.exports = exports['default'];
+},{"./List":21,"./mixins/TimeoutMixin":49,"./util/babelHelpers.js":51,"./util/dates":57,"./util/localizers":61,"./util/propTypes":62,"react":254}],35:[function(require,module,exports){
+'use strict';
+
+var babelHelpers = require('./util/babelHelpers.js');
+
+exports.__esModule = true;
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _classnames = require('classnames');
+
+var _classnames2 = babelHelpers.interopRequireDefault(_classnames);
+
+exports['default'] = _react2['default'].createClass({
+  displayName: 'WidgetButton',
+
+  render: function render() {
+    var _props = this.props;
+    var className = _props.className;
+    var children = _props.children;
+    var props = babelHelpers.objectWithoutProperties(_props, ['className', 'children']);
+
+    return _react2['default'].createElement(
+      'button',
+      babelHelpers._extends({}, props, { type: 'button', className: _classnames2['default'](className, 'rw-btn') }),
+      children
+    );
+  }
+});
+module.exports = exports['default'];
+},{"./util/babelHelpers.js":51,"classnames":66,"react":254}],36:[function(require,module,exports){
+'use strict';
+
+var babelHelpers = require('./util/babelHelpers.js');
+
+exports.__esModule = true;
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _classnames = require('classnames');
+
+var _classnames2 = babelHelpers.interopRequireDefault(_classnames);
+
+var _utilDates = require('./util/dates');
+
+var _utilDates2 = babelHelpers.interopRequireDefault(_utilDates);
+
+var _utilLocalizers = require('./util/localizers');
+
+var _util_ = require('./util/_');
+
+var _util_2 = babelHelpers.interopRequireDefault(_util_);
+
+var _utilPropTypes = require('./util/propTypes');
+
+var _utilPropTypes2 = babelHelpers.interopRequireDefault(_utilPropTypes);
+
+var _utilWidgetHelpers = require('./util/widgetHelpers');
+
+var format = function format(props) {
+  return _utilLocalizers.date.getFormat('month', props.monthFormat);
+};
+
+var propTypes = {
+  optionID: _react2['default'].PropTypes.func,
+  culture: _react2['default'].PropTypes.string,
+  value: _react2['default'].PropTypes.instanceOf(Date),
+  focused: _react2['default'].PropTypes.instanceOf(Date),
+  min: _react2['default'].PropTypes.instanceOf(Date),
+  max: _react2['default'].PropTypes.instanceOf(Date),
+  onChange: _react2['default'].PropTypes.func.isRequired,
+
+  monthFormat: _utilPropTypes2['default'].dateFormat
+};
+
+var isEqual = function isEqual(dateA, dateB) {
+  return _utilDates2['default'].eq(dateA, dateB, 'month');
+};
+var optionId = function optionId(id, date) {
+  return id + '__year_' + _utilDates2['default'].year(date) + '-' + _utilDates2['default'].month(date);
+};
+
+var YearView = _react2['default'].createClass({
+
+  displayName: 'YearView',
+
+  mixins: [require('./mixins/RtlChildContextMixin'), require('./mixins/AriaDescendantMixin')()],
+
+  propTypes: propTypes,
+
+  componentDidUpdate: function componentDidUpdate() {
+    var activeId = optionId(_utilWidgetHelpers.instanceId(this), this.props.focused);
+    this.ariaActiveDescendant(activeId);
+  },
+
+  render: function render() {
+    var _props = this.props;
+    var className = _props.className;
+    var focused = _props.focused;
+    var months = _utilDates2['default'].monthsInYear(_utilDates2['default'].year(focused));
+    var rows = _util_2['default'].chunk(months, 4);
+
+    var elementProps = _util_2['default'].omit(this.props, Object.keys(propTypes));
+
+    return _react2['default'].createElement(
+      'table',
+      babelHelpers._extends({}, elementProps, {
+        role: 'grid',
+        className: _classnames2['default'](className, 'rw-nav-view')
+      }),
+      _react2['default'].createElement(
+        'tbody',
+        null,
+        rows.map(this._row)
+      )
+    );
+  },
+
+  _row: function _row(row, rowIdx) {
+    var _this = this;
+
+    var _props2 = this.props;
+    var focused = _props2.focused;
+    var disabled = _props2.disabled;
+    var onChange = _props2.onChange;
+    var value = _props2.value;
+    var today = _props2.today;
+    var culture = _props2.culture;
+    var min = _props2.min;
+    var max = _props2.max;
+    var id = _utilWidgetHelpers.instanceId(this);
+    var labelFormat = _utilLocalizers.date.getFormat('header');
+
+    return _react2['default'].createElement(
+      'tr',
+      { key: rowIdx, role: 'row' },
+      row.map(function (date, colIdx) {
+        var isFocused = isEqual(date, focused),
+            isSelected = isEqual(date, value),
+            currentMonth = isEqual(date, today),
+            label = _utilLocalizers.date.format(date, labelFormat, culture);
+
+        var currentID = optionId(id, date);
+
+        return _utilDates2['default'].inRange(date, min, max, 'month') ? _react2['default'].createElement(
+          'td',
+          {
+            key: colIdx,
+            role: 'gridcell',
+            id: currentID,
+            title: label,
+            'aria-selected': isSelected,
+            'aria-readonly': disabled,
+            'aria-label': label
+          },
+          _react2['default'].createElement(
+            'span',
+            {
+              'aria-labelledby': currentID,
+              onClick: onChange.bind(null, date),
+              className: _classnames2['default']('rw-btn', {
+                'rw-state-focus': isFocused,
+                'rw-state-selected': isSelected,
+                'rw-now': currentMonth
+              })
+            },
+            _utilLocalizers.date.format(date, format(_this.props), culture)
+          )
+        ) : _react2['default'].createElement(
+          'td',
+          { key: colIdx, className: 'rw-empty-cell', role: 'presentation' },
+          ' '
+        );
+      })
+    );
+  }
+
+});
+
+exports['default'] = YearView;
+module.exports = exports['default'];
+},{"./mixins/AriaDescendantMixin":41,"./mixins/RtlChildContextMixin":47,"./util/_":50,"./util/babelHelpers.js":51,"./util/dates":57,"./util/localizers":61,"./util/propTypes":62,"./util/widgetHelpers":65,"classnames":66,"react":254}],37:[function(require,module,exports){
+'use strict';
+
+var babelHelpers = require('./util/babelHelpers.js');
+
+exports.__esModule = true;
+
+var _utilConfiguration = require('./util/configuration');
+
+var _utilConfiguration2 = babelHelpers.interopRequireDefault(_utilConfiguration);
+
+var _utilLocalizers = require('./util/localizers');
+
+var localizers = babelHelpers.interopRequireWildcard(_utilLocalizers);
+exports['default'] = {
+
+  setAnimate: function setAnimate(animatefn) {
+    _utilConfiguration2['default'].animate = animatefn;
+  },
+
+  setLocalizers: function setLocalizers(_ref) {
+    var date = _ref.date;
+    var number = _ref.number;
+
+    date && this.setDateLocalizer(date);
+    number && this.setNumberLocalizer(number);
+  },
+
+  setDateLocalizer: localizers.setDate,
+
+  setNumberLocalizer: localizers.setNumber
+};
+module.exports = exports['default'];
+},{"./util/babelHelpers.js":51,"./util/configuration":54,"./util/localizers":61}],38:[function(require,module,exports){
+(function (process){
+'use strict';
+
+var babelHelpers = require('./util/babelHelpers.js');
+
+var configure = require('./configure');
+
+if (process.env.NODE_ENV !== 'production') {
+  [Array.prototype.some, Array.prototype.filter, Array.prototype.reduce].forEach(function (method) {
+    if (!method) throw new Error('One or more ES5 features is not available to ReactWidgets: http://jquense.github.io/react-widgets/docs/#/getting-started/browser');
+  });
+}
+
+module.exports = babelHelpers._extends({}, configure, {
+  DropdownList: require('./DropdownList'),
+  Combobox: require('./Combobox'),
+  Calendar: require('./Calendar'),
+  DateTimePicker: require('./DateTimePicker'),
+  NumberPicker: require('./NumberPicker'),
+  Multiselect: require('./Multiselect'),
+  SelectList: require('./SelectList'),
+
+  utils: {
+    ReplaceTransitionGroup: require('./ReplaceTransitionGroup'),
+    SlideTransition: require('./SlideTransition')
+  }
+});
+}).call(this,require('_process'))
+},{"./Calendar":11,"./Combobox":13,"./DateTimePicker":16,"./DropdownList":18,"./Multiselect":25,"./NumberPicker":29,"./ReplaceTransitionGroup":31,"./SelectList":32,"./SlideTransition":33,"./configure":37,"./util/babelHelpers.js":51,"_process":6}],39:[function(require,module,exports){
+'use strict';
+
+var babelHelpers = require('../util/babelHelpers.js');
+
+exports.__esModule = true;
+
+var _configure = require('../configure');
+
+var _configure2 = babelHelpers.interopRequireDefault(_configure);
+
+exports['default'] = function (moment) {
+  if (typeof moment !== 'function') throw new TypeError('You must provide a valid moment object');
+
+  var localField = typeof moment().locale === 'function' ? 'locale' : 'lang',
+      hasLocaleData = !!moment.localeData;
+
+  if (!hasLocaleData) throw new TypeError('The Moment localizer depends on the `localeData` api, please provide a moment object v2.2.0 or higher');
+
+  function getMoment(culture, value, format) {
+    return culture ? moment(value, format)[localField](culture) : moment(value, format);
+  }
+
+  function endOfDecade(date) {
+    return moment(date).add(10, 'year').add(-1, 'millisecond').toDate();
+  }
+
+  function endOfCentury(date) {
+    return moment(date).add(100, 'year').add(-1, 'millisecond').toDate();
+  }
+
+  var localizer = {
+    formats: {
+      date: 'L',
+      time: 'LT',
+      'default': 'lll',
+      header: 'MMMM YYYY',
+      footer: 'LL',
+      weekday: 'dd',
+      dayOfMonth: 'DD',
+      month: 'MMM',
+      year: 'YYYY',
+
+      decade: function decade(date, culture, localizer) {
+        return localizer.format(date, 'YYYY', culture) + ' - ' + localizer.format(endOfDecade(date), 'YYYY', culture);
+      },
+
+      century: function century(date, culture, localizer) {
+        return localizer.format(date, 'YYYY', culture) + ' - ' + localizer.format(endOfCentury(date), 'YYYY', culture);
+      }
+    },
+
+    firstOfWeek: function firstOfWeek(culture) {
+      return moment.localeData(culture).firstDayOfWeek();
+    },
+
+    parse: function parse(value, format, culture) {
+      if (!value) return null;
+      var m = getMoment(culture, value, format);
+      if (m.isValid()) return m.toDate();
+      return null;
+    },
+
+    format: function format(value, _format, culture) {
+      return getMoment(culture, value).format(_format);
+    }
+  };
+
+  _configure2['default'].setDateLocalizer(localizer);
+
+  return localizer;
+};
+
+module.exports = exports['default'];
+},{"../configure":37,"../util/babelHelpers.js":51}],40:[function(require,module,exports){
+'use strict';
+
+var babelHelpers = require('../util/babelHelpers.js');
+
+exports.__esModule = true;
+exports['default'] = simpleNumber;
+
+var _configure = require('../configure');
+
+var _configure2 = babelHelpers.interopRequireDefault(_configure);
+
+var _formatNumberWithString = require('format-number-with-string');
+
+var _formatNumberWithString2 = babelHelpers.interopRequireDefault(_formatNumberWithString);
+
+var _deconstructNumberFormat = require('deconstruct-number-format');
+
+var _deconstructNumberFormat2 = babelHelpers.interopRequireDefault(_deconstructNumberFormat);
+
+var defaults = {
+  decimal: '.',
+  grouping: ','
+};
+
+function simpleNumber(options) {
+  var _babelHelpers$_extends = babelHelpers._extends({}, defaults, options);
+
+  var decimal = _babelHelpers$_extends.decimal;
+  var grouping = _babelHelpers$_extends.grouping;
+
+  var localizer = {
+    formats: {
+      'default': '-#' + grouping + '##0' + decimal
+    },
+
+    // TODO major bump consistent ordering
+    parse: function parse(value, culture, format) {
+      if (format) {
+        var data = _deconstructNumberFormat2['default'](format),
+            negative = data.negativeLeftSymbol && value.indexOf(data.negativeLeftSymbol) !== -1 || data.negativeRightSymbol && value.indexOf(data.negativeRightSymbol) !== -1;
+
+        value = value.replace(data.negativeLeftSymbol, '').replace(data.negativeRightSymbol, '').replace(data.prefix, '').replace(data.suffix, '');
+
+        var halves = value.split(data.decimalChar);
+
+        if (data.integerSeperator) halves[0] = halves[0].replace(new RegExp('\\' + data.integerSeperator, 'g'));
+
+        if (data.decimalsSeparator) halves[1] = halves[1].replace(new RegExp('\\' + data.decimalsSeparator, 'g'));
+
+        if (halves[1] === '') halves.pop();
+
+        value = halves.join('.');
+        value = +value;
+
+        if (negative) value = -1 * value;
+      } else value = parseFloat(value);
+
+      return isNaN(value) ? null : value;
+    },
+
+    format: function format(value, _format) {
+      return _formatNumberWithString2['default'](value, _format);
+    },
+
+    decimalChar: function decimalChar(format) {
+      return format && _deconstructNumberFormat2['default'](format).decimalsSeparator || '.';
+    },
+
+    precision: function precision(format) {
+      var data = _deconstructNumberFormat2['default'](format);
+      return data.maxRight !== -1 ? data.maxRight : null;
+    }
+  };
+
+  _configure2['default'].setNumberLocalizer(localizer);
+  return localizer;
+}
+
+module.exports = exports['default'];
+},{"../configure":37,"../util/babelHelpers.js":51,"deconstruct-number-format":68,"format-number-with-string":92}],41:[function(require,module,exports){
+'use strict';
+
+var babelHelpers = require('../util/babelHelpers.js');
+
+exports.__esModule = true;
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _utilCompat = require('../util/compat');
+
+var _utilCompat2 = babelHelpers.interopRequireDefault(_utilCompat);
+
+var shape = _react2['default'].PropTypes.shape({
+  //setActive: React.PropTypes.func,
+  reconcile: _react2['default'].PropTypes.func
+});
+
+function defaultReconcile(key, id) {
+  return id;
+}
+
+function flushAriaToNode(id, nodeOrComponent, ctx) {
+  var node = typeof nodeOrComponent === 'function' ? nodeOrComponent(ctx) : typeof nodeOrComponent === 'string' ? ctx.refs[nodeOrComponent] : ctx;
+
+  if (node) {
+    if (id) _utilCompat2['default'].findDOMNode(node).setAttribute('aria-activedescendant', id);else _utilCompat2['default'].findDOMNode(node).removeAttribute('aria-activedescendant');
+  }
+}
+
+exports['default'] = function (nodeOrComponent) {
+  var reconcileChildren = arguments.length <= 1 || arguments[1] === undefined ? defaultReconcile : arguments[1];
+
+  return {
+    propTypes: {
+      ariaActiveDescendantKey: _react2['default'].PropTypes.string.isRequired
+    },
+
+    contextTypes: {
+      activeDescendants: shape
+    },
+
+    childContextTypes: {
+      activeDescendants: shape
+    },
+
+    ariaActiveDescendant: function ariaActiveDescendant(id) {
+      var key = arguments.length <= 1 || arguments[1] === undefined ? this.props.ariaActiveDescendantKey : arguments[1];
+      var activeDescendants = this.context.activeDescendants;
+
+      var current = this.__ariaActiveDescendantId;
+
+      if (id === undefined) return current;
+
+      id = reconcileChildren.call(this, key, id);
+
+      if (id === undefined) id = current;else {
+        this.__ariaActiveDescendantId = id;
+        flushAriaToNode(id, nodeOrComponent, this);
+      }
+
+      activeDescendants && activeDescendants.reconcile(key, id);
+    },
+
+    getChildContext: function getChildContext() {
+      var _this = this;
+
+      return this._context || (this._context = {
+        activeDescendants: {
+          reconcile: function reconcile(key, id) {
+            return _this.ariaActiveDescendant(id, key);
+          }
+        }
+      });
+    }
+  };
+};
+
+module.exports = exports['default'];
+},{"../util/babelHelpers.js":51,"../util/compat":53,"react":254}],42:[function(require,module,exports){
+'use strict';
+
+var babelHelpers = require('../util/babelHelpers.js');
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _utilFilter = require('../util/filter');
+
+var _utilFilter2 = babelHelpers.interopRequireDefault(_utilFilter);
+
+var _utilPropTypes = require('../util/propTypes');
+
+var _utilPropTypes2 = babelHelpers.interopRequireDefault(_utilPropTypes);
+
+var _utilDataHelpers = require('../util/dataHelpers');
+
+var dflt = function dflt(f) {
+  return f === true ? 'startsWith' : f ? f : 'eq';
+};
+
+module.exports = {
+
+  propTypes: {
+    data: _react2['default'].PropTypes.array,
+    value: _react2['default'].PropTypes.any,
+    filter: _utilPropTypes2['default'].filter,
+    caseSensitive: _react2['default'].PropTypes.bool,
+    minLength: _react2['default'].PropTypes.number
+  },
+
+  getDefaultProps: function getDefaultProps() {
+    return {
+      caseSensitive: false,
+      minLength: 1
+    };
+  },
+
+  filterIndexOf: function filterIndexOf(items, searchTerm) {
+    var idx = -1,
+        matches = typeof this.props.filter === 'function' ? this.props.filter : getFilter(_utilFilter2['default'][dflt(this.props.filter)], searchTerm, this);
+
+    if (!searchTerm || !searchTerm.trim() || this.props.filter && searchTerm.length < (this.props.minLength || 1)) return -1;
+
+    items.every(function (item, i) {
+      if (matches(item, searchTerm, i)) return idx = i, false;
+
+      return true;
+    });
+
+    return idx;
+  },
+
+  filter: function filter(items, searchTerm) {
+    var matches = typeof this.props.filter === 'string' ? getFilter(_utilFilter2['default'][this.props.filter], searchTerm, this) : this.props.filter;
+
+    if (!matches || !searchTerm || !searchTerm.trim() || searchTerm.length < (this.props.minLength || 1)) return items;
+
+    return items.filter(function (item, idx) {
+      return matches(item, searchTerm, idx);
+    });
+  }
+};
+
+function getFilter(matcher, searchTerm, ctx) {
+  searchTerm = !ctx.props.caseSensitive ? searchTerm.toLowerCase() : searchTerm;
+
+  return function (item) {
+    var val = _utilDataHelpers.dataText(item, ctx.props.textField);
+
+    if (!ctx.props.caseSensitive) val = val.toLowerCase();
+
+    return matcher(val, searchTerm);
+  };
+}
+},{"../util/babelHelpers.js":51,"../util/dataHelpers":56,"../util/filter":59,"../util/propTypes":62,"react":254}],43:[function(require,module,exports){
+'use strict';
+
+var babelHelpers = require('../util/babelHelpers.js');
+
+exports.__esModule = true;
+exports['default'] = FocusMixin;
+
+var _utilWidgetHelpers = require('../util/widgetHelpers');
+
+var _utilInteraction = require('../util/interaction');
+
+var _utilCompat = require('../util/compat');
+
+var _utilCompat2 = babelHelpers.interopRequireDefault(_utilCompat);
+
+function FocusMixin(_ref) {
+  var willHandle = _ref.willHandle;
+  var didHandle = _ref.didHandle;
+
+  function _handleFocus(inst, focused, event) {
+    var handler = inst.props[focused ? 'onFocus' : 'onBlur'];
+
+    if (handler && event) event.persist();
+
+    if (willHandle && willHandle.call(inst, focused, event) === false) return;
+
+    inst.setTimeout('focus', function () {
+      _utilCompat2['default'].batchedUpdates(function () {
+        if (didHandle) didHandle.call(inst, focused, event);
+
+        if (focused !== inst.state.focused) {
+          _utilWidgetHelpers.notify(handler, event);
+          if (inst.isMounted()) inst.setState({ focused: focused });
+        }
+      });
+    });
+  }
+
+  return babelHelpers.createDecoratedObject([{
+    key: 'handleBlur',
+    decorators: [_utilInteraction.widgetEnabled],
+    value: function handleBlur(event) {
+      _handleFocus(this, false, event);
+    }
+  }, {
+    key: 'handleFocus',
+    decorators: [_utilInteraction.widgetEnabled],
+    value: function handleFocus(event) {
+      _handleFocus(this, true, event);
+    }
+  }]);
+}
+
+module.exports = exports['default'];
+},{"../util/babelHelpers.js":51,"../util/compat":53,"../util/interaction":60,"../util/widgetHelpers":65}],44:[function(require,module,exports){
+'use strict';
+
+var babelHelpers = require('../util/babelHelpers.js');
+
+exports.__esModule = true;
+
+var _utilFilter = require('../util/filter');
+
+var _utilFilter2 = babelHelpers.interopRequireDefault(_utilFilter);
+
+var _utilDataHelpers = require('../util/dataHelpers');
+
+var _utilPropTypes = require('../util/propTypes');
+
+var _utilPropTypes2 = babelHelpers.interopRequireDefault(_utilPropTypes);
+
+var _utilInteraction = require('../util/interaction');
+
+var EMPTY_VALUE = {};
+
+var isDisabledOrReadonly = function isDisabledOrReadonly(item, props) {
+  return _utilInteraction.isDisabledItem(item, props) || _utilInteraction.isReadOnlyItem(item, props);
+};
+
+exports['default'] = {
+
+  propTypes: {
+    textField: _utilPropTypes2['default'].accessor,
+    valueField: _utilPropTypes2['default'].accessor,
+    disabled: _utilPropTypes2['default'].disabled.acceptsArray,
+    readOnly: _utilPropTypes2['default'].readOnly.acceptsArray
+  },
+
+  first: function first() {
+    return this.next(EMPTY_VALUE);
+  },
+
+  last: function last() {
+    var data = this._data(),
+        item = data[data.length - 1];
+
+    return isDisabledOrReadonly(item, this.props) ? this.prev(item) : item;
+  },
+
+  prev: function prev(item, word) {
+    var data = this._data(),
+        nextIdx = data.indexOf(item),
+        matches = matcher(word, item, this.props.textField);
+
+    if (nextIdx < 0 || nextIdx == null) nextIdx = 0;
+
+    nextIdx--;
+
+    while (nextIdx > -1 && (isDisabledOrReadonly(data[nextIdx], this.props) || !matches(data[nextIdx]))) nextIdx--;
+
+    return nextIdx >= 0 ? data[nextIdx] : item;
+  },
+
+  next: function next(item, word) {
+    var data = this._data(),
+        nextIdx = data.indexOf(item) + 1,
+        len = data.length,
+        matches = matcher(word, item, this.props.textField);
+
+    while (nextIdx < len && (isDisabledOrReadonly(data[nextIdx], this.props) || !matches(data[nextIdx]))) nextIdx++;
+
+    return nextIdx < len ? data[nextIdx] : item;
+  }
+};
+
+function matcher(word, item, textField) {
+  if (!word) return function () {
+    return true;
+  };
+
+  word = word.toLowerCase();
+  return function (item) {
+    return _utilFilter2['default'].startsWith(_utilDataHelpers.dataText(item, textField).toLowerCase(), word);
+  };
+}
+module.exports = exports['default'];
+},{"../util/babelHelpers.js":51,"../util/dataHelpers":56,"../util/filter":59,"../util/interaction":60,"../util/propTypes":62}],45:[function(require,module,exports){
+'use strict';
+
+var babelHelpers = require('../util/babelHelpers.js');
+
+exports.__esModule = true;
+
+var _domHelpersUtilScrollTo = require('dom-helpers/util/scrollTo');
+
+var _domHelpersUtilScrollTo2 = babelHelpers.interopRequireDefault(_domHelpersUtilScrollTo);
+
+exports['default'] = {
+
+  _scrollTo: function _scrollTo(selected, list, focused) {
+    var state = this._scrollState || (this._scrollState = {}),
+        handler = this.props.onMove,
+        lastVisible = state.visible,
+        lastItem = state.focused,
+        shown,
+        changed;
+
+    state.visible = !(!list.offsetWidth || !list.offsetHeight);
+    state.focused = focused;
+
+    changed = lastItem !== focused;
+    shown = state.visible && !lastVisible;
+
+    if (shown || state.visible && changed) {
+      if (handler) handler(selected, list, focused);else {
+        state.scrollCancel && state.scrollCancel();
+        state.scrollCancel = _domHelpersUtilScrollTo2['default'](selected, list);
+      }
+    }
+  }
+};
+module.exports = exports['default'];
+},{"../util/babelHelpers.js":51,"dom-helpers/util/scrollTo":91}],46:[function(require,module,exports){
+'use strict';
+var _ = require('../util/_');
+
+//backport PureRenderEqual
+module.exports = {
+
+  shouldComponentUpdate: function shouldComponentUpdate(nextProps, nextState) {
+    return !_.isShallowEqual(this.props, nextProps) || !_.isShallowEqual(this.state, nextState);
+  }
+};
+},{"../util/_":50}],47:[function(require,module,exports){
+'use strict';
+
+var babelHelpers = require('../util/babelHelpers.js');
+
+exports.__esModule = true;
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+exports['default'] = {
+
+  contextTypes: {
+    isRtl: _react2['default'].PropTypes.bool
+  },
+
+  isRtl: function isRtl() {
+    return !!this.context.isRtl;
+  }
+
+};
+module.exports = exports['default'];
+},{"../util/babelHelpers.js":51,"react":254}],48:[function(require,module,exports){
+'use strict';
+var React = require('react');
+
+module.exports = {
+
+  propTypes: {
+    isRtl: React.PropTypes.bool
+  },
+
+  contextTypes: {
+    isRtl: React.PropTypes.bool
+  },
+
+  childContextTypes: {
+    isRtl: React.PropTypes.bool
+  },
+
+  getChildContext: function getChildContext() {
+    return {
+      isRtl: this.props.isRtl || this.context && this.context.isRtl
+    };
+  },
+
+  isRtl: function isRtl() {
+    return !!(this.props.isRtl || this.context && this.context.isRtl);
+  }
+
+};
+},{"react":254}],49:[function(require,module,exports){
+'use strict';
+
+var _require = require('../util/_');
+
+var has = _require.has;
+
+module.exports = {
+
+  componentWillUnmount: function componentWillUnmount() {
+    var timers = this._timers || {};
+
+    this._unmounted = true;
+
+    for (var k in timers) if (has(timers, k)) clearTimeout(timers[k]);
+  },
+
+  setTimeout: function setTimeout(key, cb, duration) {
+    var _this = this;
+
+    var timers = this._timers || (this._timers = Object.create(null));
+
+    if (this._unmounted) return;
+
+    clearTimeout(timers[key]);
+    timers[key] = window.setTimeout(function () {
+      if (!_this._unmounted) cb();
+    }, duration);
+  }
+};
+},{"../util/_":50}],50:[function(require,module,exports){
+'use strict';
+var idCount = 0;
+
+var _ = module.exports = {
+
+  has: has,
+
+  result: function result(value) {
+    for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+      args[_key - 1] = arguments[_key];
+    }
+
+    return typeof value === 'function' ? value.apply(undefined, args) : value;
+  },
+
+  isShallowEqual: function isShallowEqual(a, b) {
+    if (a === b) return true;
+    if (a instanceof Date && b instanceof Date) return a.getTime() === b.getTime();
+
+    if (typeof a !== 'object' && typeof b !== 'object') return a === b;
+
+    if (typeof a !== typeof b) return false;
+
+    return shallowEqual(a, b);
+  },
+
+  transform: function transform(obj, cb, seed) {
+    _.each(obj, cb.bind(null, seed = seed || (Array.isArray(obj) ? [] : {})));
+    return seed;
+  },
+
+  each: function each(obj, cb, thisArg) {
+    if (Array.isArray(obj)) return obj.forEach(cb, thisArg);
+
+    for (var key in obj) if (has(obj, key)) cb.call(thisArg, obj[key], key, obj);
+  },
+
+  pick: function pick(obj, keys) {
+    keys = [].concat(keys);
+    return _.transform(obj, function (mapped, val, key) {
+      if (keys.indexOf(key) !== -1) mapped[key] = val;
+    }, {});
+  },
+
+  omit: function omit(obj, keys) {
+    keys = [].concat(keys);
+    return _.transform(obj, function (mapped, val, key) {
+      if (keys.indexOf(key) === -1) mapped[key] = val;
+    }, {});
+  },
+
+  find: function find(arr, cb, thisArg) {
+    var result;
+    if (Array.isArray(arr)) {
+      arr.every(function (val, idx) {
+        if (cb.call(thisArg, val, idx, arr)) return result = val, false;
+        return true;
+      });
+      return result;
+    } else for (var key in arr) if (has(arr, key)) if (cb.call(thisArg, arr[key], key, arr)) return arr[key];
+  },
+
+  chunk: function chunk(array, chunkSize) {
+    var index = 0,
+        length = array ? array.length : 0,
+        result = [];
+
+    chunkSize = Math.max(+chunkSize || 1, 1);
+
+    while (index < length) result.push(array.slice(index, index += chunkSize));
+
+    return result;
+  },
+
+  splat: function splat(obj) {
+    return obj == null ? [] : [].concat(obj);
+  },
+
+  noop: function noop() {},
+
+  uniqueId: function uniqueId(prefix) {
+    return '' + ((prefix == null ? '' : prefix) + ++idCount);
+  }
+};
+
+function has(o, k) {
+  return o ? Object.prototype.hasOwnProperty.call(o, k) : false;
+}
+
+function eql(a, b) {
+  return a === b;
+}
+
+/**
+ * Copyright 2013-2015, Facebook, Inc.
+ * All rights reserved.
+ */
+function shallowEqual(objA, objB) {
+
+  if (objA == null || objB == null) return false;
+
+  var keysA = Object.keys(objA),
+      keysB = Object.keys(objB);
+
+  if (keysA.length !== keysB.length) return false;
+
+  for (var i = 0; i < keysA.length; i++) if (!has(objB, keysA[i]) || !eql(objA[keysA[i]], objB[keysA[i]])) return false;
+
+  return true;
+}
+},{}],51:[function(require,module,exports){
+(function (root, factory) {
+  if (typeof define === "function" && define.amd) {
+    define(["exports"], factory);
+  } else if (typeof exports === "object") {
+    factory(exports);
+  } else {
+    factory(root.babelHelpers = {});
+  }
+})(this, function (global) {
+  var babelHelpers = global;
+
+  babelHelpers.createDecoratedObject = function (descriptors) {
+    var target = {};
+
+    for (var i = 0; i < descriptors.length; i++) {
+      var descriptor = descriptors[i];
+      var decorators = descriptor.decorators;
+      var key = descriptor.key;
+      delete descriptor.key;
+      delete descriptor.decorators;
+      descriptor.enumerable = true;
+      descriptor.configurable = true;
+      if ("value" in descriptor || descriptor.initializer) descriptor.writable = true;
+
+      if (decorators) {
+        for (var f = 0; f < decorators.length; f++) {
+          var decorator = decorators[f];
+
+          if (typeof decorator === "function") {
+            descriptor = decorator(target, key, descriptor) || descriptor;
+          } else {
+            throw new TypeError("The decorator for method " + descriptor.key + " is of the invalid type " + typeof decorator);
+          }
+        }
+      }
+
+      if (descriptor.initializer) {
+        descriptor.value = descriptor.initializer.call(target);
+      }
+
+      Object.defineProperty(target, key, descriptor);
+    }
+
+    return target;
+  };
+
+  babelHelpers.objectWithoutProperties = function (obj, keys) {
+    var target = {};
+
+    for (var i in obj) {
+      if (keys.indexOf(i) >= 0) continue;
+      if (!Object.prototype.hasOwnProperty.call(obj, i)) continue;
+      target[i] = obj[i];
+    }
+
+    return target;
+  };
+
+  babelHelpers.interopRequireWildcard = function (obj) {
+    if (obj && obj.__esModule) {
+      return obj;
+    } else {
+      var newObj = {};
+
+      if (obj != null) {
+        for (var key in obj) {
+          if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];
+        }
+      }
+
+      newObj["default"] = obj;
+      return newObj;
+    }
+  };
+
+  babelHelpers.interopRequireDefault = function (obj) {
+    return obj && obj.__esModule ? obj : {
+      "default": obj
+    };
+  };
+
+  babelHelpers._extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+})
+},{}],52:[function(require,module,exports){
+/*eslint-disable no-empty */
+'use strict';
+
+exports.__esModule = true;
+exports['default'] = caret;
+
+function caret(el, start, end) {
+  if (start === undefined) return get(el);
+
+  set(el, start, end);
+}
+
+function get(el) {
+  var start, end, rangeEl, clone;
+
+  if (el.selectionStart !== undefined) {
+    start = el.selectionStart;
+    end = el.selectionEnd;
+  } else {
+    try {
+      el.focus();
+      rangeEl = el.createTextRange();
+      clone = rangeEl.duplicate();
+
+      rangeEl.moveToBookmark(document.selection.createRange().getBookmark());
+      clone.setEndPoint('EndToStart', rangeEl);
+
+      start = clone.text.length;
+      end = start + rangeEl.text.length;
+    } catch (e) {/* not focused or not visible */}
+  }
+
+  return { start: start, end: end };
+}
+
+function set(el, start, end) {
+  var rangeEl;
+
+  try {
+    if (el.selectionStart !== undefined) {
+      el.focus();
+      el.setSelectionRange(start, end);
+    } else {
+      el.focus();
+      rangeEl = el.createTextRange();
+      rangeEl.collapse(true);
+      rangeEl.moveStart('character', start);
+      rangeEl.moveEnd('character', end - start);
+      rangeEl.select();
+    }
+  } catch (e) {/* not focused or not visible */}
+}
+module.exports = exports['default'];
+},{}],53:[function(require,module,exports){
+'use strict';
+
+var babelHelpers = require('./babelHelpers.js');
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _reactDom = require('react-dom');
+
+var _reactDom2 = babelHelpers.interopRequireDefault(_reactDom);
+
+var _version = _react2['default'].version.split('.').map(parseFloat);
+
+module.exports = {
+
+  version: function version() {
+    return _version;
+  },
+
+  findDOMNode: function findDOMNode(component) {
+    return _reactDom2['default'].findDOMNode(component);
+  },
+
+  batchedUpdates: function batchedUpdates(cb) {
+    _reactDom2['default'].unstable_batchedUpdates(cb);
+  }
+};
+},{"./babelHelpers.js":51,"react":254,"react-dom":8}],54:[function(require,module,exports){
+'use strict';
+
+var babelHelpers = require('./babelHelpers.js');
+
+exports.__esModule = true;
+
+var _domAnimate = require('./dom/animate');
+
+var _domAnimate2 = babelHelpers.interopRequireDefault(_domAnimate);
+
+exports['default'] = { animate: _domAnimate2['default'] };
+module.exports = exports['default'];
+},{"./babelHelpers.js":51,"./dom/animate":58}],55:[function(require,module,exports){
+'use strict';
+
+var _calendarViewHierarchy, _calendarViewUnits;
+
+var views = {
+  MONTH: 'month',
+  YEAR: 'year',
+  DECADE: 'decade',
+  CENTURY: 'century'
+};
+
+module.exports = {
+
+  directions: {
+    LEFT: 'LEFT',
+    RIGHT: 'RIGHT',
+    UP: 'UP',
+    DOWN: 'DOWN'
+  },
+
+  datePopups: {
+    TIME: 'time',
+    CALENDAR: 'calendar'
+  },
+
+  calendarViews: views,
+
+  calendarViewHierarchy: (_calendarViewHierarchy = {}, _calendarViewHierarchy[views.MONTH] = views.YEAR, _calendarViewHierarchy[views.YEAR] = views.DECADE, _calendarViewHierarchy[views.DECADE] = views.CENTURY, _calendarViewHierarchy),
+
+  calendarViewUnits: (_calendarViewUnits = {}, _calendarViewUnits[views.MONTH] = 'day', _calendarViewUnits[views.YEAR] = views.MONTH, _calendarViewUnits[views.DECADE] = views.YEAR, _calendarViewUnits[views.CENTURY] = views.DECADE, _calendarViewUnits)
+};
+},{}],56:[function(require,module,exports){
+'use strict';
+
+exports.__esModule = true;
+exports.dataValue = dataValue;
+exports.dataText = dataText;
+exports.dataIndexOf = dataIndexOf;
+exports.valueMatcher = valueMatcher;
+exports.dataItem = dataItem;
+
+var _ = require('./_');
+
+function accessor(data, field) {
+  var value = data;
+
+  if (typeof field === 'function') value = field(data);else if (data == null) value = data;else if (typeof field === 'string' && typeof data === 'object' && field in data) value = data[field];
+
+  return value;
+}
+
+function dataValue(item, valueField) {
+  return valueField && item && _.has(item, valueField) ? item[valueField] : item;
+}
+
+function dataText(item, textField) {
+  var value = accessor(item, textField);
+  return value == null ? '' : value + '';
+}
+
+function dataIndexOf(data, item, valueField) {
+  var idx = -1,
+      len = data.length,
+      finder = function finder(datum) {
+    return valueMatcher(item, datum, valueField);
+  };
+
+  while (++idx < len) if (finder(data[idx])) return idx;
+
+  return -1;
+}
+
+/**
+ * I don't know that the shallow equal makes sense here but am too afraid to
+ * remove it.
+ */
+
+function valueMatcher(a, b, valueField) {
+  return _.isShallowEqual(dataValue(a, valueField), dataValue(b, valueField));
+}
+
+function dataItem(data, item, valueField) {
+  var first = data[0],
+      idx;
+
+  // make an attempt to see if we were passed in dataItem vs just a valueField value
+  // either an object with the right prop, or a primitive
+  // { valueField: 5 } || "hello" [ "hello" ]
+  if (_.has(item, valueField) || typeof first === typeof val) return item;
+
+  idx = dataIndexOf(data, dataValue(item, valueField), valueField);
+
+  if (idx !== -1) return data[idx];
+
+  return item;
+}
+},{"./_":50}],57:[function(require,module,exports){
+'use strict';
+
+var babelHelpers = require('./babelHelpers.js');
+
+exports.__esModule = true;
+
+var _dateArithmetic = require('date-arithmetic');
+
+var _dateArithmetic2 = babelHelpers.interopRequireDefault(_dateArithmetic);
+
+var _constants = require('./constants');
+
+var _constants2 = babelHelpers.interopRequireDefault(_constants);
+
+var _localizers = require('./localizers');
+
+var directions = _constants2['default'].directions;
+var calendarViewUnits = _constants2['default'].calendarViewUnits;
+
+var dates = babelHelpers._extends(_dateArithmetic2['default'], {
+
+  parse: function parse(date, format, culture) {
+    return _localizers.date.parse(date, format, culture);
+  },
+
+  format: function format(date, _format, culture) {
+    return _localizers.date.format(date, _format, culture);
+  },
+
+  monthsInYear: function monthsInYear(year) {
+    var months = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+        date = new Date(year, 0, 1);
+
+    return months.map(function (i) {
+      return dates.month(date, i);
+    });
+  },
+
+  firstVisibleDay: function firstVisibleDay(date, culture) {
+    var firstOfMonth = dates.startOf(date, 'month');
+    return dates.startOf(firstOfMonth, 'week', _localizers.date.startOfWeek(culture));
+  },
+
+  lastVisibleDay: function lastVisibleDay(date, culture) {
+    var endOfMonth = dates.endOf(date, 'month');
+
+    return dates.endOf(endOfMonth, 'week', _localizers.date.startOfWeek(culture));
+  },
+
+  visibleDays: function visibleDays(date, culture) {
+    var current = dates.firstVisibleDay(date, culture),
+        last = dates.lastVisibleDay(date, culture),
+        days = [];
+
+    while (dates.lte(current, last, 'day')) {
+      days.push(current);
+      current = dates.add(current, 1, 'day');
+    }
+
+    return days;
+  },
+
+  move: function move(date, min, max, unit, direction) {
+    var isMonth = unit === 'month',
+        isUpOrDown = direction === directions.UP || direction === directions.DOWN,
+        rangeUnit = calendarViewUnits[unit],
+        addUnit = isMonth && isUpOrDown ? 'week' : calendarViewUnits[unit],
+        amount = isMonth || !isUpOrDown ? 1 : 4,
+        newDate;
+
+    if (direction === directions.UP || direction === directions.LEFT) amount *= -1;
+
+    newDate = dates.add(date, amount, addUnit);
+
+    return dates.inRange(newDate, min, max, rangeUnit) ? newDate : date;
+  },
+
+  merge: function merge(date, time, defaultDate) {
+    if (time == null && date == null) return null;
+
+    if (time == null) time = defaultDate || new Date();
+    if (date == null) date = defaultDate || new Date();
+
+    date = dates.startOf(date, 'day');
+    date = dates.hours(date, dates.hours(time));
+    date = dates.minutes(date, dates.minutes(time));
+    date = dates.seconds(date, dates.seconds(time));
+    return dates.milliseconds(date, dates.milliseconds(time));
+  },
+
+  sameMonth: function sameMonth(dateA, dateB) {
+    return dates.eq(dateA, dateB, 'month');
+  },
+
+  today: function today() {
+    return this.startOf(new Date(), 'day');
+  },
+
+  yesterday: function yesterday() {
+    return this.add(this.startOf(new Date(), 'day'), -1, 'day');
+  },
+
+  tomorrow: function tomorrow() {
+    return this.add(this.startOf(new Date(), 'day'), 1, 'day');
+  }
+});
+
+exports['default'] = dates;
+module.exports = exports['default'];
+},{"./babelHelpers.js":51,"./constants":55,"./localizers":61,"date-arithmetic":67}],58:[function(require,module,exports){
+'use strict';
+
+var babelHelpers = require('../babelHelpers.js');
+
+exports.__esModule = true;
+exports['default'] = animate;
+
+var _domHelpersUtilHyphenate = require('dom-helpers/util/hyphenate');
+
+var _domHelpersUtilHyphenate2 = babelHelpers.interopRequireDefault(_domHelpersUtilHyphenate);
+
+var _domHelpersStyle = require('dom-helpers/style');
+
+var _domHelpersStyle2 = babelHelpers.interopRequireDefault(_domHelpersStyle);
+
+var _domHelpersEventsOn = require('dom-helpers/events/on');
+
+var _domHelpersEventsOn2 = babelHelpers.interopRequireDefault(_domHelpersEventsOn);
+
+var _domHelpersEventsOff = require('dom-helpers/events/off');
+
+var _domHelpersEventsOff2 = babelHelpers.interopRequireDefault(_domHelpersEventsOff);
+
+var _domHelpersTransitionProperties = require('dom-helpers/transition/properties');
+
+var _domHelpersTransitionProperties2 = babelHelpers.interopRequireDefault(_domHelpersTransitionProperties);
+
+var has = Object.prototype.hasOwnProperty,
+    reset = {},
+    TRANSLATION_MAP = {
+  left: 'translateX',
+  right: 'translateX',
+  top: 'translateY',
+  bottom: 'translateY'
+};
+
+reset[_domHelpersTransitionProperties2['default'].property] = reset[_domHelpersTransitionProperties2['default'].duration] = reset[_domHelpersTransitionProperties2['default'].delay] = reset[_domHelpersTransitionProperties2['default'].timing] = '';
+
+animate.endEvent = _domHelpersTransitionProperties2['default'].end;
+animate.transform = _domHelpersTransitionProperties2['default'].transform;
+animate.TRANSLATION_MAP = TRANSLATION_MAP;
+
+// super lean animate function for transitions
+// doesn't support all translations to keep it matching the jquery API
+/**
+ * code in part from: Zepto 1.1.4 | zeptojs.com/license
+ */
+
+function animate(node, properties, duration, easing, callback) {
+  var cssProperties = [],
+      fakeEvent = { target: node, currentTarget: node },
+      cssValues = {},
+      transforms = '',
+      fired;
+
+  if (typeof easing === 'function') callback = easing, easing = null;
+
+  if (!_domHelpersTransitionProperties2['default'].end) duration = 0;
+  if (duration === undefined) duration = 200;
+
+  for (var key in properties) if (has.call(properties, key)) {
+    if (/(top|bottom)/.test(key)) transforms += TRANSLATION_MAP[key] + '(' + properties[key] + ') ';else {
+      cssValues[key] = properties[key];
+      cssProperties.push(_domHelpersUtilHyphenate2['default'](key));
+    }
+  }
+
+  if (transforms) {
+    cssValues[_domHelpersTransitionProperties2['default'].transform] = transforms;
+    cssProperties.push(_domHelpersTransitionProperties2['default'].transform);
+  }
+
+  if (duration > 0) {
+    cssValues[_domHelpersTransitionProperties2['default'].property] = cssProperties.join(', ');
+    cssValues[_domHelpersTransitionProperties2['default'].duration] = duration / 1000 + 's';
+    cssValues[_domHelpersTransitionProperties2['default'].delay] = 0 + 's';
+    cssValues[_domHelpersTransitionProperties2['default'].timing] = easing || 'linear';
+
+    _domHelpersEventsOn2['default'](node, _domHelpersTransitionProperties2['default'].end, done);
+
+    setTimeout(function () {
+      if (!fired) done(fakeEvent);
+    }, duration + 500);
+  }
+
+  node.clientLeft; // trigger page reflow
+  _domHelpersStyle2['default'](node, cssValues);
+
+  if (duration <= 0) setTimeout(done.bind(null, fakeEvent), 0);
+
+  return {
+    cancel: function cancel() {
+      if (fired) return;
+      fired = true;
+      _domHelpersEventsOff2['default'](node, _domHelpersTransitionProperties2['default'].end, done);
+      _domHelpersStyle2['default'](node, reset);
+    }
+  };
+
+  function done(event) {
+    if (event.target !== event.currentTarget) return;
+
+    fired = true;
+    _domHelpersEventsOff2['default'](event.target, _domHelpersTransitionProperties2['default'].end, done);
+    _domHelpersStyle2['default'](node, reset);
+    callback && callback.call(this);
+  }
+}
+
+module.exports = exports['default'];
+},{"../babelHelpers.js":51,"dom-helpers/events/off":70,"dom-helpers/events/on":71,"dom-helpers/style":81,"dom-helpers/transition/properties":83,"dom-helpers/util/hyphenate":87}],59:[function(require,module,exports){
+"use strict";
+
+exports.__esModule = true;
+var common = {
+  eq: function eq(a, b) {
+    return a === b;
+  },
+  neq: function neq(a, b) {
+    return a !== b;
+  },
+  gt: function gt(a, b) {
+    return a > b;
+  },
+  gte: function gte(a, b) {
+    return a >= b;
+  },
+  lt: function lt(a, b) {
+    return a < b;
+  },
+  lte: function lte(a, b) {
+    return a <= b;
+  },
+
+  contains: function contains(a, b) {
+    return a.indexOf(b) !== -1;
+  },
+
+  startsWith: function startsWith(a, b) {
+    return a.lastIndexOf(b, 0) === 0;
+  },
+
+  endsWith: function endsWith(a, b) {
+    var pos = a.length - b.length,
+        lastIndex = a.indexOf(b, pos);
+
+    return lastIndex !== -1 && lastIndex === pos;
+  }
+};
+
+exports["default"] = common;
+module.exports = exports["default"];
+},{}],60:[function(require,module,exports){
+'use strict';
+
+exports.__esModule = true;
+exports.isDisabled = isDisabled;
+exports.isReadOnly = isReadOnly;
+exports.isDisabledItem = isDisabledItem;
+exports.isReadOnlyItem = isReadOnlyItem;
+exports.contains = contains;
+exports.move = move;
+
+var _dataHelpers = require('./dataHelpers');
+
+function isDisabled(props) {
+  return props.disabled === true || props.disabled === 'disabled';
+}
+
+function isReadOnly(props) {
+  return props.readOnly === true || props.readOnly === 'readOnly';
+}
+
+function isDisabledItem(item, props) {
+  return isDisabled(props) || contains(item, props.disabled, props.valueField);
+}
+
+function isReadOnlyItem(item, props) {
+  return isReadOnly(props) || contains(item, props.readOnly, props.valueField);
+}
+
+function contains(item, values, valueField) {
+  return Array.isArray(values) ? values.some(function (value) {
+    return _dataHelpers.valueMatcher(item, value, valueField);
+  }) : _dataHelpers.valueMatcher(item, values, valueField);
+}
+
+function move(dir, item, props, list) {
+  var isDisabledOrReadonly = function isDisabledOrReadonly(item) {
+    return isDisabledItem(item, props) || isReadOnlyItem(item, props);
+  },
+      stop = dir === 'next' ? list.last() : list.first(),
+      next = list[dir](item);
+
+  while (next !== stop && isDisabledOrReadonly(next)) next = list[dir](next);
+
+  return isDisabledOrReadonly(next) ? item : next;
+}
+
+var widgetEnabled = interactionDecorator(true);
+
+exports.widgetEnabled = widgetEnabled;
+var widgetEditable = interactionDecorator(false);
+
+exports.widgetEditable = widgetEditable;
+function interactionDecorator(disabledOnly) {
+  function wrap(method) {
+    return function decoratedMethod() {
+      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      if (!(isDisabled(this.props) || !disabledOnly && isReadOnly(this.props))) return method.apply(this, args);
+    };
+  }
+
+  return function decorate(target, key, desc) {
+    if (desc.initializer) {
+      (function () {
+        var init = desc.initializer;
+        desc.initializer = function () {
+          return wrap(init());
+        };
+      })();
+    } else desc.value = wrap(desc.value);
+    return desc;
+  };
+}
+},{"./dataHelpers":56}],61:[function(require,module,exports){
+(function (process){
+'use strict';
+
+var babelHelpers = require('./babelHelpers.js');
+
+exports.__esModule = true;
+exports.setNumber = setNumber;
+exports.setDate = setDate;
+
+var _invariant = require('invariant');
+
+var _invariant2 = babelHelpers.interopRequireDefault(_invariant);
+
+var _ = require('./_');
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var localePropType = _react2['default'].PropTypes.oneOfType([_react2['default'].PropTypes.string, _react2['default'].PropTypes.func]);
+
+var REQUIRED_NUMBER_FORMATS = ['default'];
+
+var REQUIRED_DATE_FORMATS = ['default', 'date', 'time', 'header', 'footer', 'dayOfMonth', 'month', 'year', 'decade', 'century'];
+
+function _format(localizer, formatter, value, format, culture) {
+  var result = typeof format === 'function' ? format(value, culture, localizer) : formatter.call(localizer, value, format, culture);
+
+  _invariant2['default'](result == null || typeof result === 'string', '`localizer format(..)` must return a string, null, or undefined');
+
+  return result;
+}
+
+function checkFormats(requiredFormats, formats) {
+  if (process.env.NODE_ENV !== 'production') requiredFormats.forEach(function (f) {
+    return _invariant2['default'](_.has(formats, f), 'localizer missing required format: `%s`', f);
+  });
+}
+
+var _numberLocalizer = createWrapper('NumberPicker');
+
+function setNumber(_ref) {
+  var _format2 = _ref.format;
+  var _parse = _ref.parse;
+  var _ref$decimalChar = _ref.decimalChar;
+  var decimalChar = _ref$decimalChar === undefined ? function () {
+    return '.';
+  } : _ref$decimalChar;
+  var _ref$precision = _ref.precision;
+  var precision = _ref$precision === undefined ? function () {
+    return null;
+  } : _ref$precision;
+  var formats = _ref.formats;
+  var propType = _ref.propType;
+
+  _invariant2['default'](typeof _format2 === 'function', 'number localizer `format(..)` must be a function');
+  _invariant2['default'](typeof _parse === 'function', 'number localizer `parse(..)` must be a function');
+
+  checkFormats(REQUIRED_NUMBER_FORMATS, formats);
+
+  formats.editFormat = formats.editFormat || function (str) {
+    return parseFloat(str);
+  };
+
+  _numberLocalizer = {
+    formats: formats,
+    precision: precision,
+    decimalChar: decimalChar,
+    propType: propType || localePropType,
+
+    format: function format(value, str, culture) {
+      return _format(this, _format2, value, str, culture);
+    },
+
+    parse: function parse(value, culture, format) {
+      var result = _parse.call(this, value, culture, format);
+      _invariant2['default'](result == null || typeof result === 'number', 'number localizer `parse(..)` must return a number, null, or undefined');
+      return result;
+    }
+  };
+}
+
+var _dateLocalizer = createWrapper('DateTimePicker');
+
+function setDate(spec) {
+  _invariant2['default'](typeof spec.format === 'function', 'date localizer `format(..)` must be a function');
+  _invariant2['default'](typeof spec.parse === 'function', 'date localizer `parse(..)` must be a function');
+  _invariant2['default'](typeof spec.firstOfWeek === 'function', 'date localizer `firstOfWeek(..)` must be a function');
+  checkFormats(REQUIRED_DATE_FORMATS, spec.formats);
+
+  _dateLocalizer = {
+    formats: spec.formats,
+    propType: spec.propType || localePropType,
+    startOfWeek: spec.firstOfWeek,
+    format: function format(value, str, culture) {
+      return _format(this, spec.format, value, str, culture);
+    },
+    parse: function parse(value, culture) {
+      var result = spec.parse.call(this, value, culture);
+      _invariant2['default'](result == null || result instanceof Date && !isNaN(result.getTime()), 'date localizer `parse(..)` must return a valid Date, null, or undefined');
+      return result;
+    }
+  };
+}
+
+var number = {
+  propType: function propType() {
+    var _numberLocalizer2;
+
+    return (_numberLocalizer2 = _numberLocalizer).propType.apply(_numberLocalizer2, arguments);
+  },
+  getFormat: function getFormat(key, format) {
+    return format || _numberLocalizer.formats[key];
+  },
+  parse: function parse() {
+    var _numberLocalizer3;
+
+    return (_numberLocalizer3 = _numberLocalizer).parse.apply(_numberLocalizer3, arguments);
+  },
+  format: function format() {
+    var _numberLocalizer4;
+
+    return (_numberLocalizer4 = _numberLocalizer).format.apply(_numberLocalizer4, arguments);
+  },
+  decimalChar: function decimalChar() {
+    var _numberLocalizer5;
+
+    return (_numberLocalizer5 = _numberLocalizer).decimalChar.apply(_numberLocalizer5, arguments);
+  },
+  precision: function precision() {
+    var _numberLocalizer6;
+
+    return (_numberLocalizer6 = _numberLocalizer).precision.apply(_numberLocalizer6, arguments);
+  }
+};
+
+exports.number = number;
+var date = {
+  propType: function propType() {
+    var _dateLocalizer2;
+
+    return (_dateLocalizer2 = _dateLocalizer).propType.apply(_dateLocalizer2, arguments);
+  },
+  getFormat: function getFormat(key, format) {
+    return format || _dateLocalizer.formats[key];
+  },
+  parse: function parse() {
+    var _dateLocalizer3;
+
+    return (_dateLocalizer3 = _dateLocalizer).parse.apply(_dateLocalizer3, arguments);
+  },
+  format: function format() {
+    var _dateLocalizer4;
+
+    return (_dateLocalizer4 = _dateLocalizer).format.apply(_dateLocalizer4, arguments);
+  },
+  startOfWeek: function startOfWeek() {
+    var _dateLocalizer5;
+
+    return (_dateLocalizer5 = _dateLocalizer).startOfWeek.apply(_dateLocalizer5, arguments);
+  }
+};
+
+exports.date = date;
+exports['default'] = { number: number, date: date };
+
+function createWrapper() {
+  var dummy = {};
+
+  if (process.env.NODE_ENV !== 'production') {
+    ['formats', 'parse', 'format', 'firstOfWeek', 'precision'].forEach(function (name) {
+      return Object.defineProperty(dummy, name, {
+        enumerable: true,
+        get: function get() {
+          throw new Error('[React Widgets] You are attempting to use a widget that requires localization ' + '(Calendar, DateTimePicker, NumberPicker). ' + 'However there is no localizer set. Please configure a localizer. \n\n' + 'see http://jquense.github.io/react-widgets/docs/#/i18n for more info.');
+        }
+      });
+    });
+  }
+  return dummy;
+}
+}).call(this,require('_process'))
+},{"./_":50,"./babelHelpers.js":51,"_process":6,"invariant":94,"react":254}],62:[function(require,module,exports){
+'use strict';
+
+var babelHelpers = require('./babelHelpers.js');
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _localizers = require('./localizers');
+
+var _localizers2 = babelHelpers.interopRequireDefault(_localizers);
+
+var _filter = require('./filter');
+
+var _filter2 = babelHelpers.interopRequireDefault(_filter);
+
+var filterTypes = Object.keys(_filter2['default']).filter(function (i) {
+  return i !== 'filter';
+});
+
+function getInteractionPropType(key) {
+  var types = [_react.PropTypes.bool, _react.PropTypes.oneOf([key])],
+      propType = _react.PropTypes.oneOfType(types);
+
+  propType.acceptsArray = _react.PropTypes.oneOfType(types.concat(_react.PropTypes.array));
+
+  return propType;
+}
+
+module.exports = {
+
+  elementType: createChainableTypeChecker(function (props, propName, componentName) {
+
+    if (typeof props[propName] !== 'function') {
+      if (_react2['default'].isValidElement(props[propName])) return new Error('Invalid prop `' + propName + '` specified in  `' + componentName + '`.' + ' Expected an Element `type`, not an actual Element');
+
+      if (typeof props[propName] !== 'string') return new Error('Invalid prop `' + propName + '` specified in  `' + componentName + '`.' + ' Expected an Element `type` such as a tag name or return value of React.createClass(...)');
+    }
+    return null;
+  }),
+
+  numberFormat: createChainableTypeChecker(function () {
+    var _localizers$number;
+
+    return (_localizers$number = _localizers2['default'].number).propType.apply(_localizers$number, arguments);
+  }),
+
+  dateFormat: createChainableTypeChecker(function () {
+    var _localizers$date;
+
+    return (_localizers$date = _localizers2['default'].date).propType.apply(_localizers$date, arguments);
+  }),
+
+  disabled: getInteractionPropType('disabled'),
+  readOnly: getInteractionPropType('readOnly'),
+
+  accessor: _react2['default'].PropTypes.oneOfType([_react2['default'].PropTypes.string, _react2['default'].PropTypes.func]),
+
+  message: _react2['default'].PropTypes.oneOfType([_react2['default'].PropTypes.func, _react2['default'].PropTypes.string]),
+
+  filter: _react2['default'].PropTypes.oneOfType([_react2['default'].PropTypes.func, _react2['default'].PropTypes.bool, _react2['default'].PropTypes.oneOf(filterTypes)])
+};
+
+function createChainableTypeChecker(validate) {
+
+  function checkType(isRequired, props, propName, componentName, location) {
+    componentName = componentName || '<<anonymous>>';
+    if (props[propName] == null) {
+      if (isRequired) {
+        return new Error('Required prop `' + propName + '` was not specified in  `' + componentName + '`.');
+      }
+    } else return validate(props, propName, componentName, location);
+  }
+
+  var chainedCheckType = checkType.bind(null, false);
+  chainedCheckType.isRequired = checkType.bind(null, true);
+
+  return chainedCheckType;
+}
+},{"./babelHelpers.js":51,"./filter":59,"./localizers":61,"react":254}],63:[function(require,module,exports){
+// my tests in ie11/chrome/FF indicate that keyDown repeats
+// at about 35ms+/- 5ms after an initial 500ms delay. callback fires on the leading edge
+"use strict";
+
+exports.__esModule = true;
+exports["default"] = Repeater;
+
+function Repeater(callback) {
+  var id,
+      cancel = function cancel() {
+    return clearInterval(id);
+  };
+
+  id = setInterval(function () {
+    cancel();
+    id = setInterval(callback, 35);
+    callback(); //fire after everything in case the user cancels on the first call
+  }, 500);
+
+  return cancel;
+}
+
+module.exports = exports["default"];
+},{}],64:[function(require,module,exports){
+(function (process){
+'use strict';
+
+var babelHelpers = require('./babelHelpers.js');
+
+exports.__esModule = true;
+exports['default'] = validateListComponent;
+
+var _invariant = require('invariant');
+
+var _invariant2 = babelHelpers.interopRequireDefault(_invariant);
+
+var METHODS = ['next', 'prev', 'first', 'last'];
+
+function validateListComponent(list) {
+  if (process.env.NODE_ENV !== 'production') {
+    METHODS.forEach(function (method) {
+      return _invariant2['default'](typeof list[method] === 'function', 'List components must implement a `' + method + '()` method');
+    });
+  }
+}
+
+module.exports = exports['default'];
+}).call(this,require('_process'))
+},{"./babelHelpers.js":51,"_process":6,"invariant":94}],65:[function(require,module,exports){
+'use strict';
+
+exports.__esModule = true;
+exports.notify = notify;
+exports.instanceId = instanceId;
+exports.isFirstFocusedRender = isFirstFocusedRender;
+
+var _ = require('./_');
+
+function notify(handler, args) {
+  handler && handler.apply(null, [].concat(args));
+}
+
+function instanceId(component) {
+  var suffix = arguments.length <= 1 || arguments[1] === undefined ? '' : arguments[1];
+
+  component.__id || (component.__id = _.uniqueId('rw_'));
+  return (component.props.id || component.__id) + suffix;
+}
+
+function isFirstFocusedRender(component) {
+  return component._firstFocus || component.state.focused && (component._firstFocus = true);
+}
+},{"./_":50}],66:[function(require,module,exports){
+/*!
+  Copyright (c) 2016 Jed Watson.
+  Licensed under the MIT License (MIT), see
+  http://jedwatson.github.io/classnames
+*/
+/* global define */
+
+(function () {
+	'use strict';
+
+	var hasOwn = {}.hasOwnProperty;
+
+	function classNames () {
+		var classes = [];
+
+		for (var i = 0; i < arguments.length; i++) {
+			var arg = arguments[i];
+			if (!arg) continue;
+
+			var argType = typeof arg;
+
+			if (argType === 'string' || argType === 'number') {
+				classes.push(arg);
+			} else if (Array.isArray(arg)) {
+				classes.push(classNames.apply(null, arg));
+			} else if (argType === 'object') {
+				for (var key in arg) {
+					if (hasOwn.call(arg, key) && arg[key]) {
+						classes.push(key);
+					}
+				}
+			}
+		}
+
+		return classes.join(' ');
+	}
+
+	if (typeof module !== 'undefined' && module.exports) {
+		module.exports = classNames;
+	} else if (typeof define === 'function' && typeof define.amd === 'object' && define.amd) {
+		// register as 'classnames', consistent with npm package name
+		define('classnames', [], function () {
+			return classNames;
+		});
+	} else {
+		window.classNames = classNames;
+	}
+}());
+
+},{}],67:[function(require,module,exports){
+var MILI    = 'milliseconds'
+  , SECONDS = 'seconds'
+  , MINUTES = 'minutes'
+  , HOURS   = 'hours'
+  , DAY     = 'day'
+  , WEEK    = 'week'
+  , MONTH   = 'month'
+  , YEAR    = 'year'
+  , DECADE  = 'decade'
+  , CENTURY = 'century';
+
+var dates = module.exports = {
+
+  add: function(date, num, unit) {
+    date = new Date(date)
+
+    switch (unit){
+      case MILI:
+      case SECONDS:
+      case MINUTES:
+      case HOURS:
+      case YEAR:
+        return dates[unit](date, dates[unit](date) + num)
+      case DAY:
+        return dates.date(date, dates.date(date) + num)
+      case WEEK:
+        return dates.date(date, dates.date(date) + (7 * num))
+      case MONTH:
+        return monthMath(date, num)
+      case DECADE:
+        return dates.year(date, dates.year(date) + (num * 10))
+      case CENTURY:
+        return dates.year(date, dates.year(date) + (num * 100))
+    }
+
+    throw new TypeError('Invalid units: "' + unit + '"')
+  },
+
+  subtract: function(date, num, unit) {
+    return dates.add(date, -num, unit)
+  },
+
+  startOf: function(date, unit, firstOfWeek) {
+    date = new Date(date)
+
+    switch (unit) {
+      case 'century':
+      case 'decade':
+      case 'year':
+          date = dates.month(date, 0);
+      case 'month':
+          date = dates.date(date, 1);
+      case 'week':
+      case 'day':
+          date = dates.hours(date, 0);
+      case 'hours':
+          date = dates.minutes(date, 0);
+      case 'minutes':
+          date = dates.seconds(date, 0);
+      case 'seconds':
+          date = dates.milliseconds(date, 0);
+    }
+
+    if (unit === DECADE)
+      date = dates.subtract(date, dates.year(date) % 10, 'year')
+
+    if (unit === CENTURY)
+      date = dates.subtract(date, dates.year(date) % 100, 'year')
+
+    if (unit === WEEK)
+      date = dates.weekday(date, 0, firstOfWeek);
+
+    return date
+  },
+
+  endOf: function(date, unit, firstOfWeek){
+    date = new Date(date)
+    date = dates.startOf(date, unit, firstOfWeek)
+    date = dates.add(date, 1, unit)
+    date = dates.subtract(date, 1, MILI)
+    return date
+  },
+
+  eq:  createComparer(function(a, b){ return a === b }),
+  neq: createComparer(function(a, b){ return a !== b }),
+  gt:  createComparer(function(a, b){ return a > b }),
+  gte: createComparer(function(a, b){ return a >= b }),
+  lt:  createComparer(function(a, b){ return a < b }),
+  lte: createComparer(function(a, b){ return a <= b }),
+
+  min: function(){
+    return new Date(Math.min.apply(Math, arguments))
+  },
+
+  max: function(){
+    return new Date(Math.max.apply(Math, arguments))
+  },
+
+  inRange: function(day, min, max, unit){
+    unit = unit || 'day'
+
+    return (!min || dates.gte(day, min, unit))
+        && (!max || dates.lte(day, max, unit))
+  },
+
+  milliseconds:   createAccessor('Milliseconds'),
+  seconds:        createAccessor('Seconds'),
+  minutes:        createAccessor('Minutes'),
+  hours:          createAccessor('Hours'),
+  day:            createAccessor('Day'),
+  date:           createAccessor('Date'),
+  month:          createAccessor('Month'),
+  year:           createAccessor('FullYear'),
+
+  decade: function (date, val) {
+    return val === undefined
+      ? dates.year(dates.startOf(date, DECADE))
+      : dates.add(date, val + 10, YEAR);
+  },
+
+  century: function (date, val) {
+    return val === undefined
+      ? dates.year(dates.startOf(date, CENTURY))
+      : dates.add(date, val + 100, YEAR);
+  },
+
+  weekday: function (date, val, firstDay) {
+      var weekday = (dates.day(date) + 7 - (firstDay || 0) ) % 7;
+
+      return val === undefined
+        ? weekday
+        : dates.add(date, val - weekday, DAY);
+  }
+}
+
+
+function monthMath(date, val){
+  var current = dates.month(date)
+    , newMonth  = (current + val);
+
+    date = dates.month(date, newMonth)
+
+    if (newMonth < 0 ) newMonth = 12 + val
+
+    //month rollover
+    if ( dates.month(date) !== ( newMonth % 12))
+      date = dates.date(date, 0) //move to last of month
+
+    return date
+}
+
+function createAccessor(method){
+  return function(date, val){
+    if (val === undefined)
+      return date['get' + method]()
+
+    date = new Date(date)
+    date['set' + method](val)
+    return date
+  }
+}
+
+function createComparer(operator) {
+  return function (a, b, unit, maybeFoW) {
+    return operator(+dates.startOf(a, unit, maybeFoW), +dates.startOf(b, unit, maybeFoW))
+  };
+}
+
+},{}],68:[function(require,module,exports){
+'use strict';
+
+
+exports = module.exports = function deconstructNumberFormat(requiredFormat) {
+
+
+  var format= requiredFormat || '-9,999.90';
+
+  format=format.trim(); //ignore leading and trailing spaces
+  
+  // *********************************************************************************
+  // find position and type of negative and contents of prefix and suffix text
+  // *********************************************************************************
+  
+  var negativeType = '', negativeRightSymbol = '', negativeLeftSymbol = '',
+      negativeRightPos = -1, negativeLeftPos = -1, 
+      absFormat,
+      prefix = '', suffix = '';
+  
+  // brackets as negative
+  if (/^([^()]+)?[(]([^09#]+)?[09#., ]+([^)]+)?[)](.+)?$/.test(format)) {
+    negativeType = 'brackets';
+    negativeLeftPos = format.indexOf("(");
+    negativeLeftSymbol = '('
+    if (negativeLeftPos > 0) { //after prefix
+      prefix = format.slice(0, negativeLeftPos);
+    } else {
+      prefix = format.search(/0|9|#/) > 0 ? format.slice(1, format.search(/0|9|#/)) : "";
+    }
+    format = format.slice(prefix.length+1);
+
+    negativeRightPos = format.indexOf(")");
+    negativeRightSymbol = ')'
+    if (negativeRightPos < format.length-1) { //before prefix
+      suffix = format.slice(negativeRightPos+1);
+      format = format.slice(0, negativeRightPos);
+    } else {
+      suffix = format.search(/[^09#,.]([^09#](.+)?)?[)]$/) > -1  ? format.slice(format.search(/[^09#,.]([^09#](.+)?)?[)]$/), -1) : "";
+      format = format.slice(0, format.length - suffix.length - 1);
+      negativeRightPos = 0;
+    }
+
+  } else if (format.indexOf("-") === -1){
+    //positive values only
+    negativeType = 'none';
+    prefix = format.search(/[.,]?[09#]/) > 0 ? format.slice(0, format.search(/[.,]?[09#]/)) : "";
+    format = format.slice(prefix.length);
+    suffix = format.search(/[^09#,.]([^09#]+|$)/) > -1  ? format.slice(format.search(/[^09#,.]([^09#]+|$)/)) : "";
+    format = format.slice(0, format.length-suffix.length);
+
+  } else if (/^([^09#-]+)?-.+$/.test(format)) {
+    //negative symbol to left of number (before or after prefix)
+    negativeType = 'left';
+    negativeLeftPos = format.indexOf("-");
+    negativeLeftSymbol = '-'
+    if (negativeLeftPos > 0) { //after prefix
+      prefix = format.slice(0, negativeLeftPos);
+    } else {
+      prefix = format.search(/[09#]/) > 0 ? format.slice(1, format.search(/[09#]/)) : "";
+    }
+    format = format.slice(prefix.length+1);
+    suffix = format.search(/[^09#,.]([^09#]+|$)/) > -1  ? format.slice(format.search(/[^09#,.]([^09#]+|$)/)) : "";
+    format = format.slice(0, format.length-suffix.length);
+
+  } else {
+    //negative symbol to right of number (before or after suffix)
+    prefix = format.search(/[09#]/) > 0 ? format.slice(0, format.search(/[09#]/)) : "";
+    format = format.slice(prefix.length);
+    negativeType = 'right';
+    negativeRightSymbol = '-'
+    negativeRightPos = format.lastIndexOf("-");
+    if (negativeRightPos < format.length-1) { //before suffix
+      suffix = format.slice(negativeRightPos+1);
+      format = format.slice(0, negativeRightPos);
+    } else {
+      suffix = format.search(/[^09#,.]([^09#](.+)?)?-$/) > -1  ? format.slice(format.search(/[^09#,.]([^09#](.+)?)?-$/), format.length-1) : "";
+      format = format.slice(0, format.length - suffix.length - 1);
+      negativeRightPos = 0;
+    }
+  }
+
+  // *********************************************************************************
+  //include spaces with negative symbols
+  // *********************************************************************************
+
+  //When negative is before prefix move spaces from start of prefix to end of negative symbol
+  while (negativeLeftPos === 0 && prefix && prefix[0] === ' ') {
+    negativeLeftSymbol = negativeLeftSymbol + ' ';
+    prefix = prefix.slice(1);
+  }
+
+  //When negative follows suffix move spaces end of suffix to start of negative symbol
+  while (negativeRightPos === 0 && suffix && suffix[suffix.length-1] === ' ') {
+    negativeRightSymbol = ' ' + negativeRightSymbol;
+    suffix = suffix.slice(0, -1);
+  }
+
+  //When negative follows prefix move spaces from start of format to end of negative symbol
+  while (negativeLeftPos > 0 && format.length && format[0] === ' ') {
+    negativeLeftSymbol = negativeLeftSymbol + ' ';
+    format = format.slice(1);
+  }
+
+  //When negative before suffix move spaces from end of format to start of negative symbol
+  while (negativeRightPos > 0 && format.length && format[format.length-1] === ' ') {
+    negativeRightSymbol = ' ' + negativeRightSymbol;
+    format = format.slice(0, -1);
+  }
+
+  var absMask = format;
+
+  // *********************************************************************************
+  //find the decimal character and parts of absolute format
+  // *********************************************************************************
+
+  var decimalChar = '', decimalsPart = '', integerPart = '', decimalsSeparator = '', integerSeparator = '';
+
+  //if last char is a ',' and there are no other commas then use this as decimal point
+  if (format[format.length-1] === ',' && format.indexOf(',') === format.length-1) {
+    decimalChar = ',';
+  //otherwise use consider '.'
+  } else if (format.indexOf('.') > -1) {
+    if (format.indexOf('.') === format.lastIndexOf('.')) {
+      decimalChar = ".";
+    } else {
+      // two of '.' means this must be the separator, so assume  ',' is the decimal
+      decimalChar = ',';
+    }
+  //otherwise use ',' if it exists and there is only one
+  } else if (format.indexOf(',') > -1) {
+    if (format.indexOf(',') === format.lastIndexOf(',')) {
+      decimalChar = ',';
+    } else {
+      decimalChar = '.';
+    }
+  }
+
+  if (decimalChar && format.indexOf(decimalChar)>-1) {
+    decimalsPart = format.slice(format.indexOf(decimalChar)+1);
+    integerPart = format.slice(0,format.indexOf(decimalChar));
+  } else {
+    integerPart = format;
+    decimalsPart = '';
+  }
+
+  while (decimalsPart.length && decimalsPart.search(/[., ]$/) > -1) {
+    decimalsPart = decimalsPart.slice(0, -1);
+  }
+
+  while (integerPart.length && integerPart[0].search(/[., ]/) > -1) {
+    integerPart = integerPart.slice(1);
+  }
+
+  //find the thousands/thousanths separators
+  if (integerPart && integerPart.search(/[., ]/) > 0) {
+    integerSeparator = integerPart[integerPart.search(/[., ]/)];
+    integerPart = integerPart.replace(/[., ]/g, "");
+  }
+
+  if (decimalsPart && decimalsPart.search(/[., ]/) > 0) {
+    decimalsSeparator = decimalsPart[decimalsPart.search(/[., ]/)];
+    decimalsPart = decimalsPart.replace(/[., ]/g, "");
+  }
+
+  if ((integerPart.length && !(/^[09#]+$/).test(integerPart)) || (decimalsPart.length && !(/^[09#]+$/).test(decimalsPart))) {return false};
+
+  // *********************************************************************************
+  //resolve length and padding
+  // *********************************************************************************
+
+  var padLeft, maxLeft, padRight, maxRight;
+  padLeft = integerPart.indexOf("0") >= 0 ? integerPart.length - integerPart.indexOf("0") : -1;
+  maxLeft = integerPart.length === 0 ||integerPart[0] === "0" || integerPart[0] === "9" ? integerPart.length : -1;
+  padRight = decimalsPart.indexOf("0") >= 0 ? decimalsPart.lastIndexOf("0")+1 : -1;
+  maxRight = decimalsPart.length === 0 || decimalsPart[decimalsPart.length-1] === "0" || decimalsPart[decimalsPart.length-1] === "9" ? decimalsPart.length : -1;
+
+  // *********************************************************************************
+  // output
+  // *********************************************************************************
+
+  var deconstructedFormat = {
+    negativeType: negativeType,
+    negativeLeftPos: negativeLeftPos,
+    negativeRightPos: negativeRightPos,
+    negativeLeftSymbol: negativeLeftSymbol,
+    negativeRightSymbol: negativeRightSymbol,
+    suffix: suffix,
+    prefix: prefix,
+    absMask: absMask,
+    decimalChar: decimalChar,
+    integerSeparator: integerSeparator,
+    decimalsSeparator: decimalsSeparator,
+    padLeft: padLeft,
+    maxLeft: maxLeft,
+    padRight: padRight,
+    maxRight: maxRight
+  }
+
+  return deconstructedFormat;
+};
+},{}],69:[function(require,module,exports){
+'use strict';
+
+var babelHelpers = require('./util/babelHelpers.js');
+
+exports.__esModule = true;
+
+/**
+ * document.activeElement
+ */
+exports['default'] = activeElement;
+
+var _ownerDocument = require('./ownerDocument');
+
+var _ownerDocument2 = babelHelpers.interopRequireDefault(_ownerDocument);
+
+function activeElement() {
+  var doc = arguments[0] === undefined ? document : arguments[0];
+
+  try {
+    return doc.activeElement;
+  } catch (e) {}
+}
+
+module.exports = exports['default'];
+},{"./ownerDocument":72,"./util/babelHelpers.js":84}],70:[function(require,module,exports){
+'use strict';
+var canUseDOM = require('../util/inDOM');
+var off = function off() {};
+
+if (canUseDOM) {
+
+  off = (function () {
+
+    if (document.addEventListener) return function (node, eventName, handler, capture) {
+      return node.removeEventListener(eventName, handler, capture || false);
+    };else if (document.attachEvent) return function (node, eventName, handler) {
+      return node.detachEvent('on' + eventName, handler);
+    };
+  })();
+}
+
+module.exports = off;
+},{"../util/inDOM":89}],71:[function(require,module,exports){
+'use strict';
+var canUseDOM = require('../util/inDOM');
+var on = function on() {};
+
+if (canUseDOM) {
+  on = (function () {
+
+    if (document.addEventListener) return function (node, eventName, handler, capture) {
+      return node.addEventListener(eventName, handler, capture || false);
+    };else if (document.attachEvent) return function (node, eventName, handler) {
+      return node.attachEvent('on' + eventName, handler);
+    };
+  })();
+}
+
+module.exports = on;
+},{"../util/inDOM":89}],72:[function(require,module,exports){
+"use strict";
+
+exports.__esModule = true;
+exports["default"] = ownerDocument;
+
+function ownerDocument(node) {
+  return node && node.ownerDocument || document;
+}
+
+module.exports = exports["default"];
+},{}],73:[function(require,module,exports){
+'use strict';
+var canUseDOM = require('../util/inDOM');
+
+var contains = (function () {
+  var root = canUseDOM && document.documentElement;
+
+  return root && root.contains ? function (context, node) {
+    return context.contains(node);
+  } : root && root.compareDocumentPosition ? function (context, node) {
+    return context === node || !!(context.compareDocumentPosition(node) & 16);
+  } : function (context, node) {
+    if (node) do {
+      if (node === context) return true;
+    } while (node = node.parentNode);
+
+    return false;
+  };
+})();
+
+module.exports = contains;
+},{"../util/inDOM":89}],74:[function(require,module,exports){
+'use strict';
+
+var offset = require('./offset'),
+    getWindow = require('./isWindow');
+
+module.exports = function height(node, client) {
+  var win = getWindow(node);
+  return win ? win.innerHeight : client ? node.clientHeight : offset(node).height;
+};
+},{"./isWindow":75,"./offset":76}],75:[function(require,module,exports){
+'use strict';
+
+module.exports = function getWindow(node) {
+  return node === node.window ? node : node.nodeType === 9 ? node.defaultView || node.parentWindow : false;
+};
+},{}],76:[function(require,module,exports){
+'use strict';
+var contains = require('./contains'),
+    getWindow = require('./isWindow'),
+    ownerDocument = require('../ownerDocument');
+
+module.exports = function offset(node) {
+  var doc = ownerDocument(node),
+      win = getWindow(doc),
+      docElem = doc && doc.documentElement,
+      box = { top: 0, left: 0, height: 0, width: 0 };
+
+  if (!doc) return;
+
+  // Make sure it's not a disconnected DOM node
+  if (!contains(docElem, node)) return box;
+
+  if (node.getBoundingClientRect !== undefined) box = node.getBoundingClientRect();
+
+  if (box.width || box.height) {
+
+    box = {
+      top: box.top + (win.pageYOffset || docElem.scrollTop) - (docElem.clientTop || 0),
+      left: box.left + (win.pageXOffset || docElem.scrollLeft) - (docElem.clientLeft || 0),
+      width: (box.width == null ? node.offsetWidth : box.width) || 0,
+      height: (box.height == null ? node.offsetHeight : box.height) || 0
+    };
+  }
+
+  return box;
+};
+},{"../ownerDocument":72,"./contains":73,"./isWindow":75}],77:[function(require,module,exports){
+'use strict';
+
+var css = require('../style'),
+    height = require('./height');
+
+module.exports = function scrollPrarent(node) {
+  var position = css(node, 'position'),
+      excludeStatic = position === 'absolute',
+      ownerDoc = node.ownerDocument;
+
+  if (position === 'fixed') return ownerDoc || document;
+
+  while ((node = node.parentNode) && node.nodeType !== 9) {
+
+    var isStatic = excludeStatic && css(node, 'position') === 'static',
+        style = css(node, 'overflow') + css(node, 'overflow-y') + css(node, 'overflow-x');
+
+    if (isStatic) continue;
+
+    if (/(auto|scroll)/.test(style) && height(node) < node.scrollHeight) return node;
+  }
+
+  return document;
+};
+},{"../style":81,"./height":74}],78:[function(require,module,exports){
+'use strict';
+var getWindow = require('./isWindow');
+
+module.exports = function scrollTop(node, val) {
+  var win = getWindow(node);
+
+  if (val === undefined) return win ? 'pageYOffset' in win ? win.pageYOffset : win.document.documentElement.scrollTop : node.scrollTop;
+
+  if (win) win.scrollTo('pageXOffset' in win ? win.pageXOffset : win.document.documentElement.scrollLeft, val);else node.scrollTop = val;
+};
+},{"./isWindow":75}],79:[function(require,module,exports){
+'use strict';
+
+var offset = require('./offset'),
+    getWindow = require('./isWindow');
+
+module.exports = function width(node, client) {
+  var win = getWindow(node);
+  return win ? win.innerWidth : client ? node.clientWidth : offset(node).width;
+};
+},{"./isWindow":75,"./offset":76}],80:[function(require,module,exports){
+'use strict';
+
+var babelHelpers = require('../util/babelHelpers.js');
+
+var _utilCamelizeStyle = require('../util/camelizeStyle');
+
+var _utilCamelizeStyle2 = babelHelpers.interopRequireDefault(_utilCamelizeStyle);
+
+var rposition = /^(top|right|bottom|left)$/;
+var rnumnonpx = /^([+-]?(?:\d*\.|)\d+(?:[eE][+-]?\d+|))(?!px)[a-z%]+$/i;
+
+module.exports = function _getComputedStyle(node) {
+  if (!node) throw new TypeError('No Element passed to `getComputedStyle()`');
+  var doc = node.ownerDocument;
+
+  return 'defaultView' in doc ? doc.defaultView.opener ? node.ownerDocument.defaultView.getComputedStyle(node, null) : window.getComputedStyle(node, null) : { //ie 8 "magic" from: https://github.com/jquery/jquery/blob/1.11-stable/src/css/curCSS.js#L72
+    getPropertyValue: function getPropertyValue(prop) {
+      var style = node.style;
+
+      prop = (0, _utilCamelizeStyle2['default'])(prop);
+
+      if (prop == 'float') prop = 'styleFloat';
+
+      var current = node.currentStyle[prop] || null;
+
+      if (current == null && style && style[prop]) current = style[prop];
+
+      if (rnumnonpx.test(current) && !rposition.test(prop)) {
+        // Remember the original values
+        var left = style.left;
+        var runStyle = node.runtimeStyle;
+        var rsLeft = runStyle && runStyle.left;
+
+        // Put in the new values to get a computed value out
+        if (rsLeft) runStyle.left = node.currentStyle.left;
+
+        style.left = prop === 'fontSize' ? '1em' : current;
+        current = style.pixelLeft + 'px';
+
+        // Revert the changed values
+        style.left = left;
+        if (rsLeft) runStyle.left = rsLeft;
+      }
+
+      return current;
+    }
+  };
+};
+},{"../util/babelHelpers.js":84,"../util/camelizeStyle":86}],81:[function(require,module,exports){
+'use strict';
+
+var camelize = require('../util/camelizeStyle'),
+    hyphenate = require('../util/hyphenateStyle'),
+    _getComputedStyle = require('./getComputedStyle'),
+    removeStyle = require('./removeStyle');
+
+var has = Object.prototype.hasOwnProperty;
+
+module.exports = function style(node, property, value) {
+  var css = '',
+      props = property;
+
+  if (typeof property === 'string') {
+
+    if (value === undefined) return node.style[camelize(property)] || _getComputedStyle(node).getPropertyValue(hyphenate(property));else (props = {})[property] = value;
+  }
+
+  for (var key in props) if (has.call(props, key)) {
+    !props[key] && props[key] !== 0 ? removeStyle(node, hyphenate(key)) : css += hyphenate(key) + ':' + props[key] + ';';
+  }
+
+  node.style.cssText += ';' + css;
+};
+},{"../util/camelizeStyle":86,"../util/hyphenateStyle":88,"./getComputedStyle":80,"./removeStyle":82}],82:[function(require,module,exports){
+'use strict';
+
+module.exports = function removeStyle(node, key) {
+  return 'removeProperty' in node.style ? node.style.removeProperty(key) : node.style.removeAttribute(key);
+};
+},{}],83:[function(require,module,exports){
+'use strict';
+var canUseDOM = require('../util/inDOM');
+
+var has = Object.prototype.hasOwnProperty,
+    transform = 'transform',
+    transition = {},
+    transitionTiming,
+    transitionDuration,
+    transitionProperty,
+    transitionDelay;
+
+if (canUseDOM) {
+  transition = getTransitionProperties();
+
+  transform = transition.prefix + transform;
+
+  transitionProperty = transition.prefix + 'transition-property';
+  transitionDuration = transition.prefix + 'transition-duration';
+  transitionDelay = transition.prefix + 'transition-delay';
+  transitionTiming = transition.prefix + 'transition-timing-function';
+}
+
+module.exports = {
+  transform: transform,
+  end: transition.end,
+  property: transitionProperty,
+  timing: transitionTiming,
+  delay: transitionDelay,
+  duration: transitionDuration
+};
+
+function getTransitionProperties() {
+  var endEvent,
+      prefix = '',
+      transitions = {
+    O: 'otransitionend',
+    Moz: 'transitionend',
+    Webkit: 'webkitTransitionEnd',
+    ms: 'MSTransitionEnd'
+  };
+
+  var element = document.createElement('div');
+
+  for (var vendor in transitions) if (has.call(transitions, vendor)) {
+    if (element.style[vendor + 'TransitionProperty'] !== undefined) {
+      prefix = '-' + vendor.toLowerCase() + '-';
+      endEvent = transitions[vendor];
+      break;
+    }
+  }
+
+  if (!endEvent && element.style.transitionProperty !== undefined) endEvent = 'transitionend';
+
+  return { end: endEvent, prefix: prefix };
+}
+},{"../util/inDOM":89}],84:[function(require,module,exports){
+(function (root, factory) {
+  if (typeof define === "function" && define.amd) {
+    define(["exports"], factory);
+  } else if (typeof exports === "object") {
+    factory(exports);
+  } else {
+    factory(root.babelHelpers = {});
+  }
+})(this, function (global) {
+  var babelHelpers = global;
+
+  babelHelpers.interopRequireDefault = function (obj) {
+    return obj && obj.__esModule ? obj : {
+      "default": obj
+    };
+  };
+
+  babelHelpers._extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+})
+},{}],85:[function(require,module,exports){
+"use strict";
+
+var rHyphen = /-(.)/g;
+
+module.exports = function camelize(string) {
+  return string.replace(rHyphen, function (_, chr) {
+    return chr.toUpperCase();
+  });
+};
+},{}],86:[function(require,module,exports){
+/**
+ * Copyright 2014-2015, Facebook, Inc.
+ * All rights reserved.
+ * https://github.com/facebook/react/blob/2aeb8a2a6beb00617a4217f7f8284924fa2ad819/src/vendor/core/camelizeStyleName.js
+ */
+
+'use strict';
+var camelize = require('./camelize');
+var msPattern = /^-ms-/;
+
+module.exports = function camelizeStyleName(string) {
+  return camelize(string.replace(msPattern, 'ms-'));
+};
+},{"./camelize":85}],87:[function(require,module,exports){
+'use strict';
+
+var rUpper = /([A-Z])/g;
+
+module.exports = function hyphenate(string) {
+  return string.replace(rUpper, '-$1').toLowerCase();
+};
+},{}],88:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ * https://github.com/facebook/react/blob/2aeb8a2a6beb00617a4217f7f8284924fa2ad819/src/vendor/core/hyphenateStyleName.js
+ */
+
+"use strict";
+
+var hyphenate = require("./hyphenate");
+var msPattern = /^ms-/;
+
+module.exports = function hyphenateStyleName(string) {
+  return hyphenate(string).replace(msPattern, "-ms-");
+};
+},{"./hyphenate":87}],89:[function(require,module,exports){
+'use strict';
+module.exports = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
+},{}],90:[function(require,module,exports){
+'use strict';
+
+var canUseDOM = require('./inDOM');
+
+var vendors = ['', 'webkit', 'moz', 'o', 'ms'],
+    cancel = 'clearTimeout',
+    raf = fallback,
+    compatRaf;
+
+var getKey = function getKey(vendor, k) {
+  return vendor + (!vendor ? k : k[0].toUpperCase() + k.substr(1)) + 'AnimationFrame';
+};
+
+if (canUseDOM) {
+  vendors.some(function (vendor) {
+    var rafKey = getKey(vendor, 'request');
+
+    if (rafKey in window) {
+      cancel = getKey(vendor, 'cancel');
+      return raf = function (cb) {
+        return window[rafKey](cb);
+      };
+    }
+  });
+}
+
+/* https://github.com/component/raf */
+var prev = new Date().getTime();
+
+function fallback(fn) {
+  var curr = new Date().getTime(),
+      ms = Math.max(0, 16 - (curr - prev)),
+      req = setTimeout(fn, ms);
+
+  prev = curr;
+  return req;
+}
+
+compatRaf = function (cb) {
+  return raf(cb);
+};
+compatRaf.cancel = function (id) {
+  return window[cancel](id);
+};
+
+module.exports = compatRaf;
+},{"./inDOM":89}],91:[function(require,module,exports){
+'use strict';
+var getOffset = require('../query/offset'),
+    height = require('../query/height'),
+    getScrollParent = require('../query/scrollParent'),
+    scrollTop = require('../query/scrollTop'),
+    raf = require('./requestAnimationFrame'),
+    getWindow = require('../query/isWindow');
+
+module.exports = function scrollTo(selected, scrollParent) {
+    var offset = getOffset(selected),
+        poff = { top: 0, left: 0 },
+        list,
+        listScrollTop,
+        selectedTop,
+        isWin,
+        selectedHeight,
+        listHeight,
+        bottom;
+
+    if (!selected) return;
+
+    list = scrollParent || getScrollParent(selected);
+    isWin = getWindow(list);
+    listScrollTop = scrollTop(list);
+
+    listHeight = height(list, true);
+    isWin = getWindow(list);
+
+    if (!isWin) poff = getOffset(list);
+
+    offset = {
+        top: offset.top - poff.top,
+        left: offset.left - poff.left,
+        height: offset.height,
+        width: offset.width
+    };
+
+    selectedHeight = offset.height;
+    selectedTop = offset.top + (isWin ? 0 : listScrollTop);
+    bottom = selectedTop + selectedHeight;
+
+    listScrollTop = listScrollTop > selectedTop ? selectedTop : bottom > listScrollTop + listHeight ? bottom - listHeight : listScrollTop;
+
+    var id = raf(function () {
+        return scrollTop(list, listScrollTop);
+    });
+
+    return function () {
+        return raf.cancel(id);
+    };
+};
+},{"../query/height":74,"../query/isWindow":75,"../query/offset":76,"../query/scrollParent":77,"../query/scrollTop":78,"./requestAnimationFrame":90}],92:[function(require,module,exports){
+'use strict';
+
+var deconstructNumberFormat = require('deconstruct-number-format');
+var formatFactory = require('format-number');
+
+exports = module.exports = function formatNumberWithString(value, requiredFormat, overrideOptions) {
+
+  var deconstructedFormat = []
+
+  if (requiredFormat) deconstructedFormat = deconstructNumberFormat(requiredFormat.trim());
+  
+  value = (value === null ? '' : value);
+  value = value + ''; //make a string
+  value = value.length ? value.trim() : '';
+  
+  var options = [];
+  
+  var format = formatFactory({
+    negativeType: deconstructedFormat.negativeType,
+    negativeLeftSymbol: deconstructedFormat.negativeLeftSymbol,
+    negativeRightSymbol: deconstructedFormat.negativeRightSymbol,
+    negativeLeftOut: deconstructedFormat.negativeLeftPos === 0,
+    negativeRightOut: deconstructedFormat.negativeRightPos === 0,
+    prefix: deconstructedFormat.prefix,
+    suffix: deconstructedFormat.suffix,
+    integerSeparator: deconstructedFormat.integerSeparator,
+    decimalsSeparator: deconstructedFormat.decimalsSeparator,
+    decimal: deconstructedFormat.decimalChar,
+    padLeft: deconstructedFormat.padLeft,
+    padRight: deconstructedFormat.padRight,
+    round: deconstructedFormat.maxRight,
+    truncate: null
+  })
+
+  return format(value, overrideOptions);
+
+};
+},{"deconstruct-number-format":68,"format-number":93}],93:[function(require,module,exports){
+
+module.exports = formatter;
+
+function formatter(options) {
+  options = options || {};
+
+
+  // *********************************************************************************************
+  // Set defaults for negatives
+  // options.negative, options.negativeOut, options.separator retained for backward compatibility
+  // *********************************************************************************************
+
+  // type of negative; default left
+  options.negativeType = options.negativeType || (options.negative === 'R' ? 'right' : 'left')
+
+  // negative symbols '-' or '()'
+  if (typeof options.negativeLeftSymbol !== 'string') {
+    switch (options.negativeType) {
+      case 'left':
+        options.negativeLeftSymbol = '-';
+        break;
+      case 'brackets':
+        options.negativeLeftSymbol = '(';
+        break;
+      default:
+        options.negativeLeftSymbol = '';
+    }
+  }
+  if (typeof options.negativeRightSymbol !== 'string') {
+    switch (options.negativeType) {
+      case 'right':
+        options.negativeRightSymbol = '-';
+        break;
+      case 'brackets':
+        options.negativeRightSymbol = ')';
+        break;
+      default:
+        options.negativeRightSymbol = '';
+    }
+  }
+
+  // whether negative symbol should be inside/outside prefix and suffix
+
+  if (typeof options.negativeLeftOut !== "boolean") {
+    options.negativeLeftOut = (options.negativeOut === false ? false : true);
+  }
+  if (typeof options.negativeRightOut !== "boolean") {
+    options.negativeRightOut = (options.negativeOut === false ? false : true);
+  }
+
+  //prefix and suffix
+  options.prefix = options.prefix || '';
+  options.suffix = options.suffix || '';
+
+  //separators
+  if (typeof options.integerSeparator !== 'string') {
+    options.integerSeparator = (typeof options.separator === 'string' ? options.separator : ',');
+  }
+  options.decimalsSeparator = typeof options.decimalsSeparator === 'string' ? options.decimalsSeparator : '';
+  options.decimal = options.decimal || '.';
+
+  //padders
+  options.padLeft = options.padLeft || -1 //default no padding
+  options.padRight = options.padRight || -1 //default no padding
+
+  function format(number, overrideOptions) {
+    overrideOptions = overrideOptions || {};
+
+    if (number || number === 0) {
+      number = '' + number;//convert number to string if it isn't already
+    } else {
+      return '';
+    }
+
+    //identify a negative number and make it absolute
+    var output = [];
+    var negative = number.charAt(0) === '-';
+    number = number.replace(/^\-/g, '');
+
+    //Prepare output with left hand negative and/or prefix
+    if (!options.negativeLeftOut && !overrideOptions.noUnits) {
+      output.push(options.prefix);
+    }
+    if (negative) {
+      output.push(options.negativeLeftSymbol);
+    }
+    if (options.negativeLeftOut && !overrideOptions.noUnits) {
+      output.push(options.prefix);
+    }
+
+    //Format core number
+    number = number.split('.');
+    if (options.round != null) round(number, options.round);
+    if (options.truncate != null) number[1] = truncate(number[1], options.truncate);
+    if (options.padLeft > 0) number[0] = padLeft(number[0], options.padLeft);
+    if (options.padRight > 0) number[1] = padRight(number[1], options.padRight);
+    if (!overrideOptions.noSeparator && number[1]) number[1] = addDecimalSeparators(number[1], options.decimalsSeparator);
+    if (!overrideOptions.noSeparator && number[0]) number[0] = addIntegerSeparators(number[0], options.integerSeparator);
+    output.push(number[0]);
+    if (number[1]) {
+      output.push(options.decimal);
+      output.push(number[1]);
+    }
+
+    //Prepare output with right hand negative and/or prefix
+    if (options.negativeRightOut && !overrideOptions.noUnits) {
+      output.push(options.suffix);
+    }
+    if (negative) {
+      output.push(options.negativeRightSymbol);
+    }
+    if (!options.negativeRightOut && !overrideOptions.noUnits) {
+      output.push(options.suffix);
+    }
+
+    //join output and return
+    return output.join('');
+  }
+
+  format.negative = options.negative;
+  format.negativeOut = options.negativeOut;
+  format.negativeType = options.negativeType;
+  format.negativeLeftOut = options.negativeLeftOut;
+  format.negativeLeftSymbol = options.negativeLeftSymbol;
+  format.negativeRightOut = options.negativeRightOut;
+  format.negativeRightSymbol = options.negativeRightSymbol;
+  format.prefix = options.prefix;
+  format.suffix = options.suffix;
+  format.separate = options.separate;
+  format.integerSeparator = options.integerSeparator;
+  format.decimalsSeparator = options.decimalsSeparator;
+  format.decimal = options.decimal;
+  format.padLeft = options.padLeft;
+  format.padRight = options.padRight;
+  format.truncate = options.truncate;
+  format.round = options.round;
+
+  function unformat(number, allowedSeparators) {
+    allowedSeparators = allowedSeparators || [];
+    if (options.allowedSeparators) {
+      options.allowedSeparators.forEach(function (s) { allowedSeparators.push (s); });
+    }
+    allowedSeparators.push(options.integerSeparator);
+    allowedSeparators.push(options.decimalsSeparator);
+    number = number.replace(options.prefix, '');
+    number = number.replace(options.suffix, '');
+    var newNumber = number;
+    do {
+      number = newNumber;
+      for (var i = 0; i < allowedSeparators.length; i++) {
+        newNumber = newNumber.replace(allowedSeparators[i], '');
+      }
+    } while (newNumber != number);
+    return number;
+  }
+  format.unformat = unformat;
+
+  function validate(number, allowedSeparators) {
+    number = unformat(number, allowedSeparators);
+    number = number.split(options.decimal);
+    if (number.length > 2) {
+      return false;
+    } else if (options.truncate != null && number[1] && number[1].length > options.truncate) {
+      return false;
+    }  else if (options.round != null && number[1] && number[1].length > options.round) {
+      return false;
+    } else {
+      return /^-?\d+\.?\d*$/.test(number);
+    }
+  }
+  return format;
+}
+
+//where x is already the integer part of the number
+function addIntegerSeparators(x, separator) {
+  x += '';
+  if (!separator) return x;
+  var rgx = /(\d+)(\d{3})/;
+  while (rgx.test(x)) {
+    x = x.replace(rgx, '$1' + separator + '$2');
+  }
+  return x;
+}
+
+//where x is already the decimal part of the number
+function addDecimalSeparators(x, separator) {
+  x += '';
+  if (!separator) return x;
+  var rgx = /(\d{3})(\d+)/;
+  while (rgx.test(x)) {
+    x = x.replace(rgx, '$1' + separator + '$2');
+  }
+  return x;
+}
+
+//where x is the integer part of the number
+function padLeft(x, padding) {
+  x = x + '';
+  var buf = [];
+  while (buf.length + x.length < padding) {
+    buf.push('0');
+  }
+  return buf.join('') + x;
+}
+
+//where x is the decimals part of the number
+function padRight(x, padding) {
+  if (x) {
+    x += '';
+  } else {
+    x = '';
+  }
+  var buf = [];
+  while (buf.length + x.length < padding) {
+    buf.push('0');
+  }
+  return x + buf.join('');
+}
+function truncate(x, length) {
+  if (x) {
+    x += '';
+  }
+  if (x && x.length > length) {
+    return x.substr(0, length);
+  } else {
+    return x;
+  }
+}
+
+//where number is an array with 0th item as integer string and 1st item as decimal string (no negatives)
+function round(number, places) {
+  if (number[1] && places >= 0 && number[1].length > places) {
+    //truncate to correct number of decimal places
+    var decim = number[1].slice(0, places);
+    //if next digit was >= 5 we need to round up
+    if (+(number[1].substr(places, 1)) >= 5) {
+      //But first count leading zeros as converting to a number will loose them
+      var leadingzeros = "";
+      while (decim.charAt(0)==="0") {
+        leadingzeros = leadingzeros + "0";
+        decim = decim.substr(1);
+      }
+      //Then we can change decim to a number and add 1 before replacing leading zeros
+      decim = (+decim + 1) + '';
+      decim = leadingzeros + decim;
+      if (decim.length > places) {
+        //adding one has made it longer
+        number[0] = (+number[0]+ +decim.charAt(0)) + ''; //add value of firstchar to the integer part
+        decim = decim.substring(1);   //ignore the 1st char at the beginning which is the carry to the integer part
+      }
+    }
+    number[1] = decim;
+  }
+  return number;
+}
+
+},{}],94:[function(require,module,exports){
+(function (process){
+/**
+ * Copyright 2013-2015, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
+
+'use strict';
+
+/**
+ * Use invariant() to assert state which your program assumes to be true.
+ *
+ * Provide sprintf-style format (only %s is supported) and arguments
+ * to provide information about what broke and what you were
+ * expecting.
+ *
+ * The invariant message will be stripped in production, but the invariant
+ * will remain to ensure logic does not differ in production.
+ */
+
+var invariant = function(condition, format, a, b, c, d, e, f) {
+  if (process.env.NODE_ENV !== 'production') {
+    if (format === undefined) {
+      throw new Error('invariant requires an error message argument');
+    }
+  }
+
+  if (!condition) {
+    var error;
+    if (format === undefined) {
+      error = new Error(
+        'Minified exception occurred; use the non-minified dev environment ' +
+        'for the full error message and additional helpful warnings.'
+      );
+    } else {
+      var args = [a, b, c, d, e, f];
+      var argIndex = 0;
+      error = new Error(
+        format.replace(/%s/g, function() { return args[argIndex++]; })
+      );
+      error.name = 'Invariant Violation';
+    }
+
+    error.framesToPop = 1; // we don't care about invariant's own frame
+    throw error;
+  }
+};
+
+module.exports = invariant;
+
+}).call(this,require('_process'))
+},{"_process":6}],95:[function(require,module,exports){
+'use strict';
+
+exports.__esModule = true;
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+exports['default'] = createUncontrollable;
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _utils = require('./utils');
+
+var utils = _interopRequireWildcard(_utils);
+
+function createUncontrollable(mixins, set) {
+
+  return uncontrollable;
+
+  function uncontrollable(Component, controlledValues) {
+    var methods = arguments.length <= 2 || arguments[2] === undefined ? [] : arguments[2];
+
+    var displayName = Component.displayName || Component.name || 'Component',
+        basePropTypes = utils.getType(Component).propTypes,
+        propTypes;
+
+    propTypes = utils.uncontrolledPropTypes(controlledValues, basePropTypes, displayName);
+
+    methods = utils.transform(methods, function (obj, method) {
+      obj[method] = function () {
+        var _refs$inner;
+
+        return (_refs$inner = this.refs.inner)[method].apply(_refs$inner, arguments);
+      };
+    }, {});
+
+    var component = _react2['default'].createClass(_extends({
+
+      displayName: 'Uncontrolled(' + displayName + ')',
+
+      mixins: mixins,
+
+      propTypes: propTypes
+
+    }, methods, {
+
+      componentWillMount: function componentWillMount() {
+        var props = this.props,
+            keys = Object.keys(controlledValues);
+
+        this._values = utils.transform(keys, function (values, key) {
+          values[key] = props[utils.defaultKey(key)];
+        }, {});
+      },
+
+      /**
+       * If a prop switches from controlled to Uncontrolled
+       * reset its value to the defaultValue
+       */
+      componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+        var _this = this;
+
+        var props = this.props,
+            keys = Object.keys(controlledValues);
+
+        keys.forEach(function (key) {
+          if (utils.getValue(nextProps, key) === undefined && utils.getValue(props, key) !== undefined) {
+            _this._values[key] = nextProps[utils.defaultKey(key)];
+          }
+        });
+      },
+
+      render: function render() {
+        var _this2 = this;
+
+        var newProps = {};
+        var _props = this.props;
+        var valueLink = _props.valueLink;
+        var checkedLink = _props.checkedLink;
+
+        var props = _objectWithoutProperties(_props, ['valueLink', 'checkedLink']);
+
+        utils.each(controlledValues, function (handle, propName) {
+          var linkPropName = utils.getLinkName(propName),
+              prop = _this2.props[propName];
+
+          if (linkPropName && !isProp(_this2.props, propName) && isProp(_this2.props, linkPropName)) {
+            prop = _this2.props[linkPropName].value;
+          }
+
+          newProps[propName] = prop !== undefined ? prop : _this2._values[propName];
+
+          newProps[handle] = setAndNotify.bind(_this2, propName);
+        });
+
+        newProps = _extends({}, props, newProps, { ref: 'inner' });
+
+        return _react2['default'].createElement(Component, newProps);
+      }
+
+    }));
+
+    component.ControlledComponent = Component;
+
+    /**
+     * useful when wrapping a Component and you want to control
+     * everything
+     */
+    component.deferControlTo = function (newComponent, additions, nextMethods) {
+      if (additions === undefined) additions = {};
+
+      return uncontrollable(newComponent, _extends({}, controlledValues, additions), nextMethods);
+    };
+
+    return component;
+
+    function setAndNotify(propName, value) {
+      var linkName = utils.getLinkName(propName),
+          handler = this.props[controlledValues[propName]];
+
+      if (linkName && isProp(this.props, linkName) && !handler) {
+        handler = this.props[linkName].requestChange;
+      }
+
+      for (var _len = arguments.length, args = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
+        args[_key - 2] = arguments[_key];
+      }
+
+      set(this, propName, handler, value, args);
+    }
+
+    function isProp(props, prop) {
+      return props[prop] !== undefined;
+    }
+  }
+}
+
+module.exports = exports['default'];
+},{"./utils":97,"react":254}],96:[function(require,module,exports){
+'use strict';
+
+exports.__esModule = true;
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var _createUncontrollable = require('./createUncontrollable');
+
+var _createUncontrollable2 = _interopRequireDefault(_createUncontrollable);
+
+var mixin = {
+  shouldComponentUpdate: function shouldComponentUpdate() {
+    //let the forceUpdate trigger the update
+    return !this._notifying;
+  }
+};
+
+function set(component, propName, handler, value, args) {
+  if (handler) {
+    component._notifying = true;
+    handler.call.apply(handler, [component, value].concat(args));
+    component._notifying = false;
+  }
+
+  component._values[propName] = value;
+
+  if (component.isMounted()) component.forceUpdate();
+}
+
+exports['default'] = _createUncontrollable2['default']([mixin], set);
+module.exports = exports['default'];
+},{"./createUncontrollable":95}],97:[function(require,module,exports){
+(function (process){
+'use strict';
+
+exports.__esModule = true;
+exports.customPropType = customPropType;
+exports.uncontrolledPropTypes = uncontrolledPropTypes;
+exports.getType = getType;
+exports.getValue = getValue;
+exports.getLinkName = getLinkName;
+exports.defaultKey = defaultKey;
+exports.chain = chain;
+exports.transform = transform;
+exports.each = each;
+exports.has = has;
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _invariant = require('invariant');
+
+var _invariant2 = _interopRequireDefault(_invariant);
+
+function customPropType(handler, propType, name) {
+
+  return function (props, propName) {
+
+    if (props[propName] !== undefined) {
+      if (!props[handler]) {
+        return new Error('You have provided a `' + propName + '` prop to ' + '`' + name + '` without an `' + handler + '` handler. This will render a read-only field. ' + 'If the field should be mutable use `' + defaultKey(propName) + '`. Otherwise, set `' + handler + '`');
+      }
+
+      return propType && propType(props, propName, name);
+    }
+  };
+}
+
+function uncontrolledPropTypes(controlledValues, basePropTypes, displayName) {
+  var propTypes = {};
+
+  if (process.env.NODE_ENV !== 'production' && basePropTypes) {
+    transform(controlledValues, function (obj, handler, prop) {
+      var type = basePropTypes[prop];
+
+      _invariant2['default'](typeof handler === 'string' && handler.trim().length, 'Uncontrollable - [%s]: the prop `%s` needs a valid handler key name in order to make it uncontrollable', displayName, prop);
+
+      obj[prop] = customPropType(handler, type, displayName);
+
+      if (type !== undefined) obj[defaultKey(prop)] = type;
+    }, propTypes);
+  }
+
+  return propTypes;
+}
+
+var version = _react2['default'].version.split('.').map(parseFloat);
+
+exports.version = version;
+
+function getType(component) {
+  if (version[0] === 0 && version[1] >= 13) return component;
+
+  return component.type;
+}
+
+function getValue(props, name) {
+  var linkPropName = getLinkName(name);
+
+  if (linkPropName && !isProp(props, name) && isProp(props, linkPropName)) return props[linkPropName].value;
+
+  return props[name];
+}
+
+function isProp(props, prop) {
+  return props[prop] !== undefined;
+}
+
+function getLinkName(name) {
+  return name === 'value' ? 'valueLink' : name === 'checked' ? 'checkedLink' : null;
+}
+
+function defaultKey(key) {
+  return 'default' + key.charAt(0).toUpperCase() + key.substr(1);
+}
+
+function chain(thisArg, a, b) {
+  return function chainedFunction() {
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    a && a.call.apply(a, [thisArg].concat(args));
+    b && b.call.apply(b, [thisArg].concat(args));
+  };
+}
+
+function transform(obj, cb, seed) {
+  each(obj, cb.bind(null, seed = seed || (Array.isArray(obj) ? [] : {})));
+  return seed;
+}
+
+function each(obj, cb, thisArg) {
+  if (Array.isArray(obj)) return obj.forEach(cb, thisArg);
+
+  for (var key in obj) if (has(obj, key)) cb.call(thisArg, obj[key], key, obj);
+}
+
+function has(o, k) {
+  return o ? Object.prototype.hasOwnProperty.call(o, k) : false;
+}
+}).call(this,require('_process'))
+},{"_process":6,"invariant":94,"react":254}],98:[function(require,module,exports){
+(function (process){
+/**
+ * Copyright 2014-2015, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
+
+'use strict';
+
+/**
+ * Similar to invariant but only logs a warning if the condition is not met.
+ * This can be used to log issues in development environments in critical
+ * paths. Removing the logging code for production environments will keep the
+ * same logic and follow the same code paths.
+ */
+
+var warning = function() {};
+
+if (process.env.NODE_ENV !== 'production') {
+  warning = function(condition, format, args) {
+    var len = arguments.length;
+    args = new Array(len > 2 ? len - 2 : 0);
+    for (var key = 2; key < len; key++) {
+      args[key - 2] = arguments[key];
+    }
+    if (format === undefined) {
+      throw new Error(
+        '`warning(condition, format, ...args)` requires a warning ' +
+        'message argument'
+      );
+    }
+
+    if (format.length < 10 || (/^[s\W]*$/).test(format)) {
+      throw new Error(
+        'The warning format should be able to uniquely identify this ' +
+        'warning. Please, use a more descriptive format than: ' + format
+      );
+    }
+
+    if (!condition) {
+      var argIndex = 0;
+      var message = 'Warning: ' +
+        format.replace(/%s/g, function() {
+          return args[argIndex++];
+        });
+      if (typeof console !== 'undefined') {
+        console.error(message);
+      }
+      try {
+        // This error was thrown as a convenience so that you can use this stack
+        // to find the callsite that caused this warning to fire.
+        throw new Error(message);
+      } catch(x) {}
+    }
+  };
+}
+
+module.exports = warning;
+
+}).call(this,require('_process'))
+},{"_process":6}],99:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -3995,7 +13866,7 @@ var AutoFocusUtils = {
 };
 
 module.exports = AutoFocusUtils;
-},{"./ReactMount":72,"./findDOMNode":115,"fbjs/lib/focusNode":145}],9:[function(require,module,exports){
+},{"./ReactMount":163,"./findDOMNode":206,"fbjs/lib/focusNode":236}],100:[function(require,module,exports){
 /**
  * Copyright 2013-2015 Facebook, Inc.
  * All rights reserved.
@@ -4401,7 +14272,7 @@ var BeforeInputEventPlugin = {
 };
 
 module.exports = BeforeInputEventPlugin;
-},{"./EventConstants":21,"./EventPropagators":25,"./FallbackCompositionState":26,"./SyntheticCompositionEvent":97,"./SyntheticInputEvent":101,"fbjs/lib/ExecutionEnvironment":137,"fbjs/lib/keyOf":155}],10:[function(require,module,exports){
+},{"./EventConstants":112,"./EventPropagators":116,"./FallbackCompositionState":117,"./SyntheticCompositionEvent":188,"./SyntheticInputEvent":192,"fbjs/lib/ExecutionEnvironment":228,"fbjs/lib/keyOf":246}],101:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -4541,7 +14412,7 @@ var CSSProperty = {
 };
 
 module.exports = CSSProperty;
-},{}],11:[function(require,module,exports){
+},{}],102:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -4719,7 +14590,7 @@ ReactPerf.measureMethods(CSSPropertyOperations, 'CSSPropertyOperations', {
 
 module.exports = CSSPropertyOperations;
 }).call(this,require('_process'))
-},{"./CSSProperty":10,"./ReactPerf":78,"./dangerousStyleValue":112,"_process":5,"fbjs/lib/ExecutionEnvironment":137,"fbjs/lib/camelizeStyleName":139,"fbjs/lib/hyphenateStyleName":150,"fbjs/lib/memoizeStringOnly":157,"fbjs/lib/warning":162}],12:[function(require,module,exports){
+},{"./CSSProperty":101,"./ReactPerf":169,"./dangerousStyleValue":203,"_process":6,"fbjs/lib/ExecutionEnvironment":228,"fbjs/lib/camelizeStyleName":230,"fbjs/lib/hyphenateStyleName":241,"fbjs/lib/memoizeStringOnly":248,"fbjs/lib/warning":253}],103:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -4815,7 +14686,7 @@ PooledClass.addPoolingTo(CallbackQueue);
 
 module.exports = CallbackQueue;
 }).call(this,require('_process'))
-},{"./Object.assign":29,"./PooledClass":30,"_process":5,"fbjs/lib/invariant":151}],13:[function(require,module,exports){
+},{"./Object.assign":120,"./PooledClass":121,"_process":6,"fbjs/lib/invariant":242}],104:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -5137,7 +15008,7 @@ var ChangeEventPlugin = {
 };
 
 module.exports = ChangeEventPlugin;
-},{"./EventConstants":21,"./EventPluginHub":22,"./EventPropagators":25,"./ReactUpdates":90,"./SyntheticEvent":99,"./getEventTarget":121,"./isEventSupported":126,"./isTextInputElement":127,"fbjs/lib/ExecutionEnvironment":137,"fbjs/lib/keyOf":155}],14:[function(require,module,exports){
+},{"./EventConstants":112,"./EventPluginHub":113,"./EventPropagators":116,"./ReactUpdates":181,"./SyntheticEvent":190,"./getEventTarget":212,"./isEventSupported":217,"./isTextInputElement":218,"fbjs/lib/ExecutionEnvironment":228,"fbjs/lib/keyOf":246}],105:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -5161,7 +15032,7 @@ var ClientReactRootIndex = {
 };
 
 module.exports = ClientReactRootIndex;
-},{}],15:[function(require,module,exports){
+},{}],106:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -5293,7 +15164,7 @@ ReactPerf.measureMethods(DOMChildrenOperations, 'DOMChildrenOperations', {
 
 module.exports = DOMChildrenOperations;
 }).call(this,require('_process'))
-},{"./Danger":18,"./ReactMultiChildUpdateTypes":74,"./ReactPerf":78,"./setInnerHTML":131,"./setTextContent":132,"_process":5,"fbjs/lib/invariant":151}],16:[function(require,module,exports){
+},{"./Danger":109,"./ReactMultiChildUpdateTypes":165,"./ReactPerf":169,"./setInnerHTML":222,"./setTextContent":223,"_process":6,"fbjs/lib/invariant":242}],107:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -5530,7 +15401,7 @@ var DOMProperty = {
 
 module.exports = DOMProperty;
 }).call(this,require('_process'))
-},{"_process":5,"fbjs/lib/invariant":151}],17:[function(require,module,exports){
+},{"_process":6,"fbjs/lib/invariant":242}],108:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -5758,7 +15629,7 @@ ReactPerf.measureMethods(DOMPropertyOperations, 'DOMPropertyOperations', {
 
 module.exports = DOMPropertyOperations;
 }).call(this,require('_process'))
-},{"./DOMProperty":16,"./ReactPerf":78,"./quoteAttributeValueForBrowser":129,"_process":5,"fbjs/lib/warning":162}],18:[function(require,module,exports){
+},{"./DOMProperty":107,"./ReactPerf":169,"./quoteAttributeValueForBrowser":220,"_process":6,"fbjs/lib/warning":253}],109:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -5906,7 +15777,7 @@ var Danger = {
 
 module.exports = Danger;
 }).call(this,require('_process'))
-},{"_process":5,"fbjs/lib/ExecutionEnvironment":137,"fbjs/lib/createNodesFromMarkup":142,"fbjs/lib/emptyFunction":143,"fbjs/lib/getMarkupWrap":147,"fbjs/lib/invariant":151}],19:[function(require,module,exports){
+},{"_process":6,"fbjs/lib/ExecutionEnvironment":228,"fbjs/lib/createNodesFromMarkup":233,"fbjs/lib/emptyFunction":234,"fbjs/lib/getMarkupWrap":238,"fbjs/lib/invariant":242}],110:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -5934,7 +15805,7 @@ var keyOf = require('fbjs/lib/keyOf');
 var DefaultEventPluginOrder = [keyOf({ ResponderEventPlugin: null }), keyOf({ SimpleEventPlugin: null }), keyOf({ TapEventPlugin: null }), keyOf({ EnterLeaveEventPlugin: null }), keyOf({ ChangeEventPlugin: null }), keyOf({ SelectEventPlugin: null }), keyOf({ BeforeInputEventPlugin: null })];
 
 module.exports = DefaultEventPluginOrder;
-},{"fbjs/lib/keyOf":155}],20:[function(require,module,exports){
+},{"fbjs/lib/keyOf":246}],111:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -6059,7 +15930,7 @@ var EnterLeaveEventPlugin = {
 };
 
 module.exports = EnterLeaveEventPlugin;
-},{"./EventConstants":21,"./EventPropagators":25,"./ReactMount":72,"./SyntheticMouseEvent":103,"fbjs/lib/keyOf":155}],21:[function(require,module,exports){
+},{"./EventConstants":112,"./EventPropagators":116,"./ReactMount":163,"./SyntheticMouseEvent":194,"fbjs/lib/keyOf":246}],112:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -6152,7 +16023,7 @@ var EventConstants = {
 };
 
 module.exports = EventConstants;
-},{"fbjs/lib/keyMirror":154}],22:[function(require,module,exports){
+},{"fbjs/lib/keyMirror":245}],113:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -6434,7 +16305,7 @@ var EventPluginHub = {
 
 module.exports = EventPluginHub;
 }).call(this,require('_process'))
-},{"./EventPluginRegistry":23,"./EventPluginUtils":24,"./ReactErrorUtils":63,"./accumulateInto":109,"./forEachAccumulated":117,"_process":5,"fbjs/lib/invariant":151,"fbjs/lib/warning":162}],23:[function(require,module,exports){
+},{"./EventPluginRegistry":114,"./EventPluginUtils":115,"./ReactErrorUtils":154,"./accumulateInto":200,"./forEachAccumulated":208,"_process":6,"fbjs/lib/invariant":242,"fbjs/lib/warning":253}],114:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -6657,7 +16528,7 @@ var EventPluginRegistry = {
 
 module.exports = EventPluginRegistry;
 }).call(this,require('_process'))
-},{"_process":5,"fbjs/lib/invariant":151}],24:[function(require,module,exports){
+},{"_process":6,"fbjs/lib/invariant":242}],115:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -6862,7 +16733,7 @@ var EventPluginUtils = {
 
 module.exports = EventPluginUtils;
 }).call(this,require('_process'))
-},{"./EventConstants":21,"./ReactErrorUtils":63,"_process":5,"fbjs/lib/invariant":151,"fbjs/lib/warning":162}],25:[function(require,module,exports){
+},{"./EventConstants":112,"./ReactErrorUtils":154,"_process":6,"fbjs/lib/invariant":242,"fbjs/lib/warning":253}],116:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -7000,7 +16871,7 @@ var EventPropagators = {
 
 module.exports = EventPropagators;
 }).call(this,require('_process'))
-},{"./EventConstants":21,"./EventPluginHub":22,"./accumulateInto":109,"./forEachAccumulated":117,"_process":5,"fbjs/lib/warning":162}],26:[function(require,module,exports){
+},{"./EventConstants":112,"./EventPluginHub":113,"./accumulateInto":200,"./forEachAccumulated":208,"_process":6,"fbjs/lib/warning":253}],117:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -7096,7 +16967,7 @@ assign(FallbackCompositionState.prototype, {
 PooledClass.addPoolingTo(FallbackCompositionState);
 
 module.exports = FallbackCompositionState;
-},{"./Object.assign":29,"./PooledClass":30,"./getTextContentAccessor":124}],27:[function(require,module,exports){
+},{"./Object.assign":120,"./PooledClass":121,"./getTextContentAccessor":215}],118:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -7327,7 +17198,7 @@ var HTMLDOMPropertyConfig = {
 };
 
 module.exports = HTMLDOMPropertyConfig;
-},{"./DOMProperty":16,"fbjs/lib/ExecutionEnvironment":137}],28:[function(require,module,exports){
+},{"./DOMProperty":107,"fbjs/lib/ExecutionEnvironment":228}],119:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -7464,7 +17335,7 @@ var LinkedValueUtils = {
 
 module.exports = LinkedValueUtils;
 }).call(this,require('_process'))
-},{"./ReactPropTypeLocations":80,"./ReactPropTypes":81,"_process":5,"fbjs/lib/invariant":151,"fbjs/lib/warning":162}],29:[function(require,module,exports){
+},{"./ReactPropTypeLocations":171,"./ReactPropTypes":172,"_process":6,"fbjs/lib/invariant":242,"fbjs/lib/warning":253}],120:[function(require,module,exports){
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -7512,7 +17383,7 @@ function assign(target, sources) {
 }
 
 module.exports = assign;
-},{}],30:[function(require,module,exports){
+},{}],121:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -7634,7 +17505,7 @@ var PooledClass = {
 
 module.exports = PooledClass;
 }).call(this,require('_process'))
-},{"_process":5,"fbjs/lib/invariant":151}],31:[function(require,module,exports){
+},{"_process":6,"fbjs/lib/invariant":242}],122:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -7675,7 +17546,7 @@ React.__SECRET_DOM_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = ReactDOM;
 React.__SECRET_DOM_SERVER_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = ReactDOMServer;
 
 module.exports = React;
-},{"./Object.assign":29,"./ReactDOM":42,"./ReactDOMServer":52,"./ReactIsomorphic":70,"./deprecated":113}],32:[function(require,module,exports){
+},{"./Object.assign":120,"./ReactDOM":133,"./ReactDOMServer":143,"./ReactIsomorphic":161,"./deprecated":204}],123:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -7714,7 +17585,7 @@ var ReactBrowserComponentMixin = {
 
 module.exports = ReactBrowserComponentMixin;
 }).call(this,require('_process'))
-},{"./ReactInstanceMap":69,"./findDOMNode":115,"_process":5,"fbjs/lib/warning":162}],33:[function(require,module,exports){
+},{"./ReactInstanceMap":160,"./findDOMNode":206,"_process":6,"fbjs/lib/warning":253}],124:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -8039,7 +17910,7 @@ ReactPerf.measureMethods(ReactBrowserEventEmitter, 'ReactBrowserEventEmitter', {
 });
 
 module.exports = ReactBrowserEventEmitter;
-},{"./EventConstants":21,"./EventPluginHub":22,"./EventPluginRegistry":23,"./Object.assign":29,"./ReactEventEmitterMixin":64,"./ReactPerf":78,"./ViewportMetrics":108,"./isEventSupported":126}],34:[function(require,module,exports){
+},{"./EventConstants":112,"./EventPluginHub":113,"./EventPluginRegistry":114,"./Object.assign":120,"./ReactEventEmitterMixin":155,"./ReactPerf":169,"./ViewportMetrics":199,"./isEventSupported":217}],125:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -8164,7 +18035,7 @@ var ReactChildReconciler = {
 
 module.exports = ReactChildReconciler;
 }).call(this,require('_process'))
-},{"./ReactReconciler":83,"./instantiateReactComponent":125,"./shouldUpdateReactComponent":133,"./traverseAllChildren":134,"_process":5,"fbjs/lib/warning":162}],35:[function(require,module,exports){
+},{"./ReactReconciler":174,"./instantiateReactComponent":216,"./shouldUpdateReactComponent":224,"./traverseAllChildren":225,"_process":6,"fbjs/lib/warning":253}],126:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -8347,7 +18218,7 @@ var ReactChildren = {
 };
 
 module.exports = ReactChildren;
-},{"./PooledClass":30,"./ReactElement":59,"./traverseAllChildren":134,"fbjs/lib/emptyFunction":143}],36:[function(require,module,exports){
+},{"./PooledClass":121,"./ReactElement":150,"./traverseAllChildren":225,"fbjs/lib/emptyFunction":234}],127:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -9121,7 +18992,7 @@ var ReactClass = {
 
 module.exports = ReactClass;
 }).call(this,require('_process'))
-},{"./Object.assign":29,"./ReactComponent":37,"./ReactElement":59,"./ReactNoopUpdateQueue":76,"./ReactPropTypeLocationNames":79,"./ReactPropTypeLocations":80,"_process":5,"fbjs/lib/emptyObject":144,"fbjs/lib/invariant":151,"fbjs/lib/keyMirror":154,"fbjs/lib/keyOf":155,"fbjs/lib/warning":162}],37:[function(require,module,exports){
+},{"./Object.assign":120,"./ReactComponent":128,"./ReactElement":150,"./ReactNoopUpdateQueue":167,"./ReactPropTypeLocationNames":170,"./ReactPropTypeLocations":171,"_process":6,"fbjs/lib/emptyObject":235,"fbjs/lib/invariant":242,"fbjs/lib/keyMirror":245,"fbjs/lib/keyOf":246,"fbjs/lib/warning":253}],128:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -9246,7 +19117,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = ReactComponent;
 }).call(this,require('_process'))
-},{"./ReactNoopUpdateQueue":76,"./canDefineProperty":111,"_process":5,"fbjs/lib/emptyObject":144,"fbjs/lib/invariant":151,"fbjs/lib/warning":162}],38:[function(require,module,exports){
+},{"./ReactNoopUpdateQueue":167,"./canDefineProperty":202,"_process":6,"fbjs/lib/emptyObject":235,"fbjs/lib/invariant":242,"fbjs/lib/warning":253}],129:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -9288,7 +19159,7 @@ var ReactComponentBrowserEnvironment = {
 };
 
 module.exports = ReactComponentBrowserEnvironment;
-},{"./ReactDOMIDOperations":47,"./ReactMount":72}],39:[function(require,module,exports){
+},{"./ReactDOMIDOperations":138,"./ReactMount":163}],130:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -9342,7 +19213,7 @@ var ReactComponentEnvironment = {
 
 module.exports = ReactComponentEnvironment;
 }).call(this,require('_process'))
-},{"_process":5,"fbjs/lib/invariant":151}],40:[function(require,module,exports){
+},{"_process":6,"fbjs/lib/invariant":242}],131:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -10039,7 +19910,7 @@ var ReactCompositeComponent = {
 
 module.exports = ReactCompositeComponent;
 }).call(this,require('_process'))
-},{"./Object.assign":29,"./ReactComponentEnvironment":39,"./ReactCurrentOwner":41,"./ReactElement":59,"./ReactInstanceMap":69,"./ReactPerf":78,"./ReactPropTypeLocationNames":79,"./ReactPropTypeLocations":80,"./ReactReconciler":83,"./ReactUpdateQueue":89,"./shouldUpdateReactComponent":133,"_process":5,"fbjs/lib/emptyObject":144,"fbjs/lib/invariant":151,"fbjs/lib/warning":162}],41:[function(require,module,exports){
+},{"./Object.assign":120,"./ReactComponentEnvironment":130,"./ReactCurrentOwner":132,"./ReactElement":150,"./ReactInstanceMap":160,"./ReactPerf":169,"./ReactPropTypeLocationNames":170,"./ReactPropTypeLocations":171,"./ReactReconciler":174,"./ReactUpdateQueue":180,"./shouldUpdateReactComponent":224,"_process":6,"fbjs/lib/emptyObject":235,"fbjs/lib/invariant":242,"fbjs/lib/warning":253}],132:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -10070,7 +19941,7 @@ var ReactCurrentOwner = {
 };
 
 module.exports = ReactCurrentOwner;
-},{}],42:[function(require,module,exports){
+},{}],133:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -10165,7 +20036,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = React;
 }).call(this,require('_process'))
-},{"./ReactCurrentOwner":41,"./ReactDOMTextComponent":53,"./ReactDefaultInjection":56,"./ReactInstanceHandles":68,"./ReactMount":72,"./ReactPerf":78,"./ReactReconciler":83,"./ReactUpdates":90,"./ReactVersion":91,"./findDOMNode":115,"./renderSubtreeIntoContainer":130,"_process":5,"fbjs/lib/ExecutionEnvironment":137,"fbjs/lib/warning":162}],43:[function(require,module,exports){
+},{"./ReactCurrentOwner":132,"./ReactDOMTextComponent":144,"./ReactDefaultInjection":147,"./ReactInstanceHandles":159,"./ReactMount":163,"./ReactPerf":169,"./ReactReconciler":174,"./ReactUpdates":181,"./ReactVersion":182,"./findDOMNode":206,"./renderSubtreeIntoContainer":221,"_process":6,"fbjs/lib/ExecutionEnvironment":228,"fbjs/lib/warning":253}],134:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -10216,7 +20087,7 @@ var ReactDOMButton = {
 };
 
 module.exports = ReactDOMButton;
-},{}],44:[function(require,module,exports){
+},{}],135:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -11181,7 +21052,7 @@ assign(ReactDOMComponent.prototype, ReactDOMComponent.Mixin, ReactMultiChild.Mix
 
 module.exports = ReactDOMComponent;
 }).call(this,require('_process'))
-},{"./AutoFocusUtils":8,"./CSSPropertyOperations":11,"./DOMProperty":16,"./DOMPropertyOperations":17,"./EventConstants":21,"./Object.assign":29,"./ReactBrowserEventEmitter":33,"./ReactComponentBrowserEnvironment":38,"./ReactDOMButton":43,"./ReactDOMInput":48,"./ReactDOMOption":49,"./ReactDOMSelect":50,"./ReactDOMTextarea":54,"./ReactMount":72,"./ReactMultiChild":73,"./ReactPerf":78,"./ReactUpdateQueue":89,"./canDefineProperty":111,"./escapeTextContentForBrowser":114,"./isEventSupported":126,"./setInnerHTML":131,"./setTextContent":132,"./validateDOMNesting":135,"_process":5,"fbjs/lib/invariant":151,"fbjs/lib/keyOf":155,"fbjs/lib/shallowEqual":160,"fbjs/lib/warning":162}],45:[function(require,module,exports){
+},{"./AutoFocusUtils":99,"./CSSPropertyOperations":102,"./DOMProperty":107,"./DOMPropertyOperations":108,"./EventConstants":112,"./Object.assign":120,"./ReactBrowserEventEmitter":124,"./ReactComponentBrowserEnvironment":129,"./ReactDOMButton":134,"./ReactDOMInput":139,"./ReactDOMOption":140,"./ReactDOMSelect":141,"./ReactDOMTextarea":145,"./ReactMount":163,"./ReactMultiChild":164,"./ReactPerf":169,"./ReactUpdateQueue":180,"./canDefineProperty":202,"./escapeTextContentForBrowser":205,"./isEventSupported":217,"./setInnerHTML":222,"./setTextContent":223,"./validateDOMNesting":226,"_process":6,"fbjs/lib/invariant":242,"fbjs/lib/keyOf":246,"fbjs/lib/shallowEqual":251,"fbjs/lib/warning":253}],136:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -11361,7 +21232,7 @@ var ReactDOMFactories = mapObject({
 
 module.exports = ReactDOMFactories;
 }).call(this,require('_process'))
-},{"./ReactElement":59,"./ReactElementValidator":60,"_process":5,"fbjs/lib/mapObject":156}],46:[function(require,module,exports){
+},{"./ReactElement":150,"./ReactElementValidator":151,"_process":6,"fbjs/lib/mapObject":247}],137:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -11380,7 +21251,7 @@ var ReactDOMFeatureFlags = {
 };
 
 module.exports = ReactDOMFeatureFlags;
-},{}],47:[function(require,module,exports){
+},{}],138:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -11477,7 +21348,7 @@ ReactPerf.measureMethods(ReactDOMIDOperations, 'ReactDOMIDOperations', {
 
 module.exports = ReactDOMIDOperations;
 }).call(this,require('_process'))
-},{"./DOMChildrenOperations":15,"./DOMPropertyOperations":17,"./ReactMount":72,"./ReactPerf":78,"_process":5,"fbjs/lib/invariant":151}],48:[function(require,module,exports){
+},{"./DOMChildrenOperations":106,"./DOMPropertyOperations":108,"./ReactMount":163,"./ReactPerf":169,"_process":6,"fbjs/lib/invariant":242}],139:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -11633,7 +21504,7 @@ function _handleChange(event) {
 
 module.exports = ReactDOMInput;
 }).call(this,require('_process'))
-},{"./LinkedValueUtils":28,"./Object.assign":29,"./ReactDOMIDOperations":47,"./ReactMount":72,"./ReactUpdates":90,"_process":5,"fbjs/lib/invariant":151}],49:[function(require,module,exports){
+},{"./LinkedValueUtils":119,"./Object.assign":120,"./ReactDOMIDOperations":138,"./ReactMount":163,"./ReactUpdates":181,"_process":6,"fbjs/lib/invariant":242}],140:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -11725,7 +21596,7 @@ var ReactDOMOption = {
 
 module.exports = ReactDOMOption;
 }).call(this,require('_process'))
-},{"./Object.assign":29,"./ReactChildren":35,"./ReactDOMSelect":50,"_process":5,"fbjs/lib/warning":162}],50:[function(require,module,exports){
+},{"./Object.assign":120,"./ReactChildren":126,"./ReactDOMSelect":141,"_process":6,"fbjs/lib/warning":253}],141:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -11916,7 +21787,7 @@ function _handleChange(event) {
 
 module.exports = ReactDOMSelect;
 }).call(this,require('_process'))
-},{"./LinkedValueUtils":28,"./Object.assign":29,"./ReactMount":72,"./ReactUpdates":90,"_process":5,"fbjs/lib/warning":162}],51:[function(require,module,exports){
+},{"./LinkedValueUtils":119,"./Object.assign":120,"./ReactMount":163,"./ReactUpdates":181,"_process":6,"fbjs/lib/warning":253}],142:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -12129,7 +22000,7 @@ var ReactDOMSelection = {
 };
 
 module.exports = ReactDOMSelection;
-},{"./getNodeForCharacterOffset":123,"./getTextContentAccessor":124,"fbjs/lib/ExecutionEnvironment":137}],52:[function(require,module,exports){
+},{"./getNodeForCharacterOffset":214,"./getTextContentAccessor":215,"fbjs/lib/ExecutionEnvironment":228}],143:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -12156,7 +22027,7 @@ var ReactDOMServer = {
 };
 
 module.exports = ReactDOMServer;
-},{"./ReactDefaultInjection":56,"./ReactServerRendering":87,"./ReactVersion":91}],53:[function(require,module,exports){
+},{"./ReactDefaultInjection":147,"./ReactServerRendering":178,"./ReactVersion":182}],144:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -12286,7 +22157,7 @@ assign(ReactDOMTextComponent.prototype, {
 
 module.exports = ReactDOMTextComponent;
 }).call(this,require('_process'))
-},{"./DOMChildrenOperations":15,"./DOMPropertyOperations":17,"./Object.assign":29,"./ReactComponentBrowserEnvironment":38,"./ReactMount":72,"./escapeTextContentForBrowser":114,"./setTextContent":132,"./validateDOMNesting":135,"_process":5}],54:[function(require,module,exports){
+},{"./DOMChildrenOperations":106,"./DOMPropertyOperations":108,"./Object.assign":120,"./ReactComponentBrowserEnvironment":129,"./ReactMount":163,"./escapeTextContentForBrowser":205,"./setTextContent":223,"./validateDOMNesting":226,"_process":6}],145:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -12402,7 +22273,7 @@ function _handleChange(event) {
 
 module.exports = ReactDOMTextarea;
 }).call(this,require('_process'))
-},{"./LinkedValueUtils":28,"./Object.assign":29,"./ReactDOMIDOperations":47,"./ReactUpdates":90,"_process":5,"fbjs/lib/invariant":151,"fbjs/lib/warning":162}],55:[function(require,module,exports){
+},{"./LinkedValueUtils":119,"./Object.assign":120,"./ReactDOMIDOperations":138,"./ReactUpdates":181,"_process":6,"fbjs/lib/invariant":242,"fbjs/lib/warning":253}],146:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -12470,7 +22341,7 @@ var ReactDefaultBatchingStrategy = {
 };
 
 module.exports = ReactDefaultBatchingStrategy;
-},{"./Object.assign":29,"./ReactUpdates":90,"./Transaction":107,"fbjs/lib/emptyFunction":143}],56:[function(require,module,exports){
+},{"./Object.assign":120,"./ReactUpdates":181,"./Transaction":198,"fbjs/lib/emptyFunction":234}],147:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -12570,7 +22441,7 @@ module.exports = {
   inject: inject
 };
 }).call(this,require('_process'))
-},{"./BeforeInputEventPlugin":9,"./ChangeEventPlugin":13,"./ClientReactRootIndex":14,"./DefaultEventPluginOrder":19,"./EnterLeaveEventPlugin":20,"./HTMLDOMPropertyConfig":27,"./ReactBrowserComponentMixin":32,"./ReactComponentBrowserEnvironment":38,"./ReactDOMComponent":44,"./ReactDOMTextComponent":53,"./ReactDefaultBatchingStrategy":55,"./ReactDefaultPerf":57,"./ReactEventListener":65,"./ReactInjection":66,"./ReactInstanceHandles":68,"./ReactMount":72,"./ReactReconcileTransaction":82,"./SVGDOMPropertyConfig":92,"./SelectEventPlugin":93,"./ServerReactRootIndex":94,"./SimpleEventPlugin":95,"_process":5,"fbjs/lib/ExecutionEnvironment":137}],57:[function(require,module,exports){
+},{"./BeforeInputEventPlugin":100,"./ChangeEventPlugin":104,"./ClientReactRootIndex":105,"./DefaultEventPluginOrder":110,"./EnterLeaveEventPlugin":111,"./HTMLDOMPropertyConfig":118,"./ReactBrowserComponentMixin":123,"./ReactComponentBrowserEnvironment":129,"./ReactDOMComponent":135,"./ReactDOMTextComponent":144,"./ReactDefaultBatchingStrategy":146,"./ReactDefaultPerf":148,"./ReactEventListener":156,"./ReactInjection":157,"./ReactInstanceHandles":159,"./ReactMount":163,"./ReactReconcileTransaction":173,"./SVGDOMPropertyConfig":183,"./SelectEventPlugin":184,"./ServerReactRootIndex":185,"./SimpleEventPlugin":186,"_process":6,"fbjs/lib/ExecutionEnvironment":228}],148:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -12808,7 +22679,7 @@ var ReactDefaultPerf = {
 };
 
 module.exports = ReactDefaultPerf;
-},{"./DOMProperty":16,"./ReactDefaultPerfAnalysis":58,"./ReactMount":72,"./ReactPerf":78,"fbjs/lib/performanceNow":159}],58:[function(require,module,exports){
+},{"./DOMProperty":107,"./ReactDefaultPerfAnalysis":149,"./ReactMount":163,"./ReactPerf":169,"fbjs/lib/performanceNow":250}],149:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -13010,7 +22881,7 @@ var ReactDefaultPerfAnalysis = {
 };
 
 module.exports = ReactDefaultPerfAnalysis;
-},{"./Object.assign":29}],59:[function(require,module,exports){
+},{"./Object.assign":120}],150:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -13260,7 +23131,7 @@ ReactElement.isValidElement = function (object) {
 
 module.exports = ReactElement;
 }).call(this,require('_process'))
-},{"./Object.assign":29,"./ReactCurrentOwner":41,"./canDefineProperty":111,"_process":5}],60:[function(require,module,exports){
+},{"./Object.assign":120,"./ReactCurrentOwner":132,"./canDefineProperty":202,"_process":6}],151:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -13544,7 +23415,7 @@ var ReactElementValidator = {
 
 module.exports = ReactElementValidator;
 }).call(this,require('_process'))
-},{"./ReactCurrentOwner":41,"./ReactElement":59,"./ReactPropTypeLocationNames":79,"./ReactPropTypeLocations":80,"./canDefineProperty":111,"./getIteratorFn":122,"_process":5,"fbjs/lib/invariant":151,"fbjs/lib/warning":162}],61:[function(require,module,exports){
+},{"./ReactCurrentOwner":132,"./ReactElement":150,"./ReactPropTypeLocationNames":170,"./ReactPropTypeLocations":171,"./canDefineProperty":202,"./getIteratorFn":213,"_process":6,"fbjs/lib/invariant":242,"fbjs/lib/warning":253}],152:[function(require,module,exports){
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -13596,7 +23467,7 @@ assign(ReactEmptyComponent.prototype, {
 ReactEmptyComponent.injection = ReactEmptyComponentInjection;
 
 module.exports = ReactEmptyComponent;
-},{"./Object.assign":29,"./ReactElement":59,"./ReactEmptyComponentRegistry":62,"./ReactReconciler":83}],62:[function(require,module,exports){
+},{"./Object.assign":120,"./ReactElement":150,"./ReactEmptyComponentRegistry":153,"./ReactReconciler":174}],153:[function(require,module,exports){
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -13645,7 +23516,7 @@ var ReactEmptyComponentRegistry = {
 };
 
 module.exports = ReactEmptyComponentRegistry;
-},{}],63:[function(require,module,exports){
+},{}],154:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -13725,7 +23596,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = ReactErrorUtils;
 }).call(this,require('_process'))
-},{"_process":5}],64:[function(require,module,exports){
+},{"_process":6}],155:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -13764,7 +23635,7 @@ var ReactEventEmitterMixin = {
 };
 
 module.exports = ReactEventEmitterMixin;
-},{"./EventPluginHub":22}],65:[function(require,module,exports){
+},{"./EventPluginHub":113}],156:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -13976,7 +23847,7 @@ var ReactEventListener = {
 };
 
 module.exports = ReactEventListener;
-},{"./Object.assign":29,"./PooledClass":30,"./ReactInstanceHandles":68,"./ReactMount":72,"./ReactUpdates":90,"./getEventTarget":121,"fbjs/lib/EventListener":136,"fbjs/lib/ExecutionEnvironment":137,"fbjs/lib/getUnboundedScrollPosition":148}],66:[function(require,module,exports){
+},{"./Object.assign":120,"./PooledClass":121,"./ReactInstanceHandles":159,"./ReactMount":163,"./ReactUpdates":181,"./getEventTarget":212,"fbjs/lib/EventListener":227,"fbjs/lib/ExecutionEnvironment":228,"fbjs/lib/getUnboundedScrollPosition":239}],157:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -14015,7 +23886,7 @@ var ReactInjection = {
 };
 
 module.exports = ReactInjection;
-},{"./DOMProperty":16,"./EventPluginHub":22,"./ReactBrowserEventEmitter":33,"./ReactClass":36,"./ReactComponentEnvironment":39,"./ReactEmptyComponent":61,"./ReactNativeComponent":75,"./ReactPerf":78,"./ReactRootIndex":85,"./ReactUpdates":90}],67:[function(require,module,exports){
+},{"./DOMProperty":107,"./EventPluginHub":113,"./ReactBrowserEventEmitter":124,"./ReactClass":127,"./ReactComponentEnvironment":130,"./ReactEmptyComponent":152,"./ReactNativeComponent":166,"./ReactPerf":169,"./ReactRootIndex":176,"./ReactUpdates":181}],158:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -14140,7 +24011,7 @@ var ReactInputSelection = {
 };
 
 module.exports = ReactInputSelection;
-},{"./ReactDOMSelection":51,"fbjs/lib/containsNode":140,"fbjs/lib/focusNode":145,"fbjs/lib/getActiveElement":146}],68:[function(require,module,exports){
+},{"./ReactDOMSelection":142,"fbjs/lib/containsNode":231,"fbjs/lib/focusNode":236,"fbjs/lib/getActiveElement":237}],159:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -14445,7 +24316,7 @@ var ReactInstanceHandles = {
 
 module.exports = ReactInstanceHandles;
 }).call(this,require('_process'))
-},{"./ReactRootIndex":85,"_process":5,"fbjs/lib/invariant":151}],69:[function(require,module,exports){
+},{"./ReactRootIndex":176,"_process":6,"fbjs/lib/invariant":242}],160:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -14493,7 +24364,7 @@ var ReactInstanceMap = {
 };
 
 module.exports = ReactInstanceMap;
-},{}],70:[function(require,module,exports){
+},{}],161:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -14570,7 +24441,7 @@ var React = {
 
 module.exports = React;
 }).call(this,require('_process'))
-},{"./Object.assign":29,"./ReactChildren":35,"./ReactClass":36,"./ReactComponent":37,"./ReactDOMFactories":45,"./ReactElement":59,"./ReactElementValidator":60,"./ReactPropTypes":81,"./ReactVersion":91,"./onlyChild":128,"_process":5}],71:[function(require,module,exports){
+},{"./Object.assign":120,"./ReactChildren":126,"./ReactClass":127,"./ReactComponent":128,"./ReactDOMFactories":136,"./ReactElement":150,"./ReactElementValidator":151,"./ReactPropTypes":172,"./ReactVersion":182,"./onlyChild":219,"_process":6}],162:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -14616,7 +24487,7 @@ var ReactMarkupChecksum = {
 };
 
 module.exports = ReactMarkupChecksum;
-},{"./adler32":110}],72:[function(require,module,exports){
+},{"./adler32":201}],163:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -15469,7 +25340,7 @@ ReactPerf.measureMethods(ReactMount, 'ReactMount', {
 
 module.exports = ReactMount;
 }).call(this,require('_process'))
-},{"./DOMProperty":16,"./Object.assign":29,"./ReactBrowserEventEmitter":33,"./ReactCurrentOwner":41,"./ReactDOMFeatureFlags":46,"./ReactElement":59,"./ReactEmptyComponentRegistry":62,"./ReactInstanceHandles":68,"./ReactInstanceMap":69,"./ReactMarkupChecksum":71,"./ReactPerf":78,"./ReactReconciler":83,"./ReactUpdateQueue":89,"./ReactUpdates":90,"./instantiateReactComponent":125,"./setInnerHTML":131,"./shouldUpdateReactComponent":133,"./validateDOMNesting":135,"_process":5,"fbjs/lib/containsNode":140,"fbjs/lib/emptyObject":144,"fbjs/lib/invariant":151,"fbjs/lib/warning":162}],73:[function(require,module,exports){
+},{"./DOMProperty":107,"./Object.assign":120,"./ReactBrowserEventEmitter":124,"./ReactCurrentOwner":132,"./ReactDOMFeatureFlags":137,"./ReactElement":150,"./ReactEmptyComponentRegistry":153,"./ReactInstanceHandles":159,"./ReactInstanceMap":160,"./ReactMarkupChecksum":162,"./ReactPerf":169,"./ReactReconciler":174,"./ReactUpdateQueue":180,"./ReactUpdates":181,"./instantiateReactComponent":216,"./setInnerHTML":222,"./shouldUpdateReactComponent":224,"./validateDOMNesting":226,"_process":6,"fbjs/lib/containsNode":231,"fbjs/lib/emptyObject":235,"fbjs/lib/invariant":242,"fbjs/lib/warning":253}],164:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -15968,7 +25839,7 @@ var ReactMultiChild = {
 
 module.exports = ReactMultiChild;
 }).call(this,require('_process'))
-},{"./ReactChildReconciler":34,"./ReactComponentEnvironment":39,"./ReactCurrentOwner":41,"./ReactMultiChildUpdateTypes":74,"./ReactReconciler":83,"./flattenChildren":116,"_process":5}],74:[function(require,module,exports){
+},{"./ReactChildReconciler":125,"./ReactComponentEnvironment":130,"./ReactCurrentOwner":132,"./ReactMultiChildUpdateTypes":165,"./ReactReconciler":174,"./flattenChildren":207,"_process":6}],165:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -16001,7 +25872,7 @@ var ReactMultiChildUpdateTypes = keyMirror({
 });
 
 module.exports = ReactMultiChildUpdateTypes;
-},{"fbjs/lib/keyMirror":154}],75:[function(require,module,exports){
+},{"fbjs/lib/keyMirror":245}],166:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -16098,7 +25969,7 @@ var ReactNativeComponent = {
 
 module.exports = ReactNativeComponent;
 }).call(this,require('_process'))
-},{"./Object.assign":29,"_process":5,"fbjs/lib/invariant":151}],76:[function(require,module,exports){
+},{"./Object.assign":120,"_process":6,"fbjs/lib/invariant":242}],167:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2015, Facebook, Inc.
@@ -16219,7 +26090,7 @@ var ReactNoopUpdateQueue = {
 
 module.exports = ReactNoopUpdateQueue;
 }).call(this,require('_process'))
-},{"_process":5,"fbjs/lib/warning":162}],77:[function(require,module,exports){
+},{"_process":6,"fbjs/lib/warning":253}],168:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -16313,7 +26184,7 @@ var ReactOwner = {
 
 module.exports = ReactOwner;
 }).call(this,require('_process'))
-},{"_process":5,"fbjs/lib/invariant":151}],78:[function(require,module,exports){
+},{"_process":6,"fbjs/lib/invariant":242}],169:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -16412,7 +26283,7 @@ function _noMeasure(objName, fnName, func) {
 
 module.exports = ReactPerf;
 }).call(this,require('_process'))
-},{"_process":5}],79:[function(require,module,exports){
+},{"_process":6}],170:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -16439,7 +26310,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = ReactPropTypeLocationNames;
 }).call(this,require('_process'))
-},{"_process":5}],80:[function(require,module,exports){
+},{"_process":6}],171:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -16462,7 +26333,7 @@ var ReactPropTypeLocations = keyMirror({
 });
 
 module.exports = ReactPropTypeLocations;
-},{"fbjs/lib/keyMirror":154}],81:[function(require,module,exports){
+},{"fbjs/lib/keyMirror":245}],172:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -16819,7 +26690,7 @@ function getClassName(propValue) {
 }
 
 module.exports = ReactPropTypes;
-},{"./ReactElement":59,"./ReactPropTypeLocationNames":79,"./getIteratorFn":122,"fbjs/lib/emptyFunction":143}],82:[function(require,module,exports){
+},{"./ReactElement":150,"./ReactPropTypeLocationNames":170,"./getIteratorFn":213,"fbjs/lib/emptyFunction":234}],173:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -16971,7 +26842,7 @@ assign(ReactReconcileTransaction.prototype, Transaction.Mixin, Mixin);
 PooledClass.addPoolingTo(ReactReconcileTransaction);
 
 module.exports = ReactReconcileTransaction;
-},{"./CallbackQueue":12,"./Object.assign":29,"./PooledClass":30,"./ReactBrowserEventEmitter":33,"./ReactDOMFeatureFlags":46,"./ReactInputSelection":67,"./Transaction":107}],83:[function(require,module,exports){
+},{"./CallbackQueue":103,"./Object.assign":120,"./PooledClass":121,"./ReactBrowserEventEmitter":124,"./ReactDOMFeatureFlags":137,"./ReactInputSelection":158,"./Transaction":198}],174:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -17079,7 +26950,7 @@ var ReactReconciler = {
 };
 
 module.exports = ReactReconciler;
-},{"./ReactRef":84}],84:[function(require,module,exports){
+},{"./ReactRef":175}],175:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -17158,7 +27029,7 @@ ReactRef.detachRefs = function (instance, element) {
 };
 
 module.exports = ReactRef;
-},{"./ReactOwner":77}],85:[function(require,module,exports){
+},{"./ReactOwner":168}],176:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -17188,7 +27059,7 @@ var ReactRootIndex = {
 };
 
 module.exports = ReactRootIndex;
-},{}],86:[function(require,module,exports){
+},{}],177:[function(require,module,exports){
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -17212,7 +27083,7 @@ var ReactServerBatchingStrategy = {
 };
 
 module.exports = ReactServerBatchingStrategy;
-},{}],87:[function(require,module,exports){
+},{}],178:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -17298,7 +27169,7 @@ module.exports = {
   renderToStaticMarkup: renderToStaticMarkup
 };
 }).call(this,require('_process'))
-},{"./ReactDefaultBatchingStrategy":55,"./ReactElement":59,"./ReactInstanceHandles":68,"./ReactMarkupChecksum":71,"./ReactServerBatchingStrategy":86,"./ReactServerRenderingTransaction":88,"./ReactUpdates":90,"./instantiateReactComponent":125,"_process":5,"fbjs/lib/emptyObject":144,"fbjs/lib/invariant":151}],88:[function(require,module,exports){
+},{"./ReactDefaultBatchingStrategy":146,"./ReactElement":150,"./ReactInstanceHandles":159,"./ReactMarkupChecksum":162,"./ReactServerBatchingStrategy":177,"./ReactServerRenderingTransaction":179,"./ReactUpdates":181,"./instantiateReactComponent":216,"_process":6,"fbjs/lib/emptyObject":235,"fbjs/lib/invariant":242}],179:[function(require,module,exports){
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -17386,7 +27257,7 @@ assign(ReactServerRenderingTransaction.prototype, Transaction.Mixin, Mixin);
 PooledClass.addPoolingTo(ReactServerRenderingTransaction);
 
 module.exports = ReactServerRenderingTransaction;
-},{"./CallbackQueue":12,"./Object.assign":29,"./PooledClass":30,"./Transaction":107,"fbjs/lib/emptyFunction":143}],89:[function(require,module,exports){
+},{"./CallbackQueue":103,"./Object.assign":120,"./PooledClass":121,"./Transaction":198,"fbjs/lib/emptyFunction":234}],180:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2015, Facebook, Inc.
@@ -17646,7 +27517,7 @@ var ReactUpdateQueue = {
 
 module.exports = ReactUpdateQueue;
 }).call(this,require('_process'))
-},{"./Object.assign":29,"./ReactCurrentOwner":41,"./ReactElement":59,"./ReactInstanceMap":69,"./ReactUpdates":90,"_process":5,"fbjs/lib/invariant":151,"fbjs/lib/warning":162}],90:[function(require,module,exports){
+},{"./Object.assign":120,"./ReactCurrentOwner":132,"./ReactElement":150,"./ReactInstanceMap":160,"./ReactUpdates":181,"_process":6,"fbjs/lib/invariant":242,"fbjs/lib/warning":253}],181:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -17872,7 +27743,7 @@ var ReactUpdates = {
 
 module.exports = ReactUpdates;
 }).call(this,require('_process'))
-},{"./CallbackQueue":12,"./Object.assign":29,"./PooledClass":30,"./ReactPerf":78,"./ReactReconciler":83,"./Transaction":107,"_process":5,"fbjs/lib/invariant":151}],91:[function(require,module,exports){
+},{"./CallbackQueue":103,"./Object.assign":120,"./PooledClass":121,"./ReactPerf":169,"./ReactReconciler":174,"./Transaction":198,"_process":6,"fbjs/lib/invariant":242}],182:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -17887,7 +27758,7 @@ module.exports = ReactUpdates;
 'use strict';
 
 module.exports = '0.14.7';
-},{}],92:[function(require,module,exports){
+},{}],183:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -18015,7 +27886,7 @@ var SVGDOMPropertyConfig = {
 };
 
 module.exports = SVGDOMPropertyConfig;
-},{"./DOMProperty":16}],93:[function(require,module,exports){
+},{"./DOMProperty":107}],184:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -18217,7 +28088,7 @@ var SelectEventPlugin = {
 };
 
 module.exports = SelectEventPlugin;
-},{"./EventConstants":21,"./EventPropagators":25,"./ReactInputSelection":67,"./SyntheticEvent":99,"./isTextInputElement":127,"fbjs/lib/ExecutionEnvironment":137,"fbjs/lib/getActiveElement":146,"fbjs/lib/keyOf":155,"fbjs/lib/shallowEqual":160}],94:[function(require,module,exports){
+},{"./EventConstants":112,"./EventPropagators":116,"./ReactInputSelection":158,"./SyntheticEvent":190,"./isTextInputElement":218,"fbjs/lib/ExecutionEnvironment":228,"fbjs/lib/getActiveElement":237,"fbjs/lib/keyOf":246,"fbjs/lib/shallowEqual":251}],185:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -18247,7 +28118,7 @@ var ServerReactRootIndex = {
 };
 
 module.exports = ServerReactRootIndex;
-},{}],95:[function(require,module,exports){
+},{}],186:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -18837,7 +28708,7 @@ var SimpleEventPlugin = {
 
 module.exports = SimpleEventPlugin;
 }).call(this,require('_process'))
-},{"./EventConstants":21,"./EventPropagators":25,"./ReactMount":72,"./SyntheticClipboardEvent":96,"./SyntheticDragEvent":98,"./SyntheticEvent":99,"./SyntheticFocusEvent":100,"./SyntheticKeyboardEvent":102,"./SyntheticMouseEvent":103,"./SyntheticTouchEvent":104,"./SyntheticUIEvent":105,"./SyntheticWheelEvent":106,"./getEventCharCode":118,"_process":5,"fbjs/lib/EventListener":136,"fbjs/lib/emptyFunction":143,"fbjs/lib/invariant":151,"fbjs/lib/keyOf":155}],96:[function(require,module,exports){
+},{"./EventConstants":112,"./EventPropagators":116,"./ReactMount":163,"./SyntheticClipboardEvent":187,"./SyntheticDragEvent":189,"./SyntheticEvent":190,"./SyntheticFocusEvent":191,"./SyntheticKeyboardEvent":193,"./SyntheticMouseEvent":194,"./SyntheticTouchEvent":195,"./SyntheticUIEvent":196,"./SyntheticWheelEvent":197,"./getEventCharCode":209,"_process":6,"fbjs/lib/EventListener":227,"fbjs/lib/emptyFunction":234,"fbjs/lib/invariant":242,"fbjs/lib/keyOf":246}],187:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -18877,7 +28748,7 @@ function SyntheticClipboardEvent(dispatchConfig, dispatchMarker, nativeEvent, na
 SyntheticEvent.augmentClass(SyntheticClipboardEvent, ClipboardEventInterface);
 
 module.exports = SyntheticClipboardEvent;
-},{"./SyntheticEvent":99}],97:[function(require,module,exports){
+},{"./SyntheticEvent":190}],188:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -18915,7 +28786,7 @@ function SyntheticCompositionEvent(dispatchConfig, dispatchMarker, nativeEvent, 
 SyntheticEvent.augmentClass(SyntheticCompositionEvent, CompositionEventInterface);
 
 module.exports = SyntheticCompositionEvent;
-},{"./SyntheticEvent":99}],98:[function(require,module,exports){
+},{"./SyntheticEvent":190}],189:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -18953,7 +28824,7 @@ function SyntheticDragEvent(dispatchConfig, dispatchMarker, nativeEvent, nativeE
 SyntheticMouseEvent.augmentClass(SyntheticDragEvent, DragEventInterface);
 
 module.exports = SyntheticDragEvent;
-},{"./SyntheticMouseEvent":103}],99:[function(require,module,exports){
+},{"./SyntheticMouseEvent":194}],190:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -19136,7 +29007,7 @@ PooledClass.addPoolingTo(SyntheticEvent, PooledClass.fourArgumentPooler);
 
 module.exports = SyntheticEvent;
 }).call(this,require('_process'))
-},{"./Object.assign":29,"./PooledClass":30,"_process":5,"fbjs/lib/emptyFunction":143,"fbjs/lib/warning":162}],100:[function(require,module,exports){
+},{"./Object.assign":120,"./PooledClass":121,"_process":6,"fbjs/lib/emptyFunction":234,"fbjs/lib/warning":253}],191:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -19174,7 +29045,7 @@ function SyntheticFocusEvent(dispatchConfig, dispatchMarker, nativeEvent, native
 SyntheticUIEvent.augmentClass(SyntheticFocusEvent, FocusEventInterface);
 
 module.exports = SyntheticFocusEvent;
-},{"./SyntheticUIEvent":105}],101:[function(require,module,exports){
+},{"./SyntheticUIEvent":196}],192:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -19213,7 +29084,7 @@ function SyntheticInputEvent(dispatchConfig, dispatchMarker, nativeEvent, native
 SyntheticEvent.augmentClass(SyntheticInputEvent, InputEventInterface);
 
 module.exports = SyntheticInputEvent;
-},{"./SyntheticEvent":99}],102:[function(require,module,exports){
+},{"./SyntheticEvent":190}],193:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -19299,7 +29170,7 @@ function SyntheticKeyboardEvent(dispatchConfig, dispatchMarker, nativeEvent, nat
 SyntheticUIEvent.augmentClass(SyntheticKeyboardEvent, KeyboardEventInterface);
 
 module.exports = SyntheticKeyboardEvent;
-},{"./SyntheticUIEvent":105,"./getEventCharCode":118,"./getEventKey":119,"./getEventModifierState":120}],103:[function(require,module,exports){
+},{"./SyntheticUIEvent":196,"./getEventCharCode":209,"./getEventKey":210,"./getEventModifierState":211}],194:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -19373,7 +29244,7 @@ function SyntheticMouseEvent(dispatchConfig, dispatchMarker, nativeEvent, native
 SyntheticUIEvent.augmentClass(SyntheticMouseEvent, MouseEventInterface);
 
 module.exports = SyntheticMouseEvent;
-},{"./SyntheticUIEvent":105,"./ViewportMetrics":108,"./getEventModifierState":120}],104:[function(require,module,exports){
+},{"./SyntheticUIEvent":196,"./ViewportMetrics":199,"./getEventModifierState":211}],195:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -19420,7 +29291,7 @@ function SyntheticTouchEvent(dispatchConfig, dispatchMarker, nativeEvent, native
 SyntheticUIEvent.augmentClass(SyntheticTouchEvent, TouchEventInterface);
 
 module.exports = SyntheticTouchEvent;
-},{"./SyntheticUIEvent":105,"./getEventModifierState":120}],105:[function(require,module,exports){
+},{"./SyntheticUIEvent":196,"./getEventModifierState":211}],196:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -19481,7 +29352,7 @@ function SyntheticUIEvent(dispatchConfig, dispatchMarker, nativeEvent, nativeEve
 SyntheticEvent.augmentClass(SyntheticUIEvent, UIEventInterface);
 
 module.exports = SyntheticUIEvent;
-},{"./SyntheticEvent":99,"./getEventTarget":121}],106:[function(require,module,exports){
+},{"./SyntheticEvent":190,"./getEventTarget":212}],197:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -19537,7 +29408,7 @@ function SyntheticWheelEvent(dispatchConfig, dispatchMarker, nativeEvent, native
 SyntheticMouseEvent.augmentClass(SyntheticWheelEvent, WheelEventInterface);
 
 module.exports = SyntheticWheelEvent;
-},{"./SyntheticMouseEvent":103}],107:[function(require,module,exports){
+},{"./SyntheticMouseEvent":194}],198:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -19771,7 +29642,7 @@ var Transaction = {
 
 module.exports = Transaction;
 }).call(this,require('_process'))
-},{"_process":5,"fbjs/lib/invariant":151}],108:[function(require,module,exports){
+},{"_process":6,"fbjs/lib/invariant":242}],199:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -19799,7 +29670,7 @@ var ViewportMetrics = {
 };
 
 module.exports = ViewportMetrics;
-},{}],109:[function(require,module,exports){
+},{}],200:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -19861,7 +29732,7 @@ function accumulateInto(current, next) {
 
 module.exports = accumulateInto;
 }).call(this,require('_process'))
-},{"_process":5,"fbjs/lib/invariant":151}],110:[function(require,module,exports){
+},{"_process":6,"fbjs/lib/invariant":242}],201:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -19904,7 +29775,7 @@ function adler32(data) {
 }
 
 module.exports = adler32;
-},{}],111:[function(require,module,exports){
+},{}],202:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -19931,7 +29802,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = canDefineProperty;
 }).call(this,require('_process'))
-},{"_process":5}],112:[function(require,module,exports){
+},{"_process":6}],203:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -19987,7 +29858,7 @@ function dangerousStyleValue(name, value) {
 }
 
 module.exports = dangerousStyleValue;
-},{"./CSSProperty":10}],113:[function(require,module,exports){
+},{"./CSSProperty":101}],204:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -20038,7 +29909,7 @@ function deprecated(fnName, newModule, newPackage, ctx, fn) {
 
 module.exports = deprecated;
 }).call(this,require('_process'))
-},{"./Object.assign":29,"_process":5,"fbjs/lib/warning":162}],114:[function(require,module,exports){
+},{"./Object.assign":120,"_process":6,"fbjs/lib/warning":253}],205:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -20077,7 +29948,7 @@ function escapeTextContentForBrowser(text) {
 }
 
 module.exports = escapeTextContentForBrowser;
-},{}],115:[function(require,module,exports){
+},{}],206:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -20129,7 +30000,7 @@ function findDOMNode(componentOrElement) {
 
 module.exports = findDOMNode;
 }).call(this,require('_process'))
-},{"./ReactCurrentOwner":41,"./ReactInstanceMap":69,"./ReactMount":72,"_process":5,"fbjs/lib/invariant":151,"fbjs/lib/warning":162}],116:[function(require,module,exports){
+},{"./ReactCurrentOwner":132,"./ReactInstanceMap":160,"./ReactMount":163,"_process":6,"fbjs/lib/invariant":242,"fbjs/lib/warning":253}],207:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -20180,7 +30051,7 @@ function flattenChildren(children) {
 
 module.exports = flattenChildren;
 }).call(this,require('_process'))
-},{"./traverseAllChildren":134,"_process":5,"fbjs/lib/warning":162}],117:[function(require,module,exports){
+},{"./traverseAllChildren":225,"_process":6,"fbjs/lib/warning":253}],208:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -20210,7 +30081,7 @@ var forEachAccumulated = function (arr, cb, scope) {
 };
 
 module.exports = forEachAccumulated;
-},{}],118:[function(require,module,exports){
+},{}],209:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -20261,7 +30132,7 @@ function getEventCharCode(nativeEvent) {
 }
 
 module.exports = getEventCharCode;
-},{}],119:[function(require,module,exports){
+},{}],210:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -20365,7 +30236,7 @@ function getEventKey(nativeEvent) {
 }
 
 module.exports = getEventKey;
-},{"./getEventCharCode":118}],120:[function(require,module,exports){
+},{"./getEventCharCode":209}],211:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -20410,7 +30281,7 @@ function getEventModifierState(nativeEvent) {
 }
 
 module.exports = getEventModifierState;
-},{}],121:[function(require,module,exports){
+},{}],212:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -20440,7 +30311,7 @@ function getEventTarget(nativeEvent) {
 }
 
 module.exports = getEventTarget;
-},{}],122:[function(require,module,exports){
+},{}],213:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -20481,7 +30352,7 @@ function getIteratorFn(maybeIterable) {
 }
 
 module.exports = getIteratorFn;
-},{}],123:[function(require,module,exports){
+},{}],214:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -20555,7 +30426,7 @@ function getNodeForCharacterOffset(root, offset) {
 }
 
 module.exports = getNodeForCharacterOffset;
-},{}],124:[function(require,module,exports){
+},{}],215:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -20589,7 +30460,7 @@ function getTextContentAccessor() {
 }
 
 module.exports = getTextContentAccessor;
-},{"fbjs/lib/ExecutionEnvironment":137}],125:[function(require,module,exports){
+},{"fbjs/lib/ExecutionEnvironment":228}],216:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -20704,7 +30575,7 @@ function instantiateReactComponent(node) {
 
 module.exports = instantiateReactComponent;
 }).call(this,require('_process'))
-},{"./Object.assign":29,"./ReactCompositeComponent":40,"./ReactEmptyComponent":61,"./ReactNativeComponent":75,"_process":5,"fbjs/lib/invariant":151,"fbjs/lib/warning":162}],126:[function(require,module,exports){
+},{"./Object.assign":120,"./ReactCompositeComponent":131,"./ReactEmptyComponent":152,"./ReactNativeComponent":166,"_process":6,"fbjs/lib/invariant":242,"fbjs/lib/warning":253}],217:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -20765,7 +30636,7 @@ function isEventSupported(eventNameSuffix, capture) {
 }
 
 module.exports = isEventSupported;
-},{"fbjs/lib/ExecutionEnvironment":137}],127:[function(require,module,exports){
+},{"fbjs/lib/ExecutionEnvironment":228}],218:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -20806,7 +30677,7 @@ function isTextInputElement(elem) {
 }
 
 module.exports = isTextInputElement;
-},{}],128:[function(require,module,exports){
+},{}],219:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -20842,7 +30713,7 @@ function onlyChild(children) {
 
 module.exports = onlyChild;
 }).call(this,require('_process'))
-},{"./ReactElement":59,"_process":5,"fbjs/lib/invariant":151}],129:[function(require,module,exports){
+},{"./ReactElement":150,"_process":6,"fbjs/lib/invariant":242}],220:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -20869,7 +30740,7 @@ function quoteAttributeValueForBrowser(value) {
 }
 
 module.exports = quoteAttributeValueForBrowser;
-},{"./escapeTextContentForBrowser":114}],130:[function(require,module,exports){
+},{"./escapeTextContentForBrowser":205}],221:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -20886,7 +30757,7 @@ module.exports = quoteAttributeValueForBrowser;
 var ReactMount = require('./ReactMount');
 
 module.exports = ReactMount.renderSubtreeIntoContainer;
-},{"./ReactMount":72}],131:[function(require,module,exports){
+},{"./ReactMount":163}],222:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -20977,7 +30848,7 @@ if (ExecutionEnvironment.canUseDOM) {
 }
 
 module.exports = setInnerHTML;
-},{"fbjs/lib/ExecutionEnvironment":137}],132:[function(require,module,exports){
+},{"fbjs/lib/ExecutionEnvironment":228}],223:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -21018,7 +30889,7 @@ if (ExecutionEnvironment.canUseDOM) {
 }
 
 module.exports = setTextContent;
-},{"./escapeTextContentForBrowser":114,"./setInnerHTML":131,"fbjs/lib/ExecutionEnvironment":137}],133:[function(require,module,exports){
+},{"./escapeTextContentForBrowser":205,"./setInnerHTML":222,"fbjs/lib/ExecutionEnvironment":228}],224:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -21062,7 +30933,7 @@ function shouldUpdateReactComponent(prevElement, nextElement) {
 }
 
 module.exports = shouldUpdateReactComponent;
-},{}],134:[function(require,module,exports){
+},{}],225:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -21254,7 +31125,7 @@ function traverseAllChildren(children, callback, traverseContext) {
 
 module.exports = traverseAllChildren;
 }).call(this,require('_process'))
-},{"./ReactCurrentOwner":41,"./ReactElement":59,"./ReactInstanceHandles":68,"./getIteratorFn":122,"_process":5,"fbjs/lib/invariant":151,"fbjs/lib/warning":162}],135:[function(require,module,exports){
+},{"./ReactCurrentOwner":132,"./ReactElement":150,"./ReactInstanceHandles":159,"./getIteratorFn":213,"_process":6,"fbjs/lib/invariant":242,"fbjs/lib/warning":253}],226:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2015, Facebook, Inc.
@@ -21620,7 +31491,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = validateDOMNesting;
 }).call(this,require('_process'))
-},{"./Object.assign":29,"_process":5,"fbjs/lib/emptyFunction":143,"fbjs/lib/warning":162}],136:[function(require,module,exports){
+},{"./Object.assign":120,"_process":6,"fbjs/lib/emptyFunction":234,"fbjs/lib/warning":253}],227:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -21707,7 +31578,7 @@ var EventListener = {
 
 module.exports = EventListener;
 }).call(this,require('_process'))
-},{"./emptyFunction":143,"_process":5}],137:[function(require,module,exports){
+},{"./emptyFunction":234,"_process":6}],228:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -21744,7 +31615,7 @@ var ExecutionEnvironment = {
 };
 
 module.exports = ExecutionEnvironment;
-},{}],138:[function(require,module,exports){
+},{}],229:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -21777,7 +31648,7 @@ function camelize(string) {
 }
 
 module.exports = camelize;
-},{}],139:[function(require,module,exports){
+},{}],230:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -21818,7 +31689,7 @@ function camelizeStyleName(string) {
 }
 
 module.exports = camelizeStyleName;
-},{"./camelize":138}],140:[function(require,module,exports){
+},{"./camelize":229}],231:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -21874,7 +31745,7 @@ function containsNode(_x, _x2) {
 }
 
 module.exports = containsNode;
-},{"./isTextNode":153}],141:[function(require,module,exports){
+},{"./isTextNode":244}],232:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -21960,7 +31831,7 @@ function createArrayFromMixed(obj) {
 }
 
 module.exports = createArrayFromMixed;
-},{"./toArray":161}],142:[function(require,module,exports){
+},{"./toArray":252}],233:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -22047,7 +31918,7 @@ function createNodesFromMarkup(markup, handleScript) {
 
 module.exports = createNodesFromMarkup;
 }).call(this,require('_process'))
-},{"./ExecutionEnvironment":137,"./createArrayFromMixed":141,"./getMarkupWrap":147,"./invariant":151,"_process":5}],143:[function(require,module,exports){
+},{"./ExecutionEnvironment":228,"./createArrayFromMixed":232,"./getMarkupWrap":238,"./invariant":242,"_process":6}],234:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -22086,7 +31957,7 @@ emptyFunction.thatReturnsArgument = function (arg) {
 };
 
 module.exports = emptyFunction;
-},{}],144:[function(require,module,exports){
+},{}],235:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -22109,7 +31980,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = emptyObject;
 }).call(this,require('_process'))
-},{"_process":5}],145:[function(require,module,exports){
+},{"_process":6}],236:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -22136,7 +32007,7 @@ function focusNode(node) {
 }
 
 module.exports = focusNode;
-},{}],146:[function(require,module,exports){
+},{}],237:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -22172,7 +32043,7 @@ function getActiveElement() /*?DOMElement*/{
 }
 
 module.exports = getActiveElement;
-},{}],147:[function(require,module,exports){
+},{}],238:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -22270,7 +32141,7 @@ function getMarkupWrap(nodeName) {
 
 module.exports = getMarkupWrap;
 }).call(this,require('_process'))
-},{"./ExecutionEnvironment":137,"./invariant":151,"_process":5}],148:[function(require,module,exports){
+},{"./ExecutionEnvironment":228,"./invariant":242,"_process":6}],239:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -22309,7 +32180,7 @@ function getUnboundedScrollPosition(scrollable) {
 }
 
 module.exports = getUnboundedScrollPosition;
-},{}],149:[function(require,module,exports){
+},{}],240:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -22343,7 +32214,7 @@ function hyphenate(string) {
 }
 
 module.exports = hyphenate;
-},{}],150:[function(require,module,exports){
+},{}],241:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -22383,7 +32254,7 @@ function hyphenateStyleName(string) {
 }
 
 module.exports = hyphenateStyleName;
-},{"./hyphenate":149}],151:[function(require,module,exports){
+},{"./hyphenate":240}],242:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -22436,7 +32307,7 @@ function invariant(condition, format, a, b, c, d, e, f) {
 
 module.exports = invariant;
 }).call(this,require('_process'))
-},{"_process":5}],152:[function(require,module,exports){
+},{"_process":6}],243:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -22460,7 +32331,7 @@ function isNode(object) {
 }
 
 module.exports = isNode;
-},{}],153:[function(require,module,exports){
+},{}],244:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -22486,7 +32357,7 @@ function isTextNode(object) {
 }
 
 module.exports = isTextNode;
-},{"./isNode":152}],154:[function(require,module,exports){
+},{"./isNode":243}],245:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -22537,7 +32408,7 @@ var keyMirror = function (obj) {
 
 module.exports = keyMirror;
 }).call(this,require('_process'))
-},{"./invariant":151,"_process":5}],155:[function(require,module,exports){
+},{"./invariant":242,"_process":6}],246:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -22573,7 +32444,7 @@ var keyOf = function (oneKeyObj) {
 };
 
 module.exports = keyOf;
-},{}],156:[function(require,module,exports){
+},{}],247:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -22625,7 +32496,7 @@ function mapObject(object, callback, context) {
 }
 
 module.exports = mapObject;
-},{}],157:[function(require,module,exports){
+},{}],248:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -22657,7 +32528,7 @@ function memoizeStringOnly(callback) {
 }
 
 module.exports = memoizeStringOnly;
-},{}],158:[function(require,module,exports){
+},{}],249:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -22681,7 +32552,7 @@ if (ExecutionEnvironment.canUseDOM) {
 }
 
 module.exports = performance || {};
-},{"./ExecutionEnvironment":137}],159:[function(require,module,exports){
+},{"./ExecutionEnvironment":228}],250:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -22716,7 +32587,7 @@ if (performance.now) {
 }
 
 module.exports = performanceNow;
-},{"./performance":158}],160:[function(require,module,exports){
+},{"./performance":249}],251:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -22767,7 +32638,7 @@ function shallowEqual(objA, objB) {
 }
 
 module.exports = shallowEqual;
-},{}],161:[function(require,module,exports){
+},{}],252:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -22827,7 +32698,7 @@ function toArray(obj) {
 
 module.exports = toArray;
 }).call(this,require('_process'))
-},{"./invariant":151,"_process":5}],162:[function(require,module,exports){
+},{"./invariant":242,"_process":6}],253:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -22887,9 +32758,9 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = warning;
 }).call(this,require('_process'))
-},{"./emptyFunction":143,"_process":5}],163:[function(require,module,exports){
+},{"./emptyFunction":234,"_process":6}],254:[function(require,module,exports){
 'use strict';
 
 module.exports = require('./lib/React');
 
-},{"./lib/React":31}]},{},[4]);
+},{"./lib/React":122}]},{},[5]);
