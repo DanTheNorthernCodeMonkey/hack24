@@ -10,32 +10,32 @@ momentLocalizer(Moment);
 
 var meetingForm = React.createClass({
     getInitialState: function(){
-        var slots = [];
-
-
         return {
             description: '',
             summary: '',
-            slots: slots
+            start: Date(),
+            end: Date()
         }
     },
-    MakeShitHappen: function(start, end){
-        debugger;
-        $.post("http://localhost:3002/api/mediator/cronofy", {start: start, end: end, description: this.state.description, summary: this.state.summary})
+    addEvent: function(e){
+        $.post('http://ec2-54-194-147-206.eu-west-1.compute.amazonaws.com:3002/api/mediator/cronofy', {startDate: this.state.start, endDate: this.state.end, description: this.state.description, summaryInfo: this.state.summary});
 
-    },
-    getSlots: function(e){
-        e.preventDefault();
         //var self = this;
         //$.get('http://hack24cronofy.azurewebsites.net/api/availability' + '/20160319T0000Z' + '/20160320T0000Z' + '/60', function(data){
         //    self.setState( {slots: data});
         //});
     },
-    onChange : function(event){
-        if(event.target.id == "summary")
-            this.setState({summary: event.target.value});
-        if(event.target.id == "description")
-            this.setState({description: event.target.value});
+    onChange : function(event) {
+            if (event.target.id == "summary")
+                this.setState({summary: event.target.value});
+            if (event.target.id == "description")
+                this.setState({description: event.target.value});
+    },
+    onStartChange : function(date) {
+            this.setState({start: date.toISOString()});
+    },
+    onEndChange : function(date) {
+        this.setState({end: date.toISOString()});
     },
     render: function () {
 
@@ -66,7 +66,9 @@ var meetingForm = React.createClass({
                                 <label className="col-md-4 control-label">Start Date</label>
                                 <div className="col-md-8">
                                     <DateTimePicker
-                                        defaultValue={new Date()}/>
+                                        id="startDate"
+                                        defaultValue={new Date()}
+                                    onChange={this.onStartChange}/>
                                 </div>
 
                             </div>
@@ -74,17 +76,15 @@ var meetingForm = React.createClass({
                                 <label className="col-md-4 control-label">End Date</label>
                                 <div className="col-md-8">
                                     <DateTimePicker
-                                        defaultValue={new Date()}/>
+                                        id="endDate"
+                                        defaultValue={new Date()}
+                                        onChange={this.onEndChange}/>
                                 </div>
 
                             </div>
 
-                            <button id="submitEvent" type="submit" className="pull-right btn btn-default" >Submit</button>
+                            <button id="submitEvent" type="submit" className="pull-right btn btn-default" onClick={this.addEvent}>Submit</button>
                         </form>
-                        <div className="row results">
-                            <SlotList slots={this.state.slots} MakeShitHappen={this.MakeShitHappen} />
-                        </div>
-
                     </div>
                 </div>
             </div>

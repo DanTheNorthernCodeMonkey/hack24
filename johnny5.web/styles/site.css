@@ -22,6 +22,14 @@ body{
 }
 
 .content-section{
-	padding-top:250px;
-	padding-bottom:250px;
+	padding-top:260px;
+	padding-bottom:260px;
+}
+
+.summary{
+	text-align: left;
+}
+
+.summaryText{
+	padding-top: 7px;
 }
