@@ -26,17 +26,17 @@ namespace Cronofy_WebAPI.Controllers
             _getFreeBusyRequestBuilderFactory = getFreeBusyRequestBuilderFactory;
         }
 
-        [Route(@"{startDateString}/{endDateString}/{duration}")]
-        public HttpResponseMessage Get([FromUri]string startDateString, [FromUri]string endDateString, int duration, string authToken)
+        [Route(@"{startDate}/{endDate}/{duration}")]
+        public HttpResponseMessage Get([FromUri]string startDate, [FromUri]string endDate, int duration)
         {
-            var cronofy = new CronofyAccountClient(authToken);
+            var cronofy = new CronofyAccountClient(_configuration.AuthToken);
             var calendarId = cronofy.GetCalendars().Select(x => x.CalendarId).FirstOrDefault();
 
-            var parsedStartDateString = DateTimeParser.Parse(startDateString);
-            var parsedEndDateString = DateTimeParser.Parse(endDateString);
+            var parsedStartDateString = DateTimeParser.Parse(startDate);
+            var parsedEndDateString = DateTimeParser.Parse(endDate);
 
-            var parsedStartDateTimeString = DateTimeParser.ParseToDateTime(startDateString);
-            var parsedEndDateTimeString = DateTimeParser.ParseToDateTime(endDateString);
+            var parsedStartDateTimeString = DateTimeParser.ParseToDateTime(startDate);
+            var parsedEndDateTimeString = DateTimeParser.ParseToDateTime(endDate);
 
             var freeRequestBuilder = _getFreeBusyRequestBuilderFactory.GetFreeBusyRequestBuilder(parsedStartDateString,
                 parsedEndDateString, calendarId, _configuration.TimeZoneId);
