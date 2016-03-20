@@ -1,0 +1,35 @@
+{
+  "name": "config-transformer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "gulpfile.js",
+  "dependencies": {
+    "bootstrap": "^3.3.5",
+    "browserify": "^12.0.1",
+    "cldr-data": "^29.0.1",
+    "globalize": "^1.1.1",
+    "guid": "0.0.12",
+    "gulp": "^3.9.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-connect": "^2.2.0",
+    "gulp-eslint": "^1.1.0",
+    "jquery": "^2.1.4",
+    "lodash": "^3.10.1",
+    "moment": "^2.12.0",
+    "node-uuid": "^1.4.4",
+    "object-assign": "^4.0.1",
+    "react": "^0.14.2",
+    "react-datepicker": "^0.24.0",
+    "react-dom": "^0.14.2",
+    "react-dropzone": "^3.0.0",
+    "react-widgets": "^3.2.0",
+    "reactify": "^1.1.1",
+    "vinyl-source-stream": "^1.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
